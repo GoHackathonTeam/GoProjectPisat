@@ -13,7 +13,7 @@ public class InitActivity extends AppCompatActivity {
     }
 
     private void proceed() {
-        Intent i = new Intent(InitActivity.this, Object.class); //TODO
+        Intent i = new Intent(InitActivity.this, LoginActivity.class);
         startActivity(i);
         finish();
     }
