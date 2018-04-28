@@ -14,19 +14,16 @@ import com.dekinci.lksbstu.communication.structure.pojos.User;
 import com.dekinci.lksbstu.utils.FactCallback;
 import com.dekinci.lksbstu.utils.ResultCallback;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 public class PolyExemple implements PolyApi {
 
@@ -235,13 +232,14 @@ public class PolyExemple implements PolyApi {
         int j;
         for (i = 0, j = 0; i < from && j < size; j++) {
             Message message = messages.get(j);
-            if (message.getSenderId().equals(LOGIN.getID()) && message.getReceiverId().equals(user_id)) {
+            if (message.getSenderId().equals(LOGIN.getID()) && message.getReceiverId().equals(user_id)
+                    || message.getSenderId().equals(user_id) && message.getReceiverId().equals(LOGIN.getID()))
                 i++;
-            }
         }
-        for (; i < to; j++) {
+        for (; i < to && j < size; j++) {
             Message message = messages.get(j);
-            if (message.getSenderId().equals(LOGIN.getID()) && message.getReceiverId().equals(user_id)) {
+            if (message.getSenderId().equals(LOGIN.getID()) && message.getReceiverId().equals(user_id)
+                    || message.getSenderId().equals(user_id) && message.getReceiverId().equals(LOGIN.getID())) {
                 result.add(message);
                 i++;
             }
@@ -251,15 +249,16 @@ public class PolyExemple implements PolyApi {
 
     @Override
     public void getDialogs(ResultCallback<List<String>> resultCallback) {
-        try {
-            BQAQufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(dialogs)));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                if QA
+        Set<String> result = new HashSet<>();
+        for (Message message : messages) {
+            if (message.getReceiverId().equals(LOGIN.getID())) {
+                result.add(message.getSenderId());
             }
-        } catch (Exception e) {
-
+            if (message.getSenderId().equals(LOGIN.getID())) {
+                result.add(message.getReceiverId());
+            }
         }
+        resultCallback.success(new ArrayList<>(result));
     }
 
 
