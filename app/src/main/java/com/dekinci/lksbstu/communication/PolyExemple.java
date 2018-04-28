@@ -1,17 +1,23 @@
 package com.dekinci.lksbstu.communication;
 
-import com.dekinci.lksbstu.communication.structure.*;
+import com.dekinci.lksbstu.PolyApp;
+import com.dekinci.lksbstu.communication.structure.DaySchedule;
+import com.dekinci.lksbstu.communication.structure.Gradebook;
+import com.dekinci.lksbstu.communication.structure.Login;
+import com.dekinci.lksbstu.communication.structure.News;
+import com.dekinci.lksbstu.communication.structure.Schedule;
+import com.dekinci.lksbstu.communication.structure.UserStatus;
 import com.dekinci.lksbstu.communication.structure.pojos.User;
 import com.dekinci.lksbstu.utils.FactCallback;
 import com.dekinci.lksbstu.utils.ResultCallback;
 import java.io.FileNotFoundException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PolyExemple implements PolyApi {
     private List<User> users;
     private List<News> news;
+    private Login LOGIN;
 
     public PolyExemple() {
         users = new ArrayList<>();
@@ -56,9 +62,7 @@ public class PolyExemple implements PolyApi {
     public void login(String login, String password, FactCallback callback) {
         String user_login = "a";
         String user_pass = "0";
-        Login LOGIN = new Login();
-        LOGIN.setID("00000001");
-        LOGIN.setTOKEN("dsfwe12dcds");
+        LOGIN = new Login("dsfwe12dcds", "00000001");
 
         if (login.equals(user_login) && password.equals(user_pass)){
             callback.success();
@@ -151,5 +155,11 @@ public class PolyExemple implements PolyApi {
         if (from > news.size())
             resultCallback.success(new ArrayList<>());
         resultCallback.success(news.subList(from, to));
+    }
+
+    @Override
+    public void logOut(Login login) {
+        login = null;
+        PolyApp.deleteCredentials();
     }
 }
