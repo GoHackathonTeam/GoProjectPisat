@@ -1,15 +1,11 @@
 package com.dekinci.lksbstu.communication;
 
-import com.dekinci.lksbstu.communication.structure.DaySchedule;
-import com.dekinci.lksbstu.communication.structure.Gradebook;
-import com.dekinci.lksbstu.communication.structure.Login;
-import com.dekinci.lksbstu.communication.structure.News;
-import com.dekinci.lksbstu.communication.structure.Schedule;
-import com.dekinci.lksbstu.communication.structure.UserStatus;
+import com.dekinci.lksbstu.communication.structure.*;
 import com.dekinci.lksbstu.communication.structure.pojos.User;
 import com.dekinci.lksbstu.utils.FactCallback;
 import com.dekinci.lksbstu.utils.ResultCallback;
 import java.io.FileNotFoundException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,8 +38,8 @@ public class PolyExemple implements PolyApi {
                 3,1));
 
         news = new ArrayList<>();
-        news.add(new News("5", "Внимание!!!", "Очень важная информация"));
-        news.add(new News("56", "Кое-что случилось", "Вы и сами наверное догадались, что <b>новости</b> это <i>новости</i>"));
+        news.add(new News("5", "Внимание!!!", "Очень важная информация", "2018.03.09 15:34"));
+        news.add(new News("56", "Кое-что случилось", "Вы и сами наверное догадались, что <b>новости</b> это <i>новости</i>", "2017.12.01 12:01"));
     }
 
     @Override
