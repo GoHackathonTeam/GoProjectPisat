@@ -5,25 +5,61 @@ import com.dekinci.lksbstu.communication.structure.Gradebook;
 import com.dekinci.lksbstu.communication.structure.Login;
 import com.dekinci.lksbstu.communication.structure.News;
 import com.dekinci.lksbstu.communication.structure.Schedule;
+import com.dekinci.lksbstu.communication.structure.UserStatus;
 import com.dekinci.lksbstu.communication.structure.pojos.User;
 import com.dekinci.lksbstu.utils.FactCallback;
 import com.dekinci.lksbstu.utils.ResultCallback;
-
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PolyExemple implements PolyApi {
+    private List<User> users;
+    private List<News> news;
 
+    public PolyExemple() {
+        users = new ArrayList<>();
+        users.add(new User("0", "Валерия", "Житникова", "Сахипзадовна",
+                UserStatus.STUDENT.getStatus(), "ИКНТ", "43134",
+                "bachelor", User.Types.FULL_TIME, "2007-12-03T10:15:30",
+                3,1));
+        users.add(new User("1", "Григорий", "Зубрин", "Владиславович",
+                UserStatus.STUDENT.getStatus(), "ИКНТ", "43134",
+                "bachelor", User.Types.FULL_TIME, "2007-12-03T10:15:30",
+                3,1));
+        users.add(new User("2", "Владимир", "Путин", "Владимирович",
+                UserStatus.STUDENT.getStatus(), "ИКНТ", "43134",
+                "bachelor", User.Types.FULL_TIME, "2007-12-03T10:15:30",
+                3,1));
+        users.add(new User("3", "Евгения", "Лососева", "Ашалайбовна",
+                UserStatus.STUDENT.getStatus(), "ИКНТ", "43154",
+                "bachelor", User.Types.FULL_TIME, "2007-12-03T10:15:30",
+                3,1));
+
+        users.add(new User("3", "Елизавета", "Арбузова", "Вольфовна",
+                UserStatus.TEACHER.getStatus(), "ИКНТ", "teachers",
+                "bachelor", User.Types.FULL_TIME, "2007-12-03T10:15:30",
+                3,1));
+
+        news = new ArrayList<>();
+        news.add(new News("5", "Внимание!!!", "Очень важная информация"));
+        news.add(new News("56", "Кое-что случилось", "Вы и сами наверное догадались, что <b>новости</b> это <i>новости</i>"));
+    }
 
     @Override
     public void getUserInfo(String user_id, ResultCallback<User> resultCallback) {
-        resultCallback.success(new User());
+        for (User user : users) {
+            if (user_id.equals(user.getId())) {
+                resultCallback.success(user);
+            }
+        }
+        resultCallback.failure(new FileNotFoundException());
     }
 
     @Override
     public void login(String login, String password, FactCallback callback) {
-        String user_login = "tovpeko.k";
-        String user_pass = "12345678";
+        String user_login = "a";
+        String user_pass = "0";
         Login LOGIN = new Login();
         LOGIN.setID("00000001");
         LOGIN.setTOKEN("dsfwe12dcds");
@@ -35,28 +71,69 @@ public class PolyExemple implements PolyApi {
     }
 
     @Override
-    public void getSchedule(String group_id, int type, ResultCallback<List<Schedule>> resultCallback) {
-        List<Schedule> schedule = new ArrayList<Schedule>();
+    public void getSchedule(String group_id, String type, ResultCallback<List<DaySchedule>> resultCallback) {
+        ArrayList<DaySchedule> daySchedList = null;
+        DaySchedule schedule;
         Schedule sched;
         switch (type) {
-            case 1:
-                sched = new Schedule("28 апреля 2018", "Практика",
+            case "day":
+                schedule = new DaySchedule("28 мая 2018");
+                sched = new Schedule("Практика",
                         "Программирование", "Глухих М.В.", "ГЗ, ауд 237");
                 schedule.add(sched);
-                resultCallback.success(schedule);
-                break;
-            case 2:
-                for (int i = 0; i < 7; i++){
-                    sched = new Schedule(i + " апреля 2018", "Практика",
-                            "Программирование", "Глухих М.В.", "ГЗ, ауд 237");
+                sched = new Schedule("Практика",
+                        "Программирование", "Глухих М.В.", "ГЗ, ауд 232");
+                schedule.add(sched);
+                sched = new Schedule("Практика",
+                        "Программирование", "Глухих М.В.", "ГЗ, ауд 231");
+                schedule.add(sched);
+                daySchedList.add(schedule);
 
+                resultCallback.success(daySchedList);
+                break;
+            case "week":
+                for (int i = 0; i < 7; i++){
+                    schedule = new DaySchedule("28 мая 2018");
+                    sched = new Schedule("Практика",
+                            "Программирование", "Глухих М.В.", "ГЗ, ауд 237");
+                    schedule.add(sched);
+                    sched = new Schedule("Лабораторная",
+                            "История", "Лебницин М.В.", "ГЗ, ауд 234");
+                    schedule.add(sched);
+                    sched = new Schedule("Лекция",
+                            "Математика", "Коровин Л.Л.", "ГЗ, ауд 233");
+                    schedule.add(sched);
+                    daySchedList.add(schedule);
                 }
+                resultCallback.success(daySchedList);
+                break;
+            case "month":
+                for (int i = 0; i < 30; i++){
+                    schedule = new DaySchedule("28 мая 2018");
+                    sched = new Schedule("Практика",
+                            "Программирование", "Глухих М.В.", "ГЗ, ауд 237");
+                    schedule.add(sched);
+                    sched = new Schedule("Лабораторная",
+                            "История", "Лебницин М.В.", "ГЗ, ауд 234");
+                    schedule.add(sched);
+                    sched = new Schedule("Лекция",
+                            "Математика", "Коровин Л.Л.", "ГЗ, ауд 233");
+                    schedule.add(sched);
+                    daySchedList.add(schedule);
+                }
+                resultCallback.success(daySchedList);
+                break;
         }
     }
 
     @Override
-    public void getGradebook(String user_id, ResultCallback<Gradebook> resultCallback) {
+    public void getGradebook(String user_id, ResultCallback<List<Gradebook>> resultCallback) {
+        List<Gradebook> gradebookList = new ArrayList<>();
 
+        for (int i = 0; i < 7; i++)
+            gradebookList.add(new Gradebook("Программирование", "Экзамен","13-05-2018",
+                 "Карамелькин Н.Н.","зачет"));
+        resultCallback.success(gradebookList);
     }
 
     @Override
@@ -70,7 +147,7 @@ public class PolyExemple implements PolyApi {
     }
 
     @Override
-    public void getNews(ResultCallback<News> resultCallback) {
-
+    public void getNews(ResultCallback<List<News>> resultCallback) {
+        resultCallback.success(news);
     }
 }

@@ -4,9 +4,6 @@ import com.google.gson.annotations.SerializedName;
 
 public class Schedule {
 
-    @SerializedName("data")
-    private String data;
-
     @SerializedName("lessonType")
     private String lessonType;
 
@@ -20,8 +17,7 @@ public class Schedule {
     private String place;
 
 
-    public Schedule(String data, String lessonType, String lesson, String teacher, String place) {
-        this.data = data;
+    public Schedule(String lessonType, String lesson, String teacher, String place) {
         this.lessonType = lessonType;
         this.lesson = lesson;
         this.teacher = teacher;
@@ -29,11 +25,6 @@ public class Schedule {
     }
 
     public Schedule(){}
-
-
-    public String getData(){
-        return data;
-    }
 
     public String getLessonType() {
         return lessonType;

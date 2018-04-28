@@ -3,6 +3,7 @@ package com.dekinci.lksbstu.communication;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.dekinci.lksbstu.communication.structure.DaySchedule;
 import com.dekinci.lksbstu.communication.structure.Gradebook;
 import com.dekinci.lksbstu.communication.structure.Login;
 import com.dekinci.lksbstu.communication.structure.News;
@@ -60,15 +61,15 @@ public class PolyLib implements PolyApi{
     }
 
     @Override
-    public void getSchedule(String group_id, int type, ResultCallback<List<Schedule>> resultCallback) {
-        Call<List<Schedule>> scheduleCall = serverApi.getSchedule(group_id, type);
+    public void getSchedule(String group_id, String type, ResultCallback<List<DaySchedule>> resultCallback) {
+        Call<List<DaySchedule>> scheduleCall = serverApi.getSchedule(group_id, type);
 
         enqueueCall(scheduleCall, resultCallback);
     }
 
     @Override
-    public void getGradebook(String user_id, ResultCallback<Gradebook> resultCallback) {
-        Call<Gradebook> gradebookCall = serverApi.getGradebook(user_id);
+    public void getGradebook(String user_id, ResultCallback<List<Gradebook>> resultCallback) {
+        Call<List<Gradebook>> gradebookCall = serverApi.getGradebook(user_id);
 
         enqueueCall(gradebookCall, resultCallback);
     }
@@ -86,7 +87,7 @@ public class PolyLib implements PolyApi{
     }
 
     @Override
-    public void getNews(ResultCallback<News> resultCallback) {
+    public void getNews(ResultCallback<List<News>> resultCallback) {
 
     }
 
