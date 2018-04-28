@@ -1,8 +1,5 @@
 package com.dekinci.lksbstu.communication;
 
-import android.content.Context;
-import android.util.Log;
-
 import com.dekinci.lksbstu.PolyApp;
 import com.dekinci.lksbstu.communication.structure.DaySchedule;
 import com.dekinci.lksbstu.communication.structure.Gradebook;
@@ -20,10 +17,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Scanner;
 import java.util.Set;
 
 public class PolyExemple implements PolyApi {
@@ -31,12 +28,14 @@ public class PolyExemple implements PolyApi {
     private List<User> users;
     private List<News> news;
     private Login LOGIN;
+    private String groupId;
     private File dialogs;
     private File dialogGroup;
-    private File notification;
+    private File notificationFile;
 
     private List<Message> messages;
-
+    private List<Message> chat;
+    private List<String> notifications;
 
     public PolyExemple() {
         users = new ArrayList<>();
@@ -66,8 +65,13 @@ public class PolyExemple implements PolyApi {
         news.add(new News("5", "Внимание!!!", "Очень важная информация", "2018.03.09 15:34"));
         news.add(new News("56", "Кое-что случилось", "Вы и сами наверное догадались, что <b>новости</b> это <i>новости</i>", "2017.12.01 12:01"));
 
-        dialogs = new File(PolyApp.getInnerDir(), "dialogs");
+        File innerDir = PolyApp.getInnerDir();
+        dialogs = new File(innerDir, "dialogs");
+        getUserInfo(user -> dialogGroup = new File(innerDir, groupId = user.getGroupId()));
+        notificationFile = new File(innerDir, LOGIN.getID());
         messages = new ArrayList<>();
+        chat = new ArrayList<>();
+
         try {
             if (dialogs.exists()) {
                 BufferedReader reader = new BufferedReader(new FileReader(dialogs));
@@ -77,8 +81,35 @@ public class PolyExemple implements PolyApi {
                     String text = reader.readLine();
                     messages.add(new Message(sender, receiver, text));
                 }
+                reverse(messages);
             }
-        } catch (Exception e) {
+            if (dialogGroup.exists()) {
+                BufferedReader reader = new BufferedReader(new FileReader(dialogGroup));
+                String sender;
+                while ((sender = reader.readLine()) != null) {
+                    String text = reader.readLine();
+                    chat.add(new Message(sender, groupId, text));
+                }
+                reverse(chat);
+            }
+            if (notificationFile.exists()) {
+                BufferedReader reader = new BufferedReader(new FileReader(notificationFile));
+                String notification;
+                while ((notification = reader.readLine()) != null) {
+                    notifications.add(notification);
+                }
+                reverse(notifications);
+            }
+        } catch (Exception e) { }
+    }
+
+    private <T> void reverse(List<T> list) {
+        int offset = list.size() - 1;
+        int half = list.size() / 2;
+        for (int i = 0; i < half; i++) {
+            T message = list.get(i);
+            list.set(i, list.get(offset - i));
+            list.set(offset - i, message);
         }
     }
 
@@ -178,13 +209,20 @@ public class PolyExemple implements PolyApi {
 
     @Override
     public void getNews(ResultCallback<List<News>> resultCallback, int from, int to) {
-        if (from < 0 || to < 0)
-            throw new IllegalArgumentException();
-        if (to > news.size())
-            to = news.size();
-        if (from > news.size())
-            resultCallback.success(new ArrayList<>());
-        resultCallback.success(news.subList(from, to));
+        try {
+            if (from < 0 || to < 0 || from > to)
+                throw new IllegalArgumentException();
+            int size = news.size() - 1;
+            if (to > size)
+                to = size;
+            if (from > to) {
+                resultCallback.success(new ArrayList<>());
+                return;
+            }
+            resultCallback.success(news.subList(from, to));
+        } catch (Exception e) {
+            resultCallback.failure(e);
+        }
     }
 
     @Override
@@ -199,17 +237,39 @@ public class PolyExemple implements PolyApi {
     }
 
     @Override
-    public void getNotification(ResultCallback<List<Message>> resultCallback, int from, int to) {
-
+    public void getNotification(ResultCallback<List<String>> resultCallback, int from, int to) {
+        try {
+            if (from < 0 || to < 0 || from > to)
+                throw new IllegalArgumentException();
+            int size = notifications.size() - 1;
+            if (to > size)
+                to = size;
+            if (from > to) {
+                resultCallback.success(new ArrayList<>());
+                return;
+            }
+            resultCallback.success(notifications.subList(from, to));
+        } catch (Exception e) {
+            resultCallback.failure(e);
+        }
     }
 
     @Override
-    public void sendNotification(Message msg, FactCallback factCallback) {
-
+    public void sendNotification(String other_user_id, String msg, FactCallback factCallback) {
+        try {
+            Writer writer = new FileWriter(new File(PolyApp.getInnerDir(), other_user_id));
+            writer.write(msg);
+            writer.write('\n');
+            writer.close();
+            factCallback.success();
+        } catch (Exception e) {
+            factCallback.failure(e);
+        }
     }
 
     @Override
     public void sendMessage(String other_user_id, String message, FactCallback factCallback) {
+        messages.add(0, new Message(LOGIN.getID(), other_user_id, message));
         try {
             FileWriter writer = new FileWriter(dialogs, true);
             writer.write(LOGIN.getID());
@@ -261,7 +321,7 @@ public class PolyExemple implements PolyApi {
             }
             try {
             } catch (Exception e) {
-
+                resultCallback.failure(e);
             }
             resultCallback.success(new ArrayList<>(result));
         }
@@ -269,30 +329,35 @@ public class PolyExemple implements PolyApi {
 
     @Override
     public void sendMessageForGroup(String message, FactCallback factCallback) {
+        chat.add(0, new Message(LOGIN.getID(), groupId, message));
         try {
             FileWriter writer = new FileWriter(dialogGroup);
-            writer.write("Кирилл Товпеко\n");
+            writer.write(LOGIN.getID());
+            writer.write('\n');
             writer.write(message);
-            writer.write("\n");
+            writer.write('\n');
+            writer.close();
+            factCallback.success();
         } catch (Exception e) {
-
+            factCallback.failure(e);
         }
     }
 
     @Override
     public void getGroupMessage(ResultCallback<List<Message>> resultCallback, int from, int to) {
         try {
-            dialogGroup = new File(PolyApp.getInnerDir(), "dialogs");
-
-            Scanner scanner = new Scanner(dialogGroup);
-            List<Message> messages = new ArrayList<>();
-            while (scanner.hasNext()) {
-                messages.add(new Message(scanner.next(), null, scanner.next()));
+            if (from < 0 || to < 0 || from > to)
+                throw new IllegalArgumentException();
+            int size = chat.size() - 1;
+            if (to > size)
+                to = size;
+            if (from > to) {
+                resultCallback.success(new ArrayList<>());
+                return;
             }
-            resultCallback.success(messages);
-
+            resultCallback.success(chat.subList(from, to));
         } catch (Exception e) {
-
+            resultCallback.failure(e);
         }
     }
 }
