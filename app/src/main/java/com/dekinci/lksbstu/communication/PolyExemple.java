@@ -21,8 +21,10 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 public class PolyExemple implements PolyApi {
 
@@ -235,11 +237,11 @@ public class PolyExemple implements PolyApi {
             Message message = messages.get(j);
             if (message.getSenderId().equals(LOGIN.getID()) && message.getReceiverId().equals(user_id)) {
                 i++;
-            }
         }
-        for (; i < to; j++) {
+        for (; i < to && j < size; j++) {
             Message message = messages.get(j);
-            if (message.getSenderId().equals(LOGIN.getID()) && message.getReceiverId().equals(user_id)) {
+            if (message.getSenderId().equals(LOGIN.getID()) && message.getReceiverId().equals(user_id)
+                    || message.getSenderId().equals(user_id) && message.getReceiverId().equals(LOGIN.getID())) {
                 result.add(message);
                 i++;
             }
@@ -249,10 +251,19 @@ public class PolyExemple implements PolyApi {
 
     @Override
     public void getDialogs(ResultCallback<List<String>> resultCallback) {
+        Set<String> result = new HashSet<>();
+        for (Message message : messages) {
+            if (message.getReceiverId().equals(LOGIN.getID())) {
+                result.add(message.getSenderId());
+            }
+            if (message.getSenderId().equals(LOGIN.getID())) {
+                result.add(message.getReceiverId());
+            }
         try {
         } catch (Exception e) {
 
         }
+        resultCallback.success(new ArrayList<>(result));
     }
 
 
