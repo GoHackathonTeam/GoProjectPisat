@@ -47,6 +47,58 @@
         app:layout_constraintStart_toEndOf="@+id/profile_name"
         app:layout_constraintTop_toTopOf="@id/profile_name" />
 
+
+    <TableLayout
+        android:id="@+id/profile_main_info_holder"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/photoDivider"
+        app:layout_constraintTop_toBottomOf="@id/profile_name">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/profile_group"
+                android:layout_width="wrap_content"
+                android:text="@string/profile_group"
+                android:textAppearance="@style/CommonText" />
+
+            <TextView
+                android:id="@+id/profile_group_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="1337"
+                android:textAppearance="@style/CommonText" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/profile_institute"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/profile_institute"
+                android:textAppearance="@style/CommonText" />
+
+            <TextView
+                android:id="@+id/profile_institute_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="ICST"
+                android:textAppearance="@style/CommonText" />
+        </TableRow>
+    </TableLayout>
+
     <TextView
         android:id="@+id/profile_info"
         android:layout_width="wrap_content"
@@ -101,26 +153,6 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/profile_institute"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/profile_institute"
-                android:textAppearance="@style/CommonText" />
-
-            <TextView
-                android:id="@+id/profile_institute_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:text="ICST"
-                android:textAppearance="@style/CommonText" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
                 android:id="@+id/profile_speciality"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -133,26 +165,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:text="Dunno, just smth"
-                android:textAppearance="@style/CommonText" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/profile_group"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/profile_group"
-                android:textAppearance="@style/CommonText" />
-
-            <TextView
-                android:id="@+id/profile_group_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:text="1337"
                 android:textAppearance="@style/CommonText" />
         </TableRow>
     </TableLayout>
