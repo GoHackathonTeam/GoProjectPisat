@@ -97,9 +97,11 @@ public class MainActivity extends AppCompatActivity implements
         } else if (id == R.id.nav_news) {
             fragment = new NewsFragment();
         } else if (id == R.id.nav_settings) {
-
+            Intent i = new Intent(this, SettingsActivity.class);
+            startActivity(i);
         } else if (id == R.id.nav_about) {
-
+            Intent i = new Intent(this, AboutActivity.class);
+            startActivity(i);
         }
 
         if (fragment != null) {

@@ -52,6 +52,14 @@
     <string name="saturday">Saturday</string>
     <string name="no_classes">No classes today!</string>
 
+    <!-- Strings related to about -->
+    <string name="about_info">Info</string>
+    <string name="about_info_content">
+        This is the beautiful app for all polykeknicks!
+    </string>
+    <string name="about_authors">Authors</string>
+    <string name="about_authors_content">Who cares actually?</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_settings">Settings</string>
