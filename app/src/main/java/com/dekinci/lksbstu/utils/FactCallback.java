@@ -1,4 +1,4 @@
 package com.dekinci.lksbstu.utils;
 
-public interface FactCallback extends EventCallback<Void> {
+public interface FactCallback extends ResultCallback<Void> {
 }
