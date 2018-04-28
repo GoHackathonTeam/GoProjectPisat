@@ -14,13 +14,13 @@
         android:textAppearance="@style/Header3Text" />
 
     <View
-        android:id="@+id/profile_day_separator"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="8dp"
         android:background="@color/primary_dark" />
 
     <LinearLayout
+        android:id="@+id/schedule_classes_holder"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="8dp"
