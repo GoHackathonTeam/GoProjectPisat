@@ -14,11 +14,16 @@ import com.dekinci.lksbstu.communication.structure.pojos.User;
 import com.dekinci.lksbstu.utils.FactCallback;
 import com.dekinci.lksbstu.utils.ResultCallback;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -31,6 +36,9 @@ public class PolyExemple implements PolyApi {
     private File dialogs;
     private String dialogGroup = "txt/dialogGroup.txt";
     private Context context;
+
+    private List<Message> messages;
+
 
     public PolyExemple(Context context) {
         users = new ArrayList<>();
@@ -62,11 +70,18 @@ public class PolyExemple implements PolyApi {
 
         this.context = context;
         dialogs = new File(context.getDataDir(), "dialogs");
-        if (!dialogs.exists()){
-            try {
-                dialogs.createNewFile();
-            } catch (Exception e) { }
-        }
+        messages = new ArrayList<>();
+        try {
+            if (dialogs.exists()) {
+                BufferedReader reader = new BufferedReader(new FileReader(dialogs));
+                String sender;
+                while ((sender = reader.readLine()) != null) {
+                    String receiver = reader.readLine();
+                    String text = reader.readLine();
+                    messages.add(new Message(sender, receiver, text));
+                }
+            }
+        } catch (Exception e) { }
     }
 
     @Override
@@ -197,19 +212,51 @@ public class PolyExemple implements PolyApi {
 
     @Override
     public void sendMessage(String other_user_id, String message, FactCallback factCallback) {
-
+        try {
+            FileWriter writer = new FileWriter(dialogs, true);
+            writer.write(LOGIN.getID());
+            writer.write('\n');
+            writer.write(other_user_id);
+            writer.write('\n');
+            writer.write(message);
+            writer.write('\n');
+            writer.close();
+            factCallback.success();
+        } catch (Exception  e) {
+            factCallback.failure(e);
+        }
     }
 
     @Override
     public void getMessageList(String user_id, ResultCallback<List<Message>> resultCallback, int from, int to) {
-
+        List<Message> result = new ArrayList<>();
+        int size = messages.size();
+        int i;
+        int j;
+        for (i = 0, j = 0; i < from && j < size; j++) {
+            Message message = messages.get(j);
+            if (message.getSenderId().equals(LOGIN.getID()) && message.getReceiverId().equals(user_id)) {
+                i++;
+            }
+        }
+        for (; i < to; j++) {
+            Message message = messages.get(j);
+            if (message.getSenderId().equals(LOGIN.getID()) && message.getReceiverId().equals(user_id)) {
+                result.add(message);
+                i++;
+            }
+        }
+        resultCallback.success(result);
     }
 
     @Override
     public void getDialogs(ResultCallback<List<String>> resultCallback) {
         try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(dialogs)));
-
+            BQAQufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(dialogs)));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                if QA
+            }
         } catch (Exception e) {
 
         }
