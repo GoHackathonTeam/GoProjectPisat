@@ -39,24 +39,24 @@ public class PolyExemple implements PolyApi {
 
     public PolyExemple() {
         users = new ArrayList<>();
-        users.add(new User("00000001", "Кирилл", "Товпека", "Александрович",
-                UserStatus.STUDENT.getStatus(), "ИКНТ", "135311",
-                "bachelor", User.Types.FULL_TIME, "2007-12-03T10:15:30",
-                3, 1));
-        users.add(new User("1", "Григорий", "Зубрин", "Владиславович",
+        users.add(new User("00000001", "13531/1", "Кирилл", "Товпеко", "Александрович",
                 UserStatus.STUDENT.getStatus(), "ИКНТ", "43134",
                 "bachelor", User.Types.FULL_TIME, "2007-12-03T10:15:30",
                 3, 1));
-        users.add(new User("2", "Владимир", "Путин", "Владимирович",
+        users.add(new User("1", "13531/1", "Григорий", "Зубрин", "Владиславович",
                 UserStatus.STUDENT.getStatus(), "ИКНТ", "43134",
                 "bachelor", User.Types.FULL_TIME, "2007-12-03T10:15:30",
                 3, 1));
-        users.add(new User("3", "Евгения", "Лососева", "Ашалайбовна",
+        users.add(new User("2", "13531/1", "Владимир", "Путин", "Владимирович",
+                UserStatus.STUDENT.getStatus(), "ИКНТ", "43134",
+                "bachelor", User.Types.FULL_TIME, "2007-12-03T10:15:30",
+                3, 1));
+        users.add(new User("3", "13531/9", "Евгения", "Лососева", "Ашалайбовна",
                 UserStatus.STUDENT.getStatus(), "ИКНТ", "43154",
                 "bachelor", User.Types.FULL_TIME, "2007-12-03T10:15:30",
                 3, 1));
 
-        users.add(new User("3", "Елизавета", "Арбузова", "Вольфовна",
+        users.add(new User("548", "Teachers", "Елизавета", "Арбузова", "Вольфовна",
                 UserStatus.TEACHER.getStatus(), "ИКНТ", "teachers",
                 "bachelor", User.Types.FULL_TIME, "2007-12-03T10:15:30",
                 3, 1));

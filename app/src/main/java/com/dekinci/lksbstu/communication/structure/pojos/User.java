@@ -25,11 +25,12 @@ public class User {
 
     public User() {}
 
-    public User(String id, String name, String surname, String patronymic,
+    public User(String id, String groupName, String name, String surname, String patronymic,
                 String status, String institute, String groupId,
                 String education, Types type, String enrollmentDate,
                 int course, int semester) {
         this.id = id;
+        this.groupName = groupName;
         this.name = name;
         this.surname = surname;
         this.patronymic = patronymic;
@@ -45,6 +46,9 @@ public class User {
 
     @SerializedName("id")
     private String id;
+
+    @SerializedName("groupName")
+    private String groupName;
 
     @SerializedName("name")
     private String name;
@@ -81,6 +85,10 @@ public class User {
 
     public String getId() {
         return id;
+    }
+
+    public String getGroupName() {
+        return groupName;
     }
 
     public String getName() {
