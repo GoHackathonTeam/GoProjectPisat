@@ -6,9 +6,9 @@
     <color name="accent">#FF4081</color>
     <color name="dark_accent">#FF4099</color>
 
-    <item name="background">#3F51B5</item>
-    <item name="background_overlay">#3F51B5</item>
+    <color name="background">#3F51B5</color>
+    <color name="background_overlay">#3F51B5</color>
 
-    <item name="common_text">#FF000000</item>
-    <item name="header_text">#FF4081</item>
+    <color name="common_text">#FF000000</color>
+    <color name="header_text">#FF4081</color>
 </resources>

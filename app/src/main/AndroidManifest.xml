@@ -11,5 +11,6 @@
         <activity
             android:name="com.dekinci.lksbstu.InitActivity"
             android:theme="@style/SplashTheme" />
+        <activity android:name="com.dekinci.lksbstu.LogInActivity" />
     </application>
 </manifest>
