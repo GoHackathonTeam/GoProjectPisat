@@ -33,6 +33,6 @@
     <color name="background">#ffBCBCBC</color>
     <color name="background_overlay">#ff7C7C7C</color>
 
-    <color name="common_text">#ff2B2B2B</color>
+    <color name="common_text">#212121</color>
     <color name="header_text">#ffFF4081</color>
 </resources>
