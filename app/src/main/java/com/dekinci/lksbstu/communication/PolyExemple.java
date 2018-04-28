@@ -17,6 +17,7 @@ import java.util.List;
 public class PolyExemple implements PolyApi {
     private List<User> users;
     private List<News> news;
+    private Login LOGIN;
 
     public PolyExemple() {
         users = new ArrayList<>();
@@ -61,7 +62,7 @@ public class PolyExemple implements PolyApi {
     public void login(String login, String password, FactCallback callback) {
         String user_login = "a";
         String user_pass = "0";
-        Login LOGIN = new Login("dsfwe12dcds", "00000001");
+        LOGIN = new Login("dsfwe12dcds", "00000001");
 
         if (login.equals(user_login) && password.equals(user_pass)){
             callback.success();
