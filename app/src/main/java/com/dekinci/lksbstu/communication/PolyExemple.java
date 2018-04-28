@@ -21,6 +21,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class PolyExemple implements PolyApi {
 
@@ -28,7 +29,7 @@ public class PolyExemple implements PolyApi {
     private List<News> news;
     private Login LOGIN;
     private File dialogs;
-    private File dialogGroup;
+    private String dialogGroup = "txt/dialogGroup.txt";
     private Context context;
 
     public PolyExemple(Context context) {
@@ -64,12 +65,6 @@ public class PolyExemple implements PolyApi {
         if (!dialogs.exists()){
             try {
                 dialogs.createNewFile();
-            } catch (Exception e) { }
-        }
-        dialogGroup = new File(context.getDataDir(), "dialog_group");
-        if (!dialogGroup.exists()){
-            try {
-                dialogGroup.createNewFile();
             } catch (Exception e) { }
         }
     }
@@ -228,7 +223,17 @@ public class PolyExemple implements PolyApi {
 
     @Override
     public void getGroupMessage(ResultCallback<List<Message>> resultCallback, int from, int to) {
+        try {
+            Scanner scanner = new Scanner(dialogGroup);
+            List<Message> messages = new ArrayList<>();
+            while (scanner.hasNext()){
+                messages.add(new Message(scanner.next(), null, scanner.next()));
+            }
+            resultCallback.success(messages);
 
+        } catch (Exception e) {
+
+        }
     }
 
 
