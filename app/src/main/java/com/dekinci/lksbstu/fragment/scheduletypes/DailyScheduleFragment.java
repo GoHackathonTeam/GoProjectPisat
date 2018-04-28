@@ -3,11 +3,22 @@ package com.dekinci.lksbstu.fragment.scheduletypes;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.dekinci.lksbstu.PolyManager;
+import com.dekinci.lksbstu.communication.structure.DaySchedule;
+import com.dekinci.lksbstu.communication.structure.Schedule;
 import com.example.hackaton.goprojectpisat.R;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Date;
 
 
 public class DailyScheduleFragment extends Fragment implements ScheduleShower {
@@ -30,7 +41,39 @@ public class DailyScheduleFragment extends Fragment implements ScheduleShower {
             @NonNull LayoutInflater inflater,
             ViewGroup container,
             Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_daily_schedule, container, false);
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+        String date = formatter.format(calendar.getTime());
+        View view = inflater.inflate(R.layout.fragment_daily_schedule, container, false);
+        LinearLayout schedules = view.findViewById(R.id.schedule_classes_holder);
+        PolyManager.get().getApi().getSchedule(date, "day", (scheduleList) -> {
+            TextView dateText = view.findViewById(R.id.schedule_day_name);
+            dateText.setText(date);
+
+            if (scheduleList.isEmpty()) {
+                TextView nothingText = new TextView(getContext());
+                nothingText.setText(R.string.no_classes);
+                ViewGroup.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                nothingText.setLayoutParams(params);
+                schedules.addView(nothingText);
+            }
+            Collection<Schedule> scheduleCollection = scheduleList.get(0).getDaySched();
+            for (Schedule schedule : scheduleCollection) {
+                View element = inflater.inflate(R.layout.class_schedule_layout, schedules, false);
+                TextView time = element.findViewById(R.id.class_time);
+                time.setText("null");
+                TextView name = element.findViewById(R.id.class_name);
+                name.setText(schedule.getLesson() + " (" + schedule.getLessonType() + ")");
+                TextView teacher = element.findViewById(R.id.class_teacher);
+                teacher.setText(schedule.getTeacher());
+                TextView room = element.findViewById(R.id.class_room);
+                room.setText(schedule.getPlace());
+                ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                element.setLayoutParams(params);
+                schedules.addView(element);
+            }
+        });
+        return view;
     }
 
     @Override
