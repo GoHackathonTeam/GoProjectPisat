@@ -147,7 +147,13 @@ public class PolyExemple implements PolyApi {
     }
 
     @Override
-    public void getNews(ResultCallback<List<News>> resultCallback) {
-        resultCallback.success(news);
+    public void getNews(ResultCallback<List<News>> resultCallback, int from, int to) {
+        if (from < 0 || to < 0)
+            throw new IllegalArgumentException();
+        if (to > news.size())
+            to = news.size();
+        if (from > news.size())
+            resultCallback.success(new ArrayList<>());
+        resultCallback.success(news.subList(from, to));
     }
 }
