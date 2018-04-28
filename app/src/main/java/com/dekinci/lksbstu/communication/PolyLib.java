@@ -1,8 +1,20 @@
 package com.dekinci.lksbstu.communication;
 
+import android.support.annotation.NonNull;
+import android.util.Log;
+import android.view.inputmethod.InputMethodSession;
+
+import com.dekinci.lksbstu.communication.structure.Gradebook;
+import com.dekinci.lksbstu.communication.structure.Login;
+import com.dekinci.lksbstu.communication.structure.News;
+import com.dekinci.lksbstu.communication.structure.Schedule;
 import com.dekinci.lksbstu.communication.structure.User;
 import com.dekinci.lksbstu.utils.FactCallback;
 import com.dekinci.lksbstu.utils.ResultCallback;
+import com.dekinci.lksbstu.utils.Synchronizer;
+
+import java.io.IOException;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -13,60 +25,112 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class PolyLib implements PolyApi{
 
     ServerApi serverApi;
+    private final static String LOG_TAG = "PolyLib";
 
     public PolyLib() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://rawgit.com/startandroid/data/master/messages/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        ServerApi serverApi = retrofit.create(ServerApi.class);
+        this.serverApi = retrofit.create(ServerApi.class);
     }
+
 
     @Override
     public void getUserInfo(String user_id, ResultCallback<User> resultCallback) {
-        Call<User> user = serverApi.getUserInfo(user_id, resultCallback);
+        Call<User> userCall = serverApi.getUserInfo(user_id);
 
-        user.enqueue(new Callback<User>(){
-
-            @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                resultCallback.success(response.body());
-            }
-
-            @Override
-            public void onFailure(Call<User> call, Throwable t) {
-
-            }
-        });
+        enqueueCall(userCall, resultCallback);
     }
 
     @Override
-    public void login(String login, String password, ResultCallback resultCallback) {
+    public void login(String login, String password, ResultCallback<Login> resultCallback) {
+        Call<Login> loginCall = serverApi.login(login, password);
 
+        enqueueCall(loginCall, resultCallback);
     }
 
     @Override
-    public void getSchedule(String group_id, int type, ResultCallback resultCallback) {
+    public void getSchedule(String group_id, int type, ResultCallback<List<Schedule>> resultCallback) {
+        Call<List<Schedule>> scheduleCall = serverApi.getSchedule(group_id, type);
 
+        enqueueCall(scheduleCall, resultCallback);
     }
 
     @Override
-    public void getGradebook(String user_id, ResultCallback resultCallback) {
+    public void getGradebook(String user_id, ResultCallback<Gradebook> resultCallback) {
+        Call<Gradebook> gradebookCall = serverApi.getGradebook(user_id);
 
+        enqueueCall(gradebookCall, resultCallback);
     }
 
     @Override
     public void sendTask(String user_id, String group_id, String msg, FactCallback factCallback) {
-
+        Exception exception = new Exception();
+        factCallback.failure(exception);
     }
 
     @Override
     public void sendDoc(FactCallback factCallback) {
-
+        Exception exception = new Exception();
+        factCallback.failure(exception);
     }
 
     @Override
-    public void getNews(ResultCallback resultCallback) {
+    public void getNews(ResultCallback<News> resultCallback) {
 
+    }
+
+
+
+    private <T> void enqueueCall(Call<T> call, ResultCallback<T> callback) {
+        Log.v(LOG_TAG, "Enqueuing call");
+        call.enqueue(new Callback<T>() {
+            @Override
+            public void onResponse(@NonNull Call<T> call, @NonNull Response<T> response) {
+                printResponseInfo(response);
+
+                if (response.body() != null)
+                    callback.success(response.body());
+                else
+                    callback.failure(new Throwable("Something went wrong"));
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<T> call, @NonNull Throwable t) {
+                callback.failure(t);
+                Log.e(LOG_TAG, t.toString());
+            }
+        });
+        Log.v(LOG_TAG, "Call enqueued");
+    }
+    private <T> T executeCall(Call<T> call) throws IllegalStateException {
+        Log.v(LOG_TAG, "Executing call");
+        try {
+            Response<T> response = call.execute();
+            printResponseInfo(response);
+
+            if (response.body() != null)
+                return response.body();
+            else
+                throw new IllegalStateException("Response body is null");
+        } catch (IOException e) {
+            throw new IllegalStateException(e.getMessage());
+        }
+    }
+    private String buildHeader() {
+        Synchronizer<String> synchronizer = new Synchronizer<>();
+        return "";
+    }
+
+    private String buildHeader(String token) {
+        return String.format(" Bearer %s", token);
+    }
+    private <T> void printResponseInfo(Response<T> response) {
+        if (response.errorBody() != null) try {
+            Log.w(LOG_TAG, response.errorBody().string());
+        } catch (Exception ignored) {
+        }
+        Log.v(LOG_TAG, "Enqueued call code: " + response.code());
     }
 }

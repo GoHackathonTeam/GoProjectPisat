@@ -1,30 +1,38 @@
 package com.dekinci.lksbstu.communication.structure;
 
-public class User {
-    String name;
-    String institute;
-    String level;
-    String orientation;
-    String form;
-    String startStudy;
-    String course;
-    String semester;
-    String groupName;
-    String group_id;
+import com.google.gson.annotations.SerializedName;
 
-    public User(String name, String institute, String level, String orientation, String form,
-                String startStudy, String course, String semester, String groupName,String group_id) {
-        this.name = name;
-        this.institute = institute;
-        this.level = level;
-        this.orientation = orientation;
-        this.form = form;
-        this.startStudy = startStudy;
-        this.course = course;
-        this.semester = semester;
-        this.group_id = group_id;
-        this.groupName = groupName;
-    }
+public class User {
+    @SerializedName("name")
+    private String name;
+
+    @SerializedName("institute")
+    private String institute;
+
+    @SerializedName("level")
+    private String level;
+
+    @SerializedName("orientation")
+    private String orientation;
+
+    @SerializedName("form")
+    private String form;
+
+    @SerializedName("startStudy")
+    private String startStudy;
+
+    @SerializedName("course")
+    private String course;
+
+    @SerializedName("semester")
+    private String semester;
+
+    @SerializedName("groupName")
+    private String groupName;
+
+    @SerializedName("group_id")
+    private String group_id;
+
 
     public String getName() {
         return name;
