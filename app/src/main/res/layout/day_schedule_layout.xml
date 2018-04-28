@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/schedule_day_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/monday"
+        android:textAppearance="@style/Header3Text" />
+
+    <View
+        android:id="@+id/profile_day_separator"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/primary_dark" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="8dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/schedule_placeholder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/no_classes" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -99,6 +99,8 @@
         </TableRow>
     </TableLayout>
 
+    <!-- Info -->
+
     <TextView
         android:id="@+id/profile_info"
         android:layout_width="wrap_content"
@@ -168,6 +170,8 @@
                 android:textAppearance="@style/CommonText" />
         </TableRow>
     </TableLayout>
+
+    <!-- Achievements -->
 
     <TextView
         android:id="@+id/profile_achievements"

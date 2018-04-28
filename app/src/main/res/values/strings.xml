@@ -37,7 +37,15 @@
     <string name="profile_group">Group:</string>
     <string name="profile_achievements">Achievements</string>
     <string name="profile_logout">Log me out</string>
-
+    
+    <!-- Strings related to schedule -->
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="saturday">Saturday</string>
+    <string name="no_classes">No classes today!</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
