@@ -34,12 +34,11 @@ public class PolyExemple implements PolyApi {
     private File dialogs;
     private File dialogGroup;
     private File notification;
-    private Context context;
 
     private List<Message> messages;
 
 
-    public PolyExemple(Context context) {
+    public PolyExemple() {
         users = new ArrayList<>();
         users.add(new User("00000001", "Кирилл", "Товпека", "Александрович",
                 UserStatus.STUDENT.getStatus(), "ИКНТ", "135311",
@@ -67,8 +66,7 @@ public class PolyExemple implements PolyApi {
         news.add(new News("5", "Внимание!!!", "Очень важная информация", "2018.03.09 15:34"));
         news.add(new News("56", "Кое-что случилось", "Вы и сами наверное догадались, что <b>новости</b> это <i>новости</i>", "2017.12.01 12:01"));
 
-        this.context = context;
-        dialogs = new File(context.getDataDir(), "dialogs");
+        dialogs = new File(PolyApp.getInnerDir(), "dialogs");
         messages = new ArrayList<>();
         try {
             if (dialogs.exists()) {
@@ -284,7 +282,7 @@ public class PolyExemple implements PolyApi {
     @Override
     public void getGroupMessage(ResultCallback<List<Message>> resultCallback, int from, int to) {
         try {
-            dialogGroup = new File(context.getDataDir(), "dialogs");
+            dialogGroup = new File(PolyApp.getInnerDir(), "dialogs");
 
             Scanner scanner = new Scanner(dialogGroup);
             List<Message> messages = new ArrayList<>();
