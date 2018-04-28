@@ -2,13 +2,12 @@ package com.dekinci.lksbstu.communication;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.view.inputmethod.InputMethodSession;
 
 import com.dekinci.lksbstu.communication.structure.Gradebook;
 import com.dekinci.lksbstu.communication.structure.Login;
 import com.dekinci.lksbstu.communication.structure.News;
 import com.dekinci.lksbstu.communication.structure.Schedule;
-import com.dekinci.lksbstu.communication.structure.User;
+import com.dekinci.lksbstu.communication.structure.pojos.User;
 import com.dekinci.lksbstu.utils.FactCallback;
 import com.dekinci.lksbstu.utils.ResultCallback;
 import com.dekinci.lksbstu.utils.Synchronizer;

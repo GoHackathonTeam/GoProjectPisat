@@ -16,14 +16,18 @@
         android:theme="@style/MainTheme">
         <activity
             android:name="com.dekinci.lksbstu.InitActivity"
-            android:theme="@style/SplashTheme" />
+            android:theme="@style/SplashTheme">
+            <intent-filter>
+
+            </intent-filter>
+        </activity>
         <activity
             android:name="com.dekinci.lksbstu.LoginActivity"
             android:label="@string/title_activity_login" />
         <activity
             android:name="com.dekinci.lksbstu.MainActivity"
             android:label="@string/title_activity_schedule"
-            android:theme="@style/MainTheme.NoActionBar"></activity>
+            android:theme="@style/MainTheme.NoActionBar" />
     </application>
 
 </manifest>
