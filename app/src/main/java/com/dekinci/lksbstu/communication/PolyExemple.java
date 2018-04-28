@@ -21,7 +21,7 @@ public class PolyExemple implements PolyApi {
     }
 
     @Override
-    public void login(String login, String password, ResultCallback<Login> resultCallback) {
+    public void login(String login, String password, FactCallback callback) {
         String user_login = "tovpeko.k";
         String user_pass = "12345678";
         Login LOGIN = new Login();
@@ -29,13 +29,13 @@ public class PolyExemple implements PolyApi {
         LOGIN.setTOKEN("dsfwe12dcds");
 
         if (login.equals(user_login) && password.equals(user_pass)){
-            resultCallback.success(LOGIN);
+            callback.success();
         }else
-            resultCallback.failure(new Exception());
+            callback.failure(new Exception());
     }
 
     @Override
-    public void getSchedule(String group_id, int type, ResultCallback<List<DaySchedule>> resultCallback) {
+    public void getSchedule(String group_id, int type, ResultCallback<List<Schedule>> resultCallback) {
         List<Schedule> schedule = new ArrayList<Schedule>();
         Schedule sched;
         switch (type) {

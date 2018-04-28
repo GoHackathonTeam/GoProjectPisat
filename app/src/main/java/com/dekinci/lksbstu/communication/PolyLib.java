@@ -43,10 +43,20 @@ public class PolyLib implements PolyApi{
     }
 
     @Override
-    public void login(String login, String password, ResultCallback<Login> resultCallback) {
+    public void login(String login, String password, FactCallback callback) {
         Call<Login> loginCall = serverApi.login(login, password);
 
-        enqueueCall(loginCall, resultCallback);
+        enqueueCall(loginCall, new ResultCallback<Login>() {
+            @Override
+            public void success(Login login) {
+                callback.success();
+            }
+
+            @Override
+            public void failure(Throwable throwable) {
+                callback.failure(throwable);
+            }
+        });
     }
 
     @Override
