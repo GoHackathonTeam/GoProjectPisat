@@ -7,12 +7,10 @@ import com.dekinci.lksbstu.communication.structure.Login;
 import com.dekinci.lksbstu.communication.structure.News;
 import com.dekinci.lksbstu.communication.structure.Schedule;
 import com.dekinci.lksbstu.communication.structure.UserStatus;
-import com.dekinci.lksbstu.communication.structure.*;
 import com.dekinci.lksbstu.communication.structure.pojos.User;
 import com.dekinci.lksbstu.utils.FactCallback;
 import com.dekinci.lksbstu.utils.ResultCallback;
 import java.io.FileNotFoundException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -160,7 +158,7 @@ public class PolyExemple implements PolyApi {
 
     @Override
     public void logOut(Login login) {
-        login = new Login();
+        login = null;
         PolyApp.deleteCredentials();
     }
 }
