@@ -23,6 +23,7 @@ import com.dekinci.lksbstu.fragment.NewsFragment;
 import com.dekinci.lksbstu.fragment.ProfileFragment;
 import com.dekinci.lksbstu.fragment.ScheduleFragment;
 import com.dekinci.lksbstu.fragment.TasksFragment;
+import com.dekinci.lksbstu.fragment.TetATetFragment;
 import com.example.hackaton.goprojectpisat.R;
 
 public class MainActivity extends AppCompatActivity implements
@@ -89,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements
         if (id == R.id.nav_schedule) {
             fragment = new ScheduleFragment();
         } else if (id == R.id.nav_messages) {
-            fragment = new GroupMessengerFragment();
+            fragment = new TetATetFragment();
         } else if (id == R.id.nav_tasks) {
             fragment = new TasksFragment();
         } else if (id == R.id.nav_docs) {
