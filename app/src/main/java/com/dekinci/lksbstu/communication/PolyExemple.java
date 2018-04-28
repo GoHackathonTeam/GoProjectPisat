@@ -58,8 +58,8 @@ public class PolyExemple implements PolyApi {
 
     @Override
     public void login(String login, String password, FactCallback callback) {
-        String user_login = "tovpeko.k";
-        String user_pass = "12345678";
+        String user_login = "a";
+        String user_pass = "0";
         Login LOGIN = new Login();
         LOGIN.setID("00000001");
         LOGIN.setTOKEN("dsfwe12dcds");

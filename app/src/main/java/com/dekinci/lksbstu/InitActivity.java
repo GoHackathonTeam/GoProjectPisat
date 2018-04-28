@@ -13,7 +13,8 @@ public class InitActivity extends AppCompatActivity {
     }
 
     private void proceed() {
-        Intent i = new Intent(InitActivity.this, LoginActivity.class);
+        Class c = PolyApp.isLoggedIn() ? MainActivity.class : LoginActivity.class;
+        Intent i = new Intent(InitActivity.this, c);
         startActivity(i);
         finish();
     }
