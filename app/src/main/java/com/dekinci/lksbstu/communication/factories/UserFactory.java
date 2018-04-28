@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static com.dekinci.lksbstu.utils.Utils.randomFromArr;
 
 public class UserFactory {
-    private static final AtomicInteger ids = new AtomicInteger(0);
+    private static final AtomicInteger ids = new AtomicInteger(1);
 
     public static final String[] names = {"Кирилл", "Григорий", "Владимир", "Евгения", "Елизавета"};
     public static final String[] surnames = {"Товпека", "Зубрин", "Путин", "Лососева", "Арбузова"};

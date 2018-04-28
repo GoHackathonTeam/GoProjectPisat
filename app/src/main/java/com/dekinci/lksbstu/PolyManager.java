@@ -28,6 +28,9 @@ public class PolyManager {
 
     public void setApi(PolyApi api) {
         this.api = api;
+    }
+
+    public void setUser() {
         api.getUserInfo(user -> currentUser = user);
     }
 

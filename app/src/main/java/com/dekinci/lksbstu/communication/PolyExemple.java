@@ -14,6 +14,7 @@ import com.dekinci.lksbstu.communication.structure.Login;
 import com.dekinci.lksbstu.communication.structure.Message;
 import com.dekinci.lksbstu.communication.structure.News;
 import com.dekinci.lksbstu.communication.structure.Schedule;
+import com.dekinci.lksbstu.communication.structure.UserStatus;
 import com.dekinci.lksbstu.communication.structure.pojos.User;
 import com.dekinci.lksbstu.utils.FactCallback;
 import com.dekinci.lksbstu.utils.ResultCallback;
@@ -33,6 +34,10 @@ public class PolyExemple implements PolyApi {
         for (int i = 0; i < 5; i++)
             users.add(userFactory.getStudent());
         users.add(userFactory.getPrepod());
+        users.add(new User("0", "13531/4", "Пользователь", "Полезный", "Тестовый",
+                UserStatus.STUDENT.getStatus(), "ИКНТ", "13531/4",
+                "бакалавр", User.Types.FULL_TIME,
+                "3 января 1970", 10, 10));
     }
 
     @Override

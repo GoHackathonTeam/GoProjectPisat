@@ -216,6 +216,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     private void proceed() {
+        PolyManager.get().setUser();
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
         finish();
