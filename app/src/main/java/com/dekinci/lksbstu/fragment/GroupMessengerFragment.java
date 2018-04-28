@@ -9,13 +9,13 @@ import android.view.ViewGroup;
 
 import com.example.hackaton.goprojectpisat.R;
 
-public class DocsFragment extends Fragment {
-    public DocsFragment() {
+public class GroupMessengerFragment extends Fragment {
+    public GroupMessengerFragment() {
         // Required empty public constructor
     }
 
-    public static DocsFragment newInstance() {
-        DocsFragment fragment = new DocsFragment();
+    public static GroupMessengerFragment newInstance(String param1, String param2) {
+        GroupMessengerFragment fragment = new GroupMessengerFragment();
         return fragment;
     }
 
@@ -25,6 +25,7 @@ public class DocsFragment extends Fragment {
             ViewGroup container,
             Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_docs, container, false);
+        return inflater.inflate(R.layout.fragment_group_messendger, container, false);
     }
+
 }
