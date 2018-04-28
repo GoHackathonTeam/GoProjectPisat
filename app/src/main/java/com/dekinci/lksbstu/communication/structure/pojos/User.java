@@ -5,6 +5,13 @@ import com.dekinci.lksbstu.utils.Utils;
 import com.google.gson.annotations.SerializedName;
 
 public class User {
+
+    public enum Types {
+        FULL_TIME,
+        EXTRAMURAL,
+        BOTH,
+    }
+
     public static User simpleUser(UserStatus status) {
         User result = new User();
         result.name = Utils.capitalize(status.getStatus());
@@ -15,6 +22,29 @@ public class User {
         //TODO...
         return result;
     }
+
+    public User() {}
+
+    public User(String id, String name, String surname, String patronymic,
+                String status, String institute, String groupId,
+                String education, Types type, String enrollmentDate,
+                int course, int semester) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.patronymic = patronymic;
+        this.status = status;
+        this.institute = institute;
+        this.groupId = groupId;
+        this.education = education;
+        this.type = type;
+        this.enrollmentDate = enrollmentDate;
+        this.course = course;
+        this.semester = semester;
+    }
+
+    @SerializedName("id")
+    private String id;
 
     @SerializedName("name")
     private String name;
@@ -38,17 +68,20 @@ public class User {
     private String education;
 
     @SerializedName("type")
-    private String type;
+    private Types type;
 
     @SerializedName("enrollmentDate")
     private String enrollmentDate;
 
     @SerializedName("course")
-    private String course;
+    private int course;
 
     @SerializedName("semester")
-    private String semester;
+    private int semester;
 
+    public String getId() {
+        return id;
+    }
 
     public String getName() {
         return name;
@@ -78,7 +111,7 @@ public class User {
         return education;
     }
 
-    public String getType() {
+    public Types getType() {
         return type;
     }
 
@@ -86,11 +119,11 @@ public class User {
         return enrollmentDate;
     }
 
-    public String getCourse() {
+    public int getCourse() {
         return course;
     }
 
-    public String getSemester() {
+    public int getSemester() {
         return semester;
     }
 }

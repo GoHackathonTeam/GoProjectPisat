@@ -5,19 +5,45 @@ import com.dekinci.lksbstu.communication.structure.Gradebook;
 import com.dekinci.lksbstu.communication.structure.Login;
 import com.dekinci.lksbstu.communication.structure.News;
 import com.dekinci.lksbstu.communication.structure.Schedule;
+import com.dekinci.lksbstu.communication.structure.UserStatus;
 import com.dekinci.lksbstu.communication.structure.pojos.User;
 import com.dekinci.lksbstu.utils.FactCallback;
 import com.dekinci.lksbstu.utils.ResultCallback;
-
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PolyExemple implements PolyApi {
+    private List<User> users;
 
+    public PolyExemple() {
+        users = new ArrayList<>();
+        users.add(new User("0", "Валерия", "Житникова", "Сахипзадовна",
+                UserStatus.STUDENT.getStatus(), "ИКНТ", "43134",
+                "bachelor", User.Types.FULL_TIME, "2007-12-03T10:15:30",
+                3,1));
+        users.add(new User("1", "Григорий", "Зубрин", "Владиславович",
+                UserStatus.STUDENT.getStatus(), "ИКНТ", "43134",
+                "bachelor", User.Types.FULL_TIME, "2007-12-03T10:15:30",
+                3,1));
+        users.add(new User("2", "Владимир", "Путин", "Владимирович",
+                UserStatus.STUDENT.getStatus(), "ИКНТ", "43134",
+                "bachelor", User.Types.FULL_TIME, "2007-12-03T10:15:30",
+                3,1));
+        users.add(new User("3", "Евгения", "Лососева", "Ашалайбовна",
+                UserStatus.STUDENT.getStatus(), "ИКНТ", "43154",
+                "bachelor", User.Types.FULL_TIME, "2007-12-03T10:15:30",
+                3,1));
+    }
 
     @Override
     public void getUserInfo(String user_id, ResultCallback<User> resultCallback) {
-        resultCallback.success(new User());
+        for (User user : users) {
+            if (user_id.equals(user.getId())) {
+                resultCallback.success(user);
+            }
+        }
+        resultCallback.failure(new FileNotFoundException());
     }
 
     @Override
