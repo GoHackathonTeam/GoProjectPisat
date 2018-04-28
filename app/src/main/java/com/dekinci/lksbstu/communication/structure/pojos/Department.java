@@ -12,6 +12,9 @@ public class Department {
     @SerializedName("abbreviation")
     private String abbreviation;
 
+    @SerializedName("instituteID")
+    private String instituteID;
+
     public String getId() {
         return id;
     }
@@ -22,5 +25,9 @@ public class Department {
 
     public String getAbbreviation() {
         return abbreviation;
+    }
+
+    public String getInstituteID() {
+        return instituteID;
     }
 }

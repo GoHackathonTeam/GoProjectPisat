@@ -9,11 +9,18 @@ public class Group {
     @SerializedName("number")
     private String number;
 
+    @SerializedName("departmentID")
+    private String departmentID;
+
     public String getId() {
         return id;
     }
 
     public String getNumber() {
         return number;
+    }
+
+    public String getDepartmentID() {
+        return departmentID;
     }
 }
