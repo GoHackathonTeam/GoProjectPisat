@@ -1,5 +1,6 @@
 package com.dekinci.lksbstu;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -16,11 +17,17 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.dekinci.lksbstu.fragment.DocsFragment;
 import com.dekinci.lksbstu.fragment.MessengerFragment;
+import com.dekinci.lksbstu.fragment.NewsFragment;
+import com.dekinci.lksbstu.fragment.ProfileFragment;
 import com.dekinci.lksbstu.fragment.ScheduleFragment;
+import com.dekinci.lksbstu.fragment.TasksFragment;
 import com.example.hackaton.goprojectpisat.R;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements
+        NavigationView.OnNavigationItemSelectedListener,
+        ProfileFragment.LogOutListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +84,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
         Fragment fragment = null;
         if (id == R.id.nav_schedule) {
@@ -85,11 +91,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_messages) {
             fragment = new MessengerFragment();
         } else if (id == R.id.nav_tasks) {
-
+            fragment = new TasksFragment();
         } else if (id == R.id.nav_docs) {
-
+            fragment = new DocsFragment();
         } else if (id == R.id.nav_news) {
-
+            fragment = new NewsFragment();
         } else if (id == R.id.nav_settings) {
 
         } else if (id == R.id.nav_about) {
@@ -106,5 +112,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void logout() {
+        PolyManager.get().getApi().logOut();
+        Intent i = new Intent(this, LoginActivity.class);
+        startActivity(i);
+        finish();
     }
 }
