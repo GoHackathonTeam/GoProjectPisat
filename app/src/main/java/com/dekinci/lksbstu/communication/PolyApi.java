@@ -1,5 +1,6 @@
 package com.dekinci.lksbstu.communication;
 
+import com.dekinci.lksbstu.communication.structure.Announcement;
 import com.dekinci.lksbstu.communication.structure.DaySchedule;
 import com.dekinci.lksbstu.communication.structure.Gradebook;
 import com.dekinci.lksbstu.communication.structure.Login;
@@ -22,7 +23,7 @@ public interface PolyApi {
     void sendTask(String group_id, String msg, FactCallback factCallback);
 
 
-    void getNotification(ResultCallback<List<String>> resultCallback, int from, int to);
+    void getAnnouncements(ResultCallback<List<Announcement>> resultCallback, int from, int to);
     void sendNotification(String other_user_id, String msg, FactCallback factCallback);
 
     void sendMessage(String other_user_id, String message, FactCallback factCallback);

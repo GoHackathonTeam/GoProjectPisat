@@ -42,8 +42,7 @@ public class PolyApp extends Application {
         return prefs.getString(CREDENTIALS_KEY, null) != null;
     }
 
-    @SuppressLint("CommitPrefEdits")
     public static void deleteCredentials() {
-        prefs.edit().remove(CREDENTIALS_KEY);
+        prefs.edit().remove(CREDENTIALS_KEY).apply();
     }
 }
