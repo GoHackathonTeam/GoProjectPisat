@@ -13,6 +13,14 @@ public class DaySchedule {
     @SerializedName("data")
     private String data;
 
+    public DaySchedule(String data, ArrayList<Schedule> daySched) {
+        this.daySched = daySched;
+        this.data = data;
+    }
+    public DaySchedule() {
+        this.data = data;
+    }
+
     public void add(Schedule schedule){
         daySched.add(schedule);
     }

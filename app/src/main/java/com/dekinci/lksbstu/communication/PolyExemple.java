@@ -41,7 +41,7 @@ public class PolyExemple implements PolyApi {
         Schedule sched;
         switch (type) {
             case 1:
-                schedule = new DaySchedule();
+                schedule = new DaySchedule("28 мая 2018", new ArrayList<>());
                 sched = new Schedule("Практика",
                         "Программирование", "Глухих М.В.", "ГЗ, ауд 237");
                 schedule.add(sched);
