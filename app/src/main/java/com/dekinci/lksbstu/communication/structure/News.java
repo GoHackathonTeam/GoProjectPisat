@@ -2,12 +2,15 @@ package com.dekinci.lksbstu.communication.structure;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.time.LocalDateTime;
+
 public class News {
 
-    public News(String id, String header, String body) {
+    public News(String id, String header, String body, String date) {
         this.id = id;
         this.header = header;
         this.body = body;
+        this.date = date;
     }
 
     @SerializedName("id")
@@ -19,6 +22,9 @@ public class News {
     @SerializedName("body")
     private String body;
 
+    @SerializedName("date")
+    private String date;
+
     public String getId() {
         return id;
     }
@@ -29,5 +35,9 @@ public class News {
 
     public String getBody() {
         return body;
+    }
+
+    public String getDate() {
+        return date;
     }
 }
