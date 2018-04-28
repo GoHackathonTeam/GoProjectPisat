@@ -71,13 +71,13 @@ public class PolyExemple implements PolyApi {
     }
 
     @Override
-    public void getSchedule(String group_id, int type, ResultCallback<List<DaySchedule>> resultCallback) {
+    public void getSchedule(String group_id, String type, ResultCallback<List<DaySchedule>> resultCallback) {
         ArrayList<DaySchedule> daySchedList = null;
         DaySchedule schedule;
         Schedule sched;
         switch (type) {
-            case 1:
-                schedule = new DaySchedule("28 мая 2018", new ArrayList<>());
+            case "day":
+                schedule = new DaySchedule("28 мая 2018");
                 sched = new Schedule("Практика",
                         "Программирование", "Глухих М.В.", "ГЗ, ауд 237");
                 schedule.add(sched);
@@ -91,9 +91,9 @@ public class PolyExemple implements PolyApi {
 
                 resultCallback.success(daySchedList);
                 break;
-            case 2:
+            case "week":
                 for (int i = 0; i < 7; i++){
-                    schedule = new DaySchedule();
+                    schedule = new DaySchedule("28 мая 2018");
                     sched = new Schedule("Практика",
                             "Программирование", "Глухих М.В.", "ГЗ, ауд 237");
                     schedule.add(sched);
@@ -107,9 +107,9 @@ public class PolyExemple implements PolyApi {
                 }
                 resultCallback.success(daySchedList);
                 break;
-            case 3:
+            case "month":
                 for (int i = 0; i < 30; i++){
-                    schedule = new DaySchedule();
+                    schedule = new DaySchedule("28 мая 2018");
                     sched = new Schedule("Практика",
                             "Программирование", "Глухих М.В.", "ГЗ, ауд 237");
                     schedule.add(sched);
@@ -127,8 +127,13 @@ public class PolyExemple implements PolyApi {
     }
 
     @Override
-    public void getGradebook(String user_id, ResultCallback<Gradebook> resultCallback) {
+    public void getGradebook(String user_id, ResultCallback<List<Gradebook>> resultCallback) {
+        List<Gradebook> gradebookList = new ArrayList<>();
 
+        for (int i = 0; i < 7; i++)
+            gradebookList.add(new Gradebook("Программирование", "Экзамен","13-05-2018",
+                 "Карамелькин Н.Н.","зачет"));
+        resultCallback.success(gradebookList);
     }
 
     @Override

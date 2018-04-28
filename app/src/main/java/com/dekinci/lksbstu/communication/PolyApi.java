@@ -14,8 +14,8 @@ import java.util.List;
 public interface PolyApi {
     void getUserInfo(String user_id, ResultCallback<User> resultCallback);
     void login(String login, String password, FactCallback callback);
-    void getSchedule(String group_id, int type, ResultCallback<List<DaySchedule>> resultCallback);
-    void getGradebook(String user_id, ResultCallback<Gradebook> resultCallback);
+    void getSchedule(String group_id, String type, ResultCallback<List<DaySchedule>> resultCallback);
+    void getGradebook(String user_id, ResultCallback<List<Gradebook>> resultCallback);
     void sendTask(String user_id, String group_id, String msg, FactCallback factCallback);
     void sendDoc(FactCallback factCallback);
     void getNews(ResultCallback<News> resultCallback);
