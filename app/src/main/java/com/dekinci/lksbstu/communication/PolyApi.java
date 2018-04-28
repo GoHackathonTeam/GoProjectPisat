@@ -13,6 +13,7 @@ import com.dekinci.lksbstu.utils.ResultCallback;
 import java.util.List;
 
 public interface PolyApi {
+    void getUserInfo(String user_id, ResultCallback<User> resultCallback);
     void getUserInfo(ResultCallback<User> resultCallback);
     void login(String login, String password, FactCallback callback);
     void getSchedule(String data, String type, ResultCallback<List<DaySchedule>> resultCallback);
@@ -21,7 +22,7 @@ public interface PolyApi {
     void logOut();
 
     void sendTask(String group_id, String msg, FactCallback factCallback);
-
+//    void getTack()
 
     void getAnnouncements(ResultCallback<List<Announcement>> resultCallback, int from, int to);
     void sendNotification(String other_user_id, String msg, FactCallback factCallback);

@@ -23,7 +23,9 @@ public class User {
         return result;
     }
 
-    public User() {}
+    public User() {
+
+    }
 
     public User(String id, String groupName, String name, String surname, String patronymic,
                 String status, String institute, String groupId,

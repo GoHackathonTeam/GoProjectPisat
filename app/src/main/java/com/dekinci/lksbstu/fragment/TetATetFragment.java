@@ -1,109 +1,145 @@
 package com.dekinci.lksbstu.fragment;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
 
+import com.dekinci.lksbstu.PolyManager;
+import com.dekinci.lksbstu.fragment.messenger.ConversationFragment;
+import com.dekinci.lksbstu.fragment.scheduletypes.DailyScheduleFragment;
 import com.example.hackaton.goprojectpisat.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link TetATetFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link TetATetFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class TetATetFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
-    private OnFragmentInteractionListener mListener;
-
-    public TetATetFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment TetATetFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static TetATetFragment newInstance(String param1, String param2) {
-        TetATetFragment fragment = new TetATetFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+public class TetATetFragment extends Fragment implements NavigationView.OnNavigationItemSelectedListener{
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tet_a_tet, container, false);
-    }
+        View view =  inflater.inflate(R.layout.fragment_tet_a_tet, container, false);
+        ListView listView = view.findViewById(R.id.list_dialogs);
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
+        PolyManager.get().getApi().getDialogs(dialogs -> {
+            Objects.requireNonNull(getActivity()).runOnUiThread(() ->
+                listView.setAdapter(new DialogsAdapter(dialogs, getContext())));
+        });
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
+
+
+        return view;
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        return false;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+
+    private class DialogsAdapter extends BaseAdapter {
+
+        private List<String> dialogs;
+        private Context context;
+        private List<String> name;
+        private String dialogsID;
+
+        public DialogsAdapter(List<String> dialogs, Context context) {
+            this.dialogs = dialogs;
+            this.context = context;
+
+            name = new ArrayList<>();
+
+            PolyManager.get().getApi().getUserInfo(null, user -> {
+                name.add(user.getGroupName());
+                dialogsID = user.getGroupId();
+            });
+            for(int i = 0; i < dialogs.size(); i++) {
+                PolyManager.get().getApi().getUserInfo(dialogs.get(i), user -> {
+                    name.add(user.getName() + " " + user.getSurname());
+                });
+            }
+        }
+
+        @Override
+        public int getCount() {
+            return dialogs.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return position;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            SetData setData = new SetData();
+
+            assert inflater != null;
+            @SuppressLint({"ViewHolder", "InflateParams"})
+            View view = inflater.inflate(R.layout.item, null);
+
+
+            setData.name = view.findViewById(R.id.user);
+            setData.image = view.findViewById(R.id.imageView);
+
+            setData.name.setText(name.get(position + 1));
+            //  setData.image.setImageBitmap(images.get(position));
+
+            view.setOnClickListener(v -> {
+                String id;
+                if (position == 0){
+                    id = dialogsID;
+                }else {
+                    id = name.get(position + 1);
+                }
+                Fragment fragment = new ConversationFragment(id);
+                Activity activity = getActivity();
+                if (activity != null) {
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.add(R.id.tet_a_tet, fragment);
+                    fragmentTransaction.commit();
+                }
+                else
+                    Log.e("ScheduleFragment", "activity is null!!!");
+            });
+
+            return view;
+        }
+
+        private class SetData{
+            TextView name;
+            ImageView image;
+        }
     }
 }

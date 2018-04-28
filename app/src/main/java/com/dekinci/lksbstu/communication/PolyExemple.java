@@ -41,6 +41,16 @@ public class PolyExemple implements PolyApi {
     }
 
     @Override
+    public void getUserInfo(String user_id, ResultCallback<User> resultCallback) {
+        for (User user : users) {
+            if (user_id.equals(user.getId())) {
+                resultCallback.success(user);
+            }
+        }
+        resultCallback.failure(new FileNotFoundException());
+    }
+
+    @Override
     public void getUserInfo(ResultCallback<User> resultCallback) {
         for (User user : users) {
             if (mLogin.getID().equals(user.getId())) {
