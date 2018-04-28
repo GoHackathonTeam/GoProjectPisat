@@ -1,19 +1,24 @@
 package com.dekinci.lksbstu.communication.structure;
 
-public class Schedule {
-    String data;
-    String lessonType;
-    String lesson;
-    String teacher;
-    String place;
+import com.google.gson.annotations.SerializedName;
 
-    public Schedule(String data, String lessonType, String lesson, String teacher, String place){
-        this.data = data;
-        this.lessonType = lessonType;
-        this.lesson = lesson;
-        this.teacher = teacher;
-        this.place = place;
-    }
+public class Schedule {
+
+    @SerializedName("data")
+    private String data;
+
+    @SerializedName("lessonType")
+    private String lessonType;
+
+    @SerializedName("lesson")
+    private String lesson;
+
+    @SerializedName("teacher")
+    private String teacher;
+
+    @SerializedName("place")
+    private String place;
+
 
     public String getData(){
         return data;
