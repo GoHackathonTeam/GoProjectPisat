@@ -3,6 +3,7 @@ package com.dekinci.lksbstu.communication.structure;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class DaySchedule {
@@ -23,6 +24,10 @@ public class DaySchedule {
 
     public void add(Schedule schedule){
         daySched.add(schedule);
+    }
+
+    public Collection<Schedule> getSchedules() {
+        return daySched;
     }
 
 }
