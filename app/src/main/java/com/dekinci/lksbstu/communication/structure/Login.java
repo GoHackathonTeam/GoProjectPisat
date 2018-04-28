@@ -16,4 +16,12 @@ public class Login {
     public String getID() {
         return ID;
     }
+
+    public void setTOKEN(String TOKEN) {
+        this.TOKEN = TOKEN;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
+    }
 }
