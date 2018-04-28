@@ -18,7 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.dekinci.lksbstu.fragment.DocsFragment;
-import com.dekinci.lksbstu.fragment.MessengerFragment;
+import com.dekinci.lksbstu.fragment.GroupMessengerFragment;
 import com.dekinci.lksbstu.fragment.NewsFragment;
 import com.dekinci.lksbstu.fragment.ProfileFragment;
 import com.dekinci.lksbstu.fragment.ScheduleFragment;
@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements
         if (id == R.id.nav_schedule) {
             fragment = new ScheduleFragment();
         } else if (id == R.id.nav_messages) {
-            fragment = new MessengerFragment();
+            fragment = new GroupMessengerFragment();
         } else if (id == R.id.nav_tasks) {
             fragment = new TasksFragment();
         } else if (id == R.id.nav_docs) {
