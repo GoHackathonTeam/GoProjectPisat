@@ -39,30 +39,29 @@ public class PolyExemple implements PolyApi {
     private List<Message> messages;
 
 
-
     public PolyExemple(Context context) {
         users = new ArrayList<>();
         users.add(new User("00000001", "Кирилл", "Товпека", "Александрович",
                 UserStatus.STUDENT.getStatus(), "ИКНТ", "135311",
                 "bachelor", User.Types.FULL_TIME, "2007-12-03T10:15:30",
-                3,1));
+                3, 1));
         users.add(new User("1", "Григорий", "Зубрин", "Владиславович",
                 UserStatus.STUDENT.getStatus(), "ИКНТ", "43134",
                 "bachelor", User.Types.FULL_TIME, "2007-12-03T10:15:30",
-                3,1));
+                3, 1));
         users.add(new User("2", "Владимир", "Путин", "Владимирович",
                 UserStatus.STUDENT.getStatus(), "ИКНТ", "43134",
                 "bachelor", User.Types.FULL_TIME, "2007-12-03T10:15:30",
-                3,1));
+                3, 1));
         users.add(new User("3", "Евгения", "Лососева", "Ашалайбовна",
                 UserStatus.STUDENT.getStatus(), "ИКНТ", "43154",
                 "bachelor", User.Types.FULL_TIME, "2007-12-03T10:15:30",
-                3,1));
+                3, 1));
 
         users.add(new User("3", "Елизавета", "Арбузова", "Вольфовна",
                 UserStatus.TEACHER.getStatus(), "ИКНТ", "teachers",
                 "bachelor", User.Types.FULL_TIME, "2007-12-03T10:15:30",
-                3,1));
+                3, 1));
 
         news = new ArrayList<>();
         news.add(new News("5", "Внимание!!!", "Очень важная информация", "2018.03.09 15:34"));
@@ -81,7 +80,8 @@ public class PolyExemple implements PolyApi {
                     messages.add(new Message(sender, receiver, text));
                 }
             }
-        } catch (Exception e) { }
+        } catch (Exception e) {
+        }
     }
 
     @Override
@@ -100,9 +100,9 @@ public class PolyExemple implements PolyApi {
         String user_pass = "0";
         LOGIN = new Login("dsfwe12dcds", "00000001");
 
-        if (login.equals(user_login) && password.equals(user_pass)){
+        if (login.equals(user_login) && password.equals(user_pass)) {
             callback.success();
-        }else
+        } else
             callback.failure(new Exception());
     }
 
@@ -128,7 +128,7 @@ public class PolyExemple implements PolyApi {
                 resultCallback.success(daySchedList);
                 break;
             case "week":
-                for (int i = 0; i < 7; i++){
+                for (int i = 0; i < 7; i++) {
                     schedule = new DaySchedule("28 мая 2018");
                     sched = new Schedule("Практика",
                             "Программирование", "Глухих М.В.", "ГЗ, ауд 237");
@@ -144,7 +144,7 @@ public class PolyExemple implements PolyApi {
                 resultCallback.success(daySchedList);
                 break;
             case "month":
-                for (int i = 0; i < 30; i++){
+                for (int i = 0; i < 30; i++) {
                     schedule = new DaySchedule("28 мая 2018");
                     sched = new Schedule("Практика",
                             "Программирование", "Глухих М.В.", "ГЗ, ауд 237");
@@ -167,8 +167,8 @@ public class PolyExemple implements PolyApi {
         List<Gradebook> gradebookList = new ArrayList<>();
 
         for (int i = 0; i < 7; i++)
-            gradebookList.add(new Gradebook("Программирование", "Экзамен","13-05-2018",
-                 "Карамелькин Н.Н.","зачет"));
+            gradebookList.add(new Gradebook("Программирование", "Экзамен", "13-05-2018",
+                    "Карамелькин Н.Н.", "зачет"));
         resultCallback.success(gradebookList);
     }
 
@@ -222,7 +222,7 @@ public class PolyExemple implements PolyApi {
             writer.write('\n');
             writer.close();
             factCallback.success();
-        } catch (Exception  e) {
+        } catch (Exception e) {
             factCallback.failure(e);
         }
     }
@@ -237,17 +237,19 @@ public class PolyExemple implements PolyApi {
             Message message = messages.get(j);
             if (message.getSenderId().equals(LOGIN.getID()) && message.getReceiverId().equals(user_id)) {
                 i++;
-        }
-        for (; i < to && j < size; j++) {
-            Message message = messages.get(j);
-            if (message.getSenderId().equals(LOGIN.getID()) && message.getReceiverId().equals(user_id)
-                    || message.getSenderId().equals(user_id) && message.getReceiverId().equals(LOGIN.getID())) {
-                result.add(message);
-                i++;
             }
+            for (; i < to && j < size; j++) {
+                message = messages.get(j);
+                if (message.getSenderId().equals(LOGIN.getID()) && message.getReceiverId().equals(user_id)
+                        || message.getSenderId().equals(user_id) && message.getReceiverId().equals(LOGIN.getID())) {
+                    result.add(message);
+                    i++;
+                }
+            }
+            resultCallback.success(result);
         }
-        resultCallback.success(result);
     }
+
 
     @Override
     public void getDialogs(ResultCallback<List<String>> resultCallback) {
@@ -259,13 +261,13 @@ public class PolyExemple implements PolyApi {
             if (message.getSenderId().equals(LOGIN.getID())) {
                 result.add(message.getReceiverId());
             }
-        try {
-        } catch (Exception e) {
+            try {
+            } catch (Exception e) {
 
+            }
+            resultCallback.success(new ArrayList<>(result));
         }
-        resultCallback.success(new ArrayList<>(result));
     }
-
 
     @Override
     public void sendMessageForGroup(String message, FactCallback factCallback) {
@@ -274,7 +276,7 @@ public class PolyExemple implements PolyApi {
             writer.write("Кирилл Товпеко\n");
             writer.write(message);
             writer.write("\n");
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
     }
@@ -286,7 +288,7 @@ public class PolyExemple implements PolyApi {
 
             Scanner scanner = new Scanner(dialogGroup);
             List<Message> messages = new ArrayList<>();
-            while (scanner.hasNext()){
+            while (scanner.hasNext()) {
                 messages.add(new Message(scanner.next(), null, scanner.next()));
             }
             resultCallback.success(messages);
