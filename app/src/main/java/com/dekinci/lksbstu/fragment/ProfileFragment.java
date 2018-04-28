@@ -7,8 +7,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.dekinci.lksbstu.PolyManager;
+import com.dekinci.lksbstu.communication.structure.pojos.User;
+import com.dekinci.lksbstu.utils.ImageLoader;
 import com.example.hackaton.goprojectpisat.R;
 
 public class ProfileFragment extends Fragment {
@@ -30,7 +34,36 @@ public class ProfileFragment extends Fragment {
             Bundle savedInstanceState) {
         View resultView = inflater.inflate(R.layout.fragment_profile, container, false);
         resultView.findViewById(R.id.button_logout).setOnClickListener(v -> logOutListener.logout());
+        inflateUserData(resultView);
         return resultView;
+    }
+
+    private void inflateUserData(View v) {
+        User u = PolyManager.get().getCurrentUser();
+        ImageView profilePhoto = v.findViewById(R.id.profile_photo);
+        new ImageLoader(profilePhoto::setImageBitmap)
+                .execute("https://images-na.ssl-images-amazon.com/images/I/41q1QAln%2BQL.jpg");
+
+        TextView surname = v.findViewById(R.id.profile_surname);
+        surname.setText(u.getSurname());
+
+        TextView name = v.findViewById(R.id.profile_name);
+        name.setText(u.getName());
+
+        TextView patronymic = v.findViewById(R.id.profile_patronymic);
+        patronymic.setText(u.getPatronymic());
+
+        TextView group = v.findViewById(R.id.profile_group_value);
+        group.setText(u.getGroupId());
+
+        TextView institute = v.findViewById(R.id.profile_institute_value);
+        institute.setText(u.getInstitute());
+
+        TextView recordBook = v.findViewById(R.id.profile_rec_book_value);
+        recordBook.setText("ERROR!"); //TODO!!!
+
+        TextView speciality = v.findViewById(R.id.profile_speciality_value);
+        speciality.setText("ERROR!");//TODO!!!
     }
 
     @Override
