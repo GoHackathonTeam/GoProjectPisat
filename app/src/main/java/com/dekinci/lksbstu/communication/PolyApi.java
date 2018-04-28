@@ -12,16 +12,25 @@ import com.dekinci.lksbstu.utils.ResultCallback;
 import java.util.List;
 
 public interface PolyApi {
-    void getUserInfo(String user_id, ResultCallback<User> resultCallback);
+    void getUserInfo(ResultCallback<User> resultCallback);
     void login(String login, String password, FactCallback callback);
-    void getSchedule(String group_id, String type, ResultCallback<List<DaySchedule>> resultCallback);
-    void getGradebook(String user_id, ResultCallback<List<Gradebook>> resultCallback);
-    void sendTask(String user_id, String group_id, String msg, FactCallback factCallback);
-    void sendDoc(FactCallback factCallback);
+    void getSchedule(String data,String type, ResultCallback<List<DaySchedule>> resultCallback);
+    void getGradebook(ResultCallback<List<Gradebook>> resultCallback);
     void getNews(ResultCallback<List<News>> resultCallback, int from, int to);
     void logOut(Login login);
 
+    void sendTask(String group_id, String msg, FactCallback factCallback);
+
+
+    void getNotification(ResultCallback<List<Message>> resultCallback, int from, int to);
+    void sendNotification(Message msg, FactCallback factCallback);
+
     void sendMessage(String other_user_id, String message, FactCallback factCallback);
-    void getDialogs(ResultCallback<List<Message>> resultCallback);
     void getMessageList(String user_id, ResultCallback<List<Message>> resultCallback, int from, int to);
+    void getDialogs(ResultCallback<List<String>> resultCallback);
+
+    void sendMessageForGroup(String message, FactCallback factCallback);
+    void getGroupMessage(ResultCallback<List<Message>> resultCallback, int from, int to);
+
+
 }
