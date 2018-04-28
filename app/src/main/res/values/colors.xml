@@ -1,14 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">#3F51B5</color>
-    <color name="primary_dark">#303F9F</color>
+
+    <!-- Colors of spbstu -->
+
+    <color name="primary_poly">#319B3D</color>
+    <color name="primary_dark_poly">#16431C</color>
+
+    <!-- Closest material colors -->
+
+    <color name="primary">#388e3c</color>
+    <color name="primary_dark">#1b5e20</color>
+
+    <!-- Colors of institutes -->
+    <color name="institute_icst">#419b5f</color>
+    <color name="institute_hi">#fe9920</color>
+    <color name="institute_ice">#28777e</color>
+    <color name="institute_iiem">#313595</color>
+    <color name="institute_ipnt">#4eaace</color>
+    <color name="institute_imesr">#8c9a4a</color>
+    <color name="institute_iamm">#184180</color>
+    <color name="institute_iets">#ff5a0b</color>
+    <color name="institute_ipest">#66b934</color>
+    <color name="institute_iiep">#990000</color>
+    <color name="institute_immet">#7a808b</color>
+    <color name="institute_iamt">#db3519</color>
+
 
     <color name="accent">#FF4081</color>
     <color name="dark_accent">#FF4099</color>
 
-    <color name="background">#3F51B5</color>
-    <color name="background_overlay">#3F51B5</color>
+    <color name="background">#BCBCBC</color>
+    <color name="background_overlay">#7C7C7C</color>
 
-    <color name="common_text">#FF000000</color>
+    <color name="common_text">#2B2B2B00</color>
     <color name="header_text">#FF4081</color>
 </resources>
