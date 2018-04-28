@@ -20,6 +20,7 @@
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -30,6 +31,9 @@
             android:name="com.dekinci.lksbstu.MainActivity"
             android:label="@string/title_activity_schedule"
             android:theme="@style/MainTheme.NoActionBar" />
+        <activity
+            android:name="com.dekinci.lksbstu.SettingsActivity"
+            android:label="@string/title_activity_settings"></activity>
     </application>
 
 </manifest>

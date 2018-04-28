@@ -64,17 +64,18 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/profile_group"
+                android:id="@+id/profile_status"
                 android:layout_width="wrap_content"
-                android:text="@string/profile_group"
+                android:layout_height="wrap_content"
+                android:text="@string/profile_status"
                 android:textAppearance="@style/CommonText" />
 
             <TextView
-                android:id="@+id/profile_group_value"
+                android:id="@+id/profile_status_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="1337"
+                android:text="Student"
                 android:textAppearance="@style/CommonText" />
         </TableRow>
 
@@ -97,6 +98,26 @@
                 android:text="ICST"
                 android:textAppearance="@style/CommonText" />
         </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/profile_group"
+                android:layout_width="wrap_content"
+                android:text="@string/profile_group"
+                android:textAppearance="@style/CommonText" />
+
+            <TextView
+                android:id="@+id/profile_group_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="1337"
+                android:textAppearance="@style/CommonText" />
+        </TableRow>
+
     </TableLayout>
 
     <!-- Info -->

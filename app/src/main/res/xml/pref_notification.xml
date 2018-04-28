@@ -1,0 +1,12 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="group_chat_notifications"
+        android:title="@string/pref_group_notifications"/>
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="private_chat_notifications"
+        android:title="@string/pref_private__chat_notifications"/>
+
+</PreferenceScreen>
