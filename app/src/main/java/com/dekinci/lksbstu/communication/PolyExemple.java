@@ -1,6 +1,7 @@
 package com.dekinci.lksbstu.communication;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.dekinci.lksbstu.PolyApp;
 import com.dekinci.lksbstu.communication.structure.DaySchedule;
@@ -14,16 +15,11 @@ import com.dekinci.lksbstu.communication.structure.pojos.User;
 import com.dekinci.lksbstu.utils.FactCallback;
 import com.dekinci.lksbstu.utils.ResultCallback;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -34,16 +30,18 @@ public class PolyExemple implements PolyApi {
     private List<News> news;
     private Login LOGIN;
     private File dialogs;
-    private String dialogGroup = "txt/dialogGroup.txt";
+    private File dialogGroup;
+    private File notification;
     private Context context;
 
     private List<Message> messages;
 
 
+
     public PolyExemple(Context context) {
         users = new ArrayList<>();
-        users.add(new User("0", "Валерия", "Житникова", "Сахипзадовна",
-                UserStatus.STUDENT.getStatus(), "ИКНТ", "43134",
+        users.add(new User("00000001", "Кирилл", "Товпека", "Александрович",
+                UserStatus.STUDENT.getStatus(), "ИКНТ", "135311",
                 "bachelor", User.Types.FULL_TIME, "2007-12-03T10:15:30",
                 3,1));
         users.add(new User("1", "Григорий", "Зубрин", "Владиславович",
@@ -252,11 +250,6 @@ public class PolyExemple implements PolyApi {
     @Override
     public void getDialogs(ResultCallback<List<String>> resultCallback) {
         try {
-            BQAQufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(dialogs)));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                if QA
-            }
         } catch (Exception e) {
 
         }
@@ -265,12 +258,21 @@ public class PolyExemple implements PolyApi {
 
     @Override
     public void sendMessageForGroup(String message, FactCallback factCallback) {
+        try {
+            FileWriter writer = new FileWriter(dialogGroup);
+            writer.write("Кирилл Товпеко\n");
+            writer.write(message);
+            writer.write("\n");
+        }catch (Exception e){
 
+        }
     }
 
     @Override
     public void getGroupMessage(ResultCallback<List<Message>> resultCallback, int from, int to) {
         try {
+            dialogGroup = new File(context.getDataDir(), "dialogs");
+
             Scanner scanner = new Scanner(dialogGroup);
             List<Message> messages = new ArrayList<>();
             while (scanner.hasNext()){
@@ -282,6 +284,4 @@ public class PolyExemple implements PolyApi {
 
         }
     }
-
-
 }
