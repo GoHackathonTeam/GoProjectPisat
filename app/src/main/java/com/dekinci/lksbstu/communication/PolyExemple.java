@@ -4,6 +4,7 @@ import com.dekinci.lksbstu.PolyApp;
 import com.dekinci.lksbstu.communication.structure.DaySchedule;
 import com.dekinci.lksbstu.communication.structure.Gradebook;
 import com.dekinci.lksbstu.communication.structure.Login;
+import com.dekinci.lksbstu.communication.structure.Message;
 import com.dekinci.lksbstu.communication.structure.News;
 import com.dekinci.lksbstu.communication.structure.Schedule;
 import com.dekinci.lksbstu.communication.structure.UserStatus;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PolyExemple implements PolyApi {
+
     private List<User> users;
     private List<News> news;
     private Login LOGIN;
@@ -49,9 +51,9 @@ public class PolyExemple implements PolyApi {
     }
 
     @Override
-    public void getUserInfo(String user_id, ResultCallback<User> resultCallback) {
+    public void getUserInfo(ResultCallback<User> resultCallback) {
         for (User user : users) {
-            if (user_id.equals(user.getId())) {
+            if (LOGIN.getID().equals(user.getId())) {
                 resultCallback.success(user);
             }
         }
@@ -71,7 +73,7 @@ public class PolyExemple implements PolyApi {
     }
 
     @Override
-    public void getSchedule(String group_id, String type, ResultCallback<List<DaySchedule>> resultCallback) {
+    public void getSchedule(String type, ResultCallback<List<DaySchedule>> resultCallback) {
         ArrayList<DaySchedule> daySchedList = null;
         DaySchedule schedule;
         Schedule sched;
@@ -127,7 +129,7 @@ public class PolyExemple implements PolyApi {
     }
 
     @Override
-    public void getGradebook(String user_id, ResultCallback<List<Gradebook>> resultCallback) {
+    public void getGradebook(ResultCallback<List<Gradebook>> resultCallback) {
         List<Gradebook> gradebookList = new ArrayList<>();
 
         for (int i = 0; i < 7; i++)
@@ -136,15 +138,11 @@ public class PolyExemple implements PolyApi {
         resultCallback.success(gradebookList);
     }
 
-    @Override
-    public void sendTask(String user_id, String group_id, String msg, FactCallback factCallback) {
+//    @Override
+//    public void sendTask(String user_id, String group_id, String msg, FactCallback factCallback) {
+//
+//    }
 
-    }
-
-    @Override
-    public void sendDoc(FactCallback factCallback) {
-
-    }
 
     @Override
     public void getNews(ResultCallback<List<News>> resultCallback, int from, int to) {
@@ -161,5 +159,27 @@ public class PolyExemple implements PolyApi {
     public void logOut(Login login) {
         login = null;
         PolyApp.deleteCredentials();
+    }
+
+
+
+    @Override
+    public void getNotification(ResultCallback<List<Message>> resultCallback) {
+
+    }
+
+    @Override
+    public void sendMessage(String other_user_id, String message, FactCallback factCallback) {
+
+    }
+
+    @Override
+    public void sendMessageForGroup(String message, FactCallback factCallback) {
+
+    }
+
+    @Override
+    public void getDialogs(ResultCallback<List<String>> resultCallback) {
+
     }
 }
