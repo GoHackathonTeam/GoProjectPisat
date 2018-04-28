@@ -3,35 +3,35 @@
 
     <!-- Colors of spbstu -->
 
-    <color name="primary_poly">#319B3D</color>
-    <color name="primary_dark_poly">#16431C</color>
+    <color name="primary_poly">#ff319B3D</color>
+    <color name="primary_dark_poly">#ff16431C</color>
 
     <!-- Closest material colors -->
 
-    <color name="primary">#388e3c</color>
-    <color name="primary_dark">#1b5e20</color>
+    <color name="primary">#ff388e3c</color>
+    <color name="primary_dark">#ff1b5e20</color>
 
     <!-- Colors of institutes -->
-    <color name="institute_icst">#419b5f</color>
-    <color name="institute_hi">#fe9920</color>
-    <color name="institute_ice">#28777e</color>
-    <color name="institute_iiem">#313595</color>
-    <color name="institute_ipnt">#4eaace</color>
-    <color name="institute_imesr">#8c9a4a</color>
-    <color name="institute_iamm">#184180</color>
-    <color name="institute_iets">#ff5a0b</color>
-    <color name="institute_ipest">#66b934</color>
-    <color name="institute_iiep">#990000</color>
-    <color name="institute_immet">#7a808b</color>
-    <color name="institute_iamt">#db3519</color>
+    <color name="institute_icst">#ff419b5f</color>
+    <color name="institute_hi">#fffe9920</color>
+    <color name="institute_ice">#ff28777e</color>
+    <color name="institute_iiem">#ff313595</color>
+    <color name="institute_ipnt">#ff4eaace</color>
+    <color name="institute_imesr">#ff8c9a4a</color>
+    <color name="institute_iamm">#ff184180</color>
+    <color name="institute_iets">#ffff5a0b</color>
+    <color name="institute_ipest">#ff66b934</color>
+    <color name="institute_iiep">#ff990000</color>
+    <color name="institute_immet">#ff7a808b</color>
+    <color name="institute_iamt">#ffdb3519</color>
 
 
-    <color name="accent">#FF4081</color>
-    <color name="dark_accent">#FF4099</color>
+    <color name="accent">#ffFF4081</color>
+    <color name="dark_accent">#ffFF4099</color>
 
-    <color name="background">#BCBCBC</color>
-    <color name="background_overlay">#7C7C7C</color>
+    <color name="background">#ffBCBCBC</color>
+    <color name="background_overlay">#ff7C7C7C</color>
 
-    <color name="common_text">#2B2B2B00</color>
-    <color name="header_text">#FF4081</color>
+    <color name="common_text">#ff2B2B2B</color>
+    <color name="header_text">#ffFF4081</color>
 </resources>
