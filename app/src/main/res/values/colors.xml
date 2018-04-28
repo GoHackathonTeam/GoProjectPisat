@@ -5,6 +5,7 @@
 
     <color name="primary_poly">#ff319B3D</color>
     <color name="primary_dark_poly">#ff16431C</color>
+    <color name="additional_poly">#ff42D153</color>
 
     <!-- Closest material colors -->
 
