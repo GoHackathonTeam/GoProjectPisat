@@ -1,5 +1,6 @@
 package com.dekinci.lksbstu.communication;
 
+import com.dekinci.lksbstu.communication.structure.DaySchedule;
 import com.dekinci.lksbstu.communication.structure.Gradebook;
 import com.dekinci.lksbstu.communication.structure.Login;
 import com.dekinci.lksbstu.communication.structure.Schedule;
@@ -20,10 +21,10 @@ public interface ServerApi {
     Call<Login> login(String login, String password);
 
     @GET("getSchedule")
-    Call<List<Schedule>> getSchedule(String group_id, int type);
+    Call<List<DaySchedule>> getSchedule(String group_id, String type);
 
     @GET("getGradebook")
-    Call<Gradebook> getGradebook(String user_id);
+    Call<List<Gradebook>> getGradebook(String user_id);
 
     @POST("sendTask")
     void sendTask(String user_id, String group_id, String msg);

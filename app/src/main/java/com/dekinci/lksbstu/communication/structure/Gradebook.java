@@ -19,6 +19,17 @@ public class Gradebook {
     @SerializedName("result")
     private String result;
 
+    public Gradebook(String lesson, String type, String data, String teacher, String result) {
+        this.lesson = lesson;
+        this.type = type;
+        this.data = data;
+        this.teacher = teacher;
+        this.result = result;
+    }
+
+    public Gradebook(){
+
+    }
 
     public String getLesson() {
         return lesson;

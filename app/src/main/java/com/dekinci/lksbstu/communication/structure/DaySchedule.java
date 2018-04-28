@@ -8,15 +8,15 @@ import java.util.List;
 public class DaySchedule {
 
     @SerializedName("daySched")
-    private ArrayList<Schedule> daySched;
+    private List<Schedule> daySched = new ArrayList<>();
 
     @SerializedName("data")
     private String data;
 
-    public DaySchedule(String data, ArrayList<Schedule> daySched) {
-        this.daySched = daySched;
+    public DaySchedule(String data) {
         this.data = data;
     }
+
     public DaySchedule() {
         this.data = data;
     }
