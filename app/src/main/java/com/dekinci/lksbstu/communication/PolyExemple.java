@@ -15,6 +15,7 @@ import java.util.List;
 
 public class PolyExemple implements PolyApi {
     private List<User> users;
+    private List<News> news;
 
     public PolyExemple() {
         users = new ArrayList<>();
@@ -34,6 +35,15 @@ public class PolyExemple implements PolyApi {
                 UserStatus.STUDENT.getStatus(), "ИКНТ", "43154",
                 "bachelor", User.Types.FULL_TIME, "2007-12-03T10:15:30",
                 3,1));
+
+        users.add(new User("3", "Елизавета", "Арбузова", "Вольфовна",
+                UserStatus.TEACHER.getStatus(), "ИКНТ", "teachers",
+                "bachelor", User.Types.FULL_TIME, "2007-12-03T10:15:30",
+                3,1));
+
+        news = new ArrayList<>();
+        news.add(new News("5", "Внимание!!!", "Очень важная информация"));
+        news.add(new News("56", "Кое-что случилось", "Вы и сами наверное догадались, что <b>новости</b> это <i>новости</i>"));
     }
 
     @Override
