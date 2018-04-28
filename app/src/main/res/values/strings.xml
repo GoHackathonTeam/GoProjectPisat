@@ -36,6 +36,7 @@
     <string name="profile_speciality">Speciality:</string>
     <string name="profile_group">Group:</string>
     <string name="profile_achievements">Achievements</string>
+    <string name="profile_logout">Log me out</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

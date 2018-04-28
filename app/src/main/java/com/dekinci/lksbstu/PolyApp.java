@@ -1,5 +1,6 @@
 package com.dekinci.lksbstu;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -20,14 +21,23 @@ public class PolyApp extends Application {
     }
 
     public static void persistCredentials(Login login) {
-
+        prefs.edit()
+                .putString(CREDENTIALS_KEY, login.toString()).apply();
     }
 
     public static Login restoreCredentials() {
-        return null;
+        if (isLoggedIn())
+            return Login.fromString(prefs.getString(CREDENTIALS_KEY, null));
+        else
+            return null;
     }
 
     public static boolean isLoggedIn() {
-        return false;
+        return prefs.getString(CREDENTIALS_KEY, null) != null;
+    }
+
+    @SuppressLint("CommitPrefEdits")
+    public static void deleteCredentials() {
+        prefs.edit().remove(CREDENTIALS_KEY);
     }
 }
