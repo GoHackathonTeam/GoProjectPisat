@@ -9,14 +9,17 @@ public class User {
     @SerializedName("surname")
     private String surname;
 
+    @SerializedName("status")
+    private String status;
+
     @SerializedName("patronymic")
     private String patronymic;
 
     @SerializedName("institute")
     private String institute;
 
-    @SerializedName("group")
-    Group group;
+    @SerializedName("groupId")
+    String groupId;
 
     @SerializedName("education")
     private String education;
