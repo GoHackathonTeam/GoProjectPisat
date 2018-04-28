@@ -147,7 +147,7 @@ public class PolyExemple implements PolyApi {
     }
 
     @Override
-    public void getNews(ResultCallback<News> resultCallback) {
-
+    public void getNews(ResultCallback<List<News>> resultCallback) {
+        resultCallback.success(news);
     }
 }

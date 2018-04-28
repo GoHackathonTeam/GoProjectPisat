@@ -18,5 +18,5 @@ public interface PolyApi {
     void getGradebook(String user_id, ResultCallback<List<Gradebook>> resultCallback);
     void sendTask(String user_id, String group_id, String msg, FactCallback factCallback);
     void sendDoc(FactCallback factCallback);
-    void getNews(ResultCallback<News> resultCallback);
+    void getNews(ResultCallback<List<News>> resultCallback);
 }
