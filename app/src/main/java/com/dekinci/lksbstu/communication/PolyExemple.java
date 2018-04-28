@@ -1,5 +1,6 @@
 package com.dekinci.lksbstu.communication;
 
+import com.dekinci.lksbstu.PolyApp;
 import com.dekinci.lksbstu.communication.structure.DaySchedule;
 import com.dekinci.lksbstu.communication.structure.Gradebook;
 import com.dekinci.lksbstu.communication.structure.Login;
@@ -60,9 +61,7 @@ public class PolyExemple implements PolyApi {
     public void login(String login, String password, FactCallback callback) {
         String user_login = "a";
         String user_pass = "0";
-        Login LOGIN = new Login();
-        LOGIN.setID("00000001");
-        LOGIN.setTOKEN("dsfwe12dcds");
+        Login LOGIN = new Login("dsfwe12dcds", "00000001");
 
         if (login.equals(user_login) && password.equals(user_pass)){
             callback.success();
@@ -149,5 +148,11 @@ public class PolyExemple implements PolyApi {
     @Override
     public void getNews(ResultCallback<List<News>> resultCallback) {
         resultCallback.success(news);
+    }
+
+    @Override
+    public void logOut(Login login) {
+        login = new Login();
+        PolyApp.deleteCredentials();
     }
 }
