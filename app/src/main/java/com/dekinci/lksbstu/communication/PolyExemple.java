@@ -1,5 +1,7 @@
 package com.dekinci.lksbstu.communication;
 
+import android.content.Context;
+
 import com.dekinci.lksbstu.PolyApp;
 import com.dekinci.lksbstu.communication.structure.DaySchedule;
 import com.dekinci.lksbstu.communication.structure.Gradebook;
@@ -11,7 +13,12 @@ import com.dekinci.lksbstu.communication.structure.UserStatus;
 import com.dekinci.lksbstu.communication.structure.pojos.User;
 import com.dekinci.lksbstu.utils.FactCallback;
 import com.dekinci.lksbstu.utils.ResultCallback;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,8 +27,11 @@ public class PolyExemple implements PolyApi {
     private List<User> users;
     private List<News> news;
     private Login LOGIN;
+    private File dialogs;
+    private File dialogGroup;
+    private Context context;
 
-    public PolyExemple() {
+    public PolyExemple(Context context) {
         users = new ArrayList<>();
         users.add(new User("0", "Валерия", "Житникова", "Сахипзадовна",
                 UserStatus.STUDENT.getStatus(), "ИКНТ", "43134",
@@ -48,6 +58,20 @@ public class PolyExemple implements PolyApi {
         news = new ArrayList<>();
         news.add(new News("5", "Внимание!!!", "Очень важная информация", "2018.03.09 15:34"));
         news.add(new News("56", "Кое-что случилось", "Вы и сами наверное догадались, что <b>новости</b> это <i>новости</i>", "2017.12.01 12:01"));
+
+        this.context = context;
+        dialogs = new File(context.getDataDir(), "dialogs");
+        if (!dialogs.exists()){
+            try {
+                dialogs.createNewFile();
+            } catch (Exception e) { }
+        }
+        dialogGroup = new File(context.getDataDir(), "dialog_group");
+        if (!dialogGroup.exists()){
+            try {
+                dialogGroup.createNewFile();
+            } catch (Exception e) { }
+        }
     }
 
     @Override
@@ -188,9 +212,13 @@ public class PolyExemple implements PolyApi {
 
     @Override
     public void getDialogs(ResultCallback<List<String>> resultCallback) {
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(dialogs)));
 
+        } catch (Exception e) {
+
+        }
     }
-
 
 
     @Override
