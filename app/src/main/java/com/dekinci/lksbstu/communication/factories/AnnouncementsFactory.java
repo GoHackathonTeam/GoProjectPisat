@@ -1,7 +1,6 @@
 package com.dekinci.lksbstu.communication.factories;
 
 import com.dekinci.lksbstu.communication.structure.Announcement;
-import com.dekinci.lksbstu.communication.structure.News;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

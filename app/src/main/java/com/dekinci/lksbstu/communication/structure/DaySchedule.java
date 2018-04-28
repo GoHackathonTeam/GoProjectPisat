@@ -10,19 +10,26 @@ public class DaySchedule {
     @SerializedName("daySched")
     private List<Schedule> daySched = new ArrayList<>();
 
-    @SerializedName("data")
-    private String data;
+    @SerializedName("date")
+    private String date;
 
-    public DaySchedule(String data) {
-        this.data = data;
+    public DaySchedule(List<Schedule> schedules, String date) {
+        this.date = date;
+        daySched = schedules;
     }
 
     public DaySchedule() {
-        this.data = data;
     }
 
     public void add(Schedule schedule){
         daySched.add(schedule);
     }
 
+    public List<Schedule> getDaySched() {
+        return daySched;
+    }
+
+    public String getDate() {
+        return date;
+    }
 }

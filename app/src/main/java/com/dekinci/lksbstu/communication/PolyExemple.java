@@ -1,8 +1,11 @@
 package com.dekinci.lksbstu.communication;
 
+import android.util.Log;
+
 import com.dekinci.lksbstu.PolyApp;
 import com.dekinci.lksbstu.communication.factories.AnnouncementsFactory;
 import com.dekinci.lksbstu.communication.factories.NewsFactory;
+import com.dekinci.lksbstu.communication.factories.ScheduleFactory;
 import com.dekinci.lksbstu.communication.factories.UserFactory;
 import com.dekinci.lksbstu.communication.structure.Announcement;
 import com.dekinci.lksbstu.communication.structure.DaySchedule;
@@ -17,6 +20,7 @@ import com.dekinci.lksbstu.utils.ResultCallback;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class PolyExemple implements PolyApi {
@@ -59,57 +63,20 @@ public class PolyExemple implements PolyApi {
 
     @Override
     public void getSchedule(String data, String type, ResultCallback<List<DaySchedule>> resultCallback) {
-        ArrayList<DaySchedule> daySchedList = null;
-        DaySchedule schedule;
-        Schedule sched;
+        ScheduleFactory factory = new ScheduleFactory();
+
         switch (type) {
             case "day":
-                schedule = new DaySchedule("28 мая 2018");
-                sched = new Schedule("Практика",
-                        "Программирование", "Глухих М.В.", "ГЗ, ауд 237");
-                schedule.add(sched);
-                sched = new Schedule("Практика",
-                        "Программирование", "Глухих М.В.", "ГЗ, ауд 232");
-                schedule.add(sched);
-                sched = new Schedule("Практика",
-                        "Программирование", "Глухих М.В.", "ГЗ, ауд 231");
-                schedule.add(sched);
-                daySchedList.add(schedule);
-
-                resultCallback.success(daySchedList);
+                resultCallback.success(Collections.singletonList(factory.createDaySchedule()));
                 break;
             case "week":
-                for (int i = 0; i < 7; i++) {
-                    schedule = new DaySchedule("28 мая 2018");
-                    sched = new Schedule("Практика",
-                            "Программирование", "Глухих М.В.", "ГЗ, ауд 237");
-                    schedule.add(sched);
-                    sched = new Schedule("Лабораторная",
-                            "История", "Лебницин М.В.", "ГЗ, ауд 234");
-                    schedule.add(sched);
-                    sched = new Schedule("Лекция",
-                            "Математика", "Коровин Л.Л.", "ГЗ, ауд 233");
-                    schedule.add(sched);
-                    daySchedList.add(schedule);
-                }
-                resultCallback.success(daySchedList);
+                resultCallback.success(factory.createWeekSchedule().getDaySchedules());
                 break;
             case "month":
-                for (int i = 0; i < 30; i++) {
-                    schedule = new DaySchedule("28 мая 2018");
-                    sched = new Schedule("Практика",
-                            "Программирование", "Глухих М.В.", "ГЗ, ауд 237");
-                    schedule.add(sched);
-                    sched = new Schedule("Лабораторная",
-                            "История", "Лебницин М.В.", "ГЗ, ауд 234");
-                    schedule.add(sched);
-                    sched = new Schedule("Лекция",
-                            "Математика", "Коровин Л.Л.", "ГЗ, ауд 233");
-                    schedule.add(sched);
-                    daySchedList.add(schedule);
-                }
-                resultCallback.success(daySchedList);
+                resultCallback.success(factory.createMonthSchedule().getSchedules());
                 break;
+            default:
+                Log.wtf("Exemple", "Wrong schedule type");
         }
     }
 
@@ -122,8 +89,6 @@ public class PolyExemple implements PolyApi {
                     "Карамелькин Н.Н.", "зачет"));
         resultCallback.success(gradebookList);
     }
-
-
 
     @Override
     public void getNews(ResultCallback<List<News>> resultCallback, int from, int to) {
