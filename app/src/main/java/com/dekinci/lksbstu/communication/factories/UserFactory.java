@@ -23,7 +23,7 @@ public class UserFactory {
     public User getStudent() {
         Random r = new Random();
 
-        return new User(String.valueOf(ids.incrementAndGet()),
+        return new User(String.valueOf(ids.incrementAndGet()), randomFromArr(groups),
                 randomFromArr(names), randomFromArr(surnames), randomFromArr(patrons),
                 UserStatus.STUDENT.getStatus(), randomFromArr(institutes), randomFromArr(groups),
                 randomFromArr(educations), User.Types.FULL_TIME, randomFromArr(enrollementDates),
@@ -33,7 +33,7 @@ public class UserFactory {
     public User getPrepod() {
         Random r = new Random();
 
-        return new User(String.valueOf(ids.incrementAndGet()),
+        return new User(String.valueOf(ids.incrementAndGet()), randomFromArr(groups),
                 randomFromArr(names), randomFromArr(surnames), randomFromArr(patrons),
                 UserStatus.STUDENT.getStatus(), randomFromArr(institutes), "teacher",
                 randomFromArr(educations), User.Types.FULL_TIME, randomFromArr(enrollementDates),
