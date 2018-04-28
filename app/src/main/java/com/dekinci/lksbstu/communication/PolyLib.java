@@ -6,6 +6,7 @@ import com.dekinci.lksbstu.utils.ResultCallback;
 
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -22,10 +23,21 @@ public class PolyLib implements PolyApi{
     }
 
     @Override
-    public void getUserInfo(String user_id, ResultCallback resultCallback) {
+    public void getUserInfo(String user_id, ResultCallback<User> resultCallback) {
         Call<User> user = serverApi.getUserInfo(user_id, resultCallback);
 
-        user.enqueue(Callback<>);
+        user.enqueue(new Callback<User>(){
+
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                resultCallback.success(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+
+            }
+        });
     }
 
     @Override
