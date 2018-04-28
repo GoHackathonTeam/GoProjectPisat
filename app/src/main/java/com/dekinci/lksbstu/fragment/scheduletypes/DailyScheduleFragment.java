@@ -57,7 +57,7 @@ public class DailyScheduleFragment extends Fragment implements ScheduleShower {
                 nothingText.setLayoutParams(params);
                 schedules.addView(nothingText);
             }
-            Collection<Schedule> scheduleCollection = scheduleList.get(0).getSchedules();
+            Collection<Schedule> scheduleCollection = scheduleList.get(0).getDaySched();
             for (Schedule schedule : scheduleCollection) {
                 View element = inflater.inflate(R.layout.class_schedule_layout, schedules, false);
                 TextView time = element.findViewById(R.id.class_time);
