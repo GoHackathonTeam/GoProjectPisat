@@ -35,22 +35,58 @@ public class PolyExemple implements PolyApi {
     }
 
     @Override
-    public void getSchedule(String group_id, int type, ResultCallback<List<Schedule>> resultCallback) {
-        List<Schedule> schedule = new ArrayList<Schedule>();
+    public void getSchedule(String group_id, int type, ResultCallback<List<DaySchedule>> resultCallback) {
+        ArrayList<DaySchedule> daySchedList = null;
+        DaySchedule schedule;
         Schedule sched;
         switch (type) {
             case 1:
-                sched = new Schedule("28 апреля 2018", "Практика",
+                schedule = new DaySchedule();
+                sched = new Schedule("Практика",
                         "Программирование", "Глухих М.В.", "ГЗ, ауд 237");
                 schedule.add(sched);
-                resultCallback.success(schedule);
+                sched = new Schedule("Практика",
+                        "Программирование", "Глухих М.В.", "ГЗ, ауд 232");
+                schedule.add(sched);
+                sched = new Schedule("Практика",
+                        "Программирование", "Глухих М.В.", "ГЗ, ауд 231");
+                schedule.add(sched);
+                daySchedList.add(schedule);
+
+                resultCallback.success(daySchedList);
                 break;
             case 2:
                 for (int i = 0; i < 7; i++){
-                    sched = new Schedule(i + " апреля 2018", "Практика",
+                    schedule = new DaySchedule();
+                    sched = new Schedule("Практика",
                             "Программирование", "Глухих М.В.", "ГЗ, ауд 237");
-
+                    schedule.add(sched);
+                    sched = new Schedule("Лабораторная",
+                            "История", "Лебницин М.В.", "ГЗ, ауд 234");
+                    schedule.add(sched);
+                    sched = new Schedule("Лекция",
+                            "Математика", "Коровин Л.Л.", "ГЗ, ауд 233");
+                    schedule.add(sched);
+                    daySchedList.add(schedule);
                 }
+                resultCallback.success(daySchedList);
+                break;
+            case 3:
+                for (int i = 0; i < 30; i++){
+                    schedule = new DaySchedule();
+                    sched = new Schedule("Практика",
+                            "Программирование", "Глухих М.В.", "ГЗ, ауд 237");
+                    schedule.add(sched);
+                    sched = new Schedule("Лабораторная",
+                            "История", "Лебницин М.В.", "ГЗ, ауд 234");
+                    schedule.add(sched);
+                    sched = new Schedule("Лекция",
+                            "Математика", "Коровин Л.Л.", "ГЗ, ауд 233");
+                    schedule.add(sched);
+                    daySchedList.add(schedule);
+                }
+                resultCallback.success(daySchedList);
+                break;
         }
     }
 
