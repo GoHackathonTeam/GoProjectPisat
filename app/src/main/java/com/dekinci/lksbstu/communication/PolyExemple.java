@@ -73,7 +73,7 @@ public class PolyExemple implements PolyApi {
     }
 
     @Override
-    public void getSchedule(String type, ResultCallback<List<DaySchedule>> resultCallback) {
+    public void getSchedule(String data, String type, ResultCallback<List<DaySchedule>> resultCallback) {
         ArrayList<DaySchedule> daySchedList = null;
         DaySchedule schedule;
         Schedule sched;
@@ -156,15 +156,23 @@ public class PolyExemple implements PolyApi {
     }
 
     @Override
-    public void logOut(Login login) {
-        login = null;
+    public void logOut() {
+        LOGIN = null;
         PolyApp.deleteCredentials();
     }
 
+    @Override
+    public void sendTask(String group_id, String msg, FactCallback factCallback) {
 
+    }
 
     @Override
-    public void getNotification(ResultCallback<List<Message>> resultCallback) {
+    public void getNotification(ResultCallback<List<Message>> resultCallback, int from, int to) {
+
+    }
+
+    @Override
+    public void sendNotification(Message msg, FactCallback factCallback) {
 
     }
 
@@ -174,7 +182,7 @@ public class PolyExemple implements PolyApi {
     }
 
     @Override
-    public void sendMessageForGroup(String message, FactCallback factCallback) {
+    public void getMessageList(String user_id, ResultCallback<List<Message>> resultCallback, int from, int to) {
 
     }
 
@@ -182,4 +190,18 @@ public class PolyExemple implements PolyApi {
     public void getDialogs(ResultCallback<List<String>> resultCallback) {
 
     }
+
+
+
+    @Override
+    public void sendMessageForGroup(String message, FactCallback factCallback) {
+
+    }
+
+    @Override
+    public void getGroupMessage(ResultCallback<List<Message>> resultCallback, int from, int to) {
+
+    }
+
+
 }

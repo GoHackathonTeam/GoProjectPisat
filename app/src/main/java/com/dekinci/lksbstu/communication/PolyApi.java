@@ -14,10 +14,10 @@ import java.util.List;
 public interface PolyApi {
     void getUserInfo(ResultCallback<User> resultCallback);
     void login(String login, String password, FactCallback callback);
-    void getSchedule(String data,String type, ResultCallback<List<DaySchedule>> resultCallback);
+    void getSchedule(String data, String type, ResultCallback<List<DaySchedule>> resultCallback);
     void getGradebook(ResultCallback<List<Gradebook>> resultCallback);
     void getNews(ResultCallback<List<News>> resultCallback, int from, int to);
-    void logOut(Login login);
+    void logOut();
 
     void sendTask(String group_id, String msg, FactCallback factCallback);
 
