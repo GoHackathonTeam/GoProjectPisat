@@ -22,8 +22,8 @@ public interface PolyApi {
     void sendTask(String group_id, String msg, FactCallback factCallback);
 
 
-    void getNotification(ResultCallback<List<Message>> resultCallback, int from, int to);
-    void sendNotification(Message msg, FactCallback factCallback);
+    void getNotification(ResultCallback<List<String>> resultCallback, int from, int to);
+    void sendNotification(String other_user_id, String msg, FactCallback factCallback);
 
     void sendMessage(String other_user_id, String message, FactCallback factCallback);
     void getMessageList(String user_id, ResultCallback<List<Message>> resultCallback, int from, int to);
