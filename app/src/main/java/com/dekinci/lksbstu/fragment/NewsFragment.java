@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,26 +29,28 @@ public class NewsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater,
+                             ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         Log.i("News", "Fragment attached");
         View view = inflater.inflate(R.layout.fragment_news, container, false);
-        LinearLayout holder = view.findViewById(R.id.news_holder);
+        LinearLayout holder = view.findViewById(R.id.newsItem); //TODO!!
         PolyManager.get().getApi().getNews(newsList -> {
             for (News news : newsList) {
-                TextView date = holder.findViewById(R.id.news_time);
-                TextView header = holder.findViewById(R.id.news_header);
-                TextView body = holder.findViewById(R.id.news_body);
+                View record = inflater.inflate(R.layout.news_layout, holder, false);
+                TextView date = record.findViewById(R.id.news_time);
+                TextView header = record.findViewById(R.id.news_header);
+                TextView body = record.findViewById(R.id.news_body);
 
-                getActivity().runOnUiThread(() -> {
-                    date.setText(news.getDate());
-                    header.setText(news.getHeader());
-                    String bodyText = news.getBody();
-                    if (bodyText.length() > 200)
-                        bodyText = bodyText.substring(0, 197) + "...";
-                    body.setText(bodyText);
-                });
+                date.setText(news.getDate());
+                header.setText(news.getHeader());
+                String bodyText = news.getBody();
+                if (bodyText.length() > 200)
+                    bodyText = bodyText.substring(0, 197) + "...";
+                body.setText(Html.fromHtml(bodyText, Html.FROM_HTML_MODE_COMPACT));
+
+                holder.addView(record);
             }
         }, 0, Integer.MAX_VALUE);
         return view;

@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.RadioGroup;
 
 import com.dekinci.lksbstu.fragment.scheduletypes.DailyScheduleFragment;
+import com.dekinci.lksbstu.fragment.scheduletypes.DayManager;
 import com.dekinci.lksbstu.fragment.scheduletypes.MonthlyScheduleFragment;
 import com.dekinci.lksbstu.fragment.scheduletypes.ScheduleShower;
 import com.dekinci.lksbstu.fragment.scheduletypes.WeeklyScheduleFragment;
@@ -21,8 +22,9 @@ import com.example.hackaton.goprojectpisat.R;
 
 import java.util.Date;
 
-public class ScheduleFragment extends Fragment {
+public class ScheduleFragment extends Fragment implements DayManager {
     private ScheduleShower scheduleShower;
+    RadioGroup group;
 
     public ScheduleFragment() {
         // Required empty public constructor
@@ -43,7 +45,7 @@ public class ScheduleFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_schedule, container, false);
         Log.i("Schedule", "Fragment attached");
 
-        RadioGroup group = view.findViewById(R.id.scheduleTypeRadioGroup);
+        group = view.findViewById(R.id.scheduleTypeRadioGroup);
         group.check(R.id.scheduleDaily);
 
         initFragment(new DailyScheduleFragment());
@@ -64,6 +66,7 @@ public class ScheduleFragment extends Fragment {
                 scheduleShower = f;
             }
 
+            scheduleShower.injectDayManager(this);
             if (fragment != null) {
                 replaceBy(fragment);
             }
@@ -75,6 +78,7 @@ public class ScheduleFragment extends Fragment {
 
     private void initFragment(Fragment fragment) {
         scheduleShower = (ScheduleShower) fragment;
+        scheduleShower.injectDayManager(this);
 
         FragmentActivity activity = getActivity();
         if (activity != null) {
@@ -113,8 +117,11 @@ public class ScheduleFragment extends Fragment {
         });
     }
 
+    @Override
     public void showDay(Date date) {
         DailyScheduleFragment f = new DailyScheduleFragment();
+        group.check(R.id.scheduleDaily);
+        scheduleShower = f;
         replaceBy(f);
         f.show(date);
     }

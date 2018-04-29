@@ -44,10 +44,15 @@ public class DailyScheduleFragment extends Fragment implements ScheduleShower {
         calendar = Calendar.getInstance();
         dateText = view.findViewById(R.id.schedule_day_name);
 
-        currentDate = calendar.getTime();
+        if (currentDate == null)
+            currentDate = calendar.getTime();
         inflateSchedule();
 
         return view;
+    }
+
+    @Override
+    public void injectDayManager(DayManager manager) {
     }
 
     @Override
@@ -65,7 +70,9 @@ public class DailyScheduleFragment extends Fragment implements ScheduleShower {
     @Override
     public void show(Date date) {
         currentDate = date;
-        inflateSchedule();
+
+        if (dateText != null)
+            inflateSchedule();
     }
 
     public void inflateSchedule() {

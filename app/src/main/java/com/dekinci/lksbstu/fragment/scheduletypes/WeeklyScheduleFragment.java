@@ -29,13 +29,20 @@ public class WeeklyScheduleFragment extends Fragment implements ScheduleShower {
     private LayoutInflater inflater;
     private Date currentDate;
 
+    private DayManager manager;
+
     public WeeklyScheduleFragment() {
-        // Required empty public constructor
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onDetach() {
+        super.onDetach();
+        manager = null;
+    }
+
+    @Override
+    public void injectDayManager(DayManager manager) {
+        this.manager = manager;
     }
 
     @Override
@@ -81,9 +88,7 @@ public class WeeklyScheduleFragment extends Fragment implements ScheduleShower {
                 TextView scheduleDayName = dayScheduleView.findViewById(R.id.schedule_day_name);
                 scheduleDayName.setText(date);
                 scheduleDayName.setOnClickListener((v) -> {
-                    ScheduleFragment parent = (ScheduleFragment) getParentFragment();
-                    if (parent != null)
-                        parent.showDay(currentDate);
+                    manager.showDay(currentDate);
                 });
 
                 LinearLayout classesHolder = dayScheduleView.findViewById(R.id.schedule_classes_holder);

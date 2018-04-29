@@ -31,7 +31,6 @@ public class PolyMock implements PolyApi {
 
     public PolyMock() {
         mLogin = PolyApp.restoreCredentials();
-        System.out.println(mLogin.getId());
     }
 
     @Override
@@ -109,10 +108,17 @@ public class PolyMock implements PolyApi {
 
     @Override
     public void getNews(ResultCallback<List<News>> resultCallback, int from, int to) {
+        try {
+            resultCallback.success(newsServer.getNewsByRange(from, to));
+        } catch (Exception e) {
+            resultCallback.failure(e);
+        }
+        /*
         List<News> news = new ArrayList<>();
         for (int i = from; i < to; i++)
             news.add(newsServer.forceNewsById(String.valueOf(i)));
         resultCallback.success(news);
+        */
     }
 
     @Override
