@@ -9,8 +9,13 @@
         android:entries="@array/pref_start_activity_list_titles"
         android:entryValues="@array/pref_start_activity_list_values"
         android:key="start_activity"
-        android:negativeButtonText="@null"
-        android:positiveButtonText="@null"
         android:title="@string/pref_start_activity" />
+
+    <ListPreference
+        android:defaultValue="2"
+        android:entries="@array/pref_schedule_types_titles"
+        android:entryValues="@array/pref_schedule_types_values"
+        android:key="schedule_type"
+        android:title="@string/pref_schedule_type" />
 
 </PreferenceScreen>

@@ -82,7 +82,7 @@
         <item>0</item>
     </string-array>
 
-    <string name="pref_schedule_type">Choose start screen:</string>
+    <string name="pref_schedule_type">Preferred schedule type:</string>
     <string-array name="pref_schedule_types_titles">
         <item>Daily</item>
         <item>Weekly</item>
