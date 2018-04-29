@@ -75,6 +75,7 @@ public class PolyMock implements PolyApi {
     @Override
     public void getSchedule(String date, String type, ResultCallback<List<DaySchedule>> resultCallback) {
         List<DaySchedule> list = new ArrayList<>();
+        Log.w("PolyMock", "Filling schedule");
 
         switch (type) {
             case "day":

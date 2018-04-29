@@ -26,7 +26,7 @@ public class ScheduleServer {
 
     public WeekSchedule getWeekSchedule(String date) {
         ArrayList<DaySchedule> daySchedules = new ArrayList<>();
-        int start = Integer.parseInt(date.trim().split(" ")[0]);
+        int start = Integer.parseInt(date.trim().split("[ .]")[0]);
 
         for (int i = start; i < start + 7; i++)
             daySchedules.add(getDaySchedule(i + " мая 2018"));

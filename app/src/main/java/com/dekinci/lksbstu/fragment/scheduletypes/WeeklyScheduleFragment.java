@@ -16,15 +16,20 @@ import com.example.hackaton.goprojectpisat.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class WeeklyScheduleFragment extends Fragment implements ScheduleShower {
+    private static final SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+
+    private TextView dateText;
+    private Calendar calendar;
+
+    private LinearLayout mainHolder;
+    private LayoutInflater inflater;
+    private Date currentDate;
+
     public WeeklyScheduleFragment() {
         // Required empty public constructor
-    }
-
-    public static WeeklyScheduleFragment newInstance() {
-        WeeklyScheduleFragment fragment = new WeeklyScheduleFragment();
-        return fragment;
     }
 
     @Override
@@ -37,12 +42,33 @@ public class WeeklyScheduleFragment extends Fragment implements ScheduleShower {
             @NonNull LayoutInflater inflater,
             ViewGroup container,
             Bundle savedInstanceState) {
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
-        final String date = formatter.format(calendar.getTime());
+        calendar = Calendar.getInstance();
+        this.inflater = inflater;
         View view = inflater.inflate(R.layout.fragment_weekly_schedule, container, false);
-        LinearLayout mainHolder = view.findViewById(R.id.schedule_holder);
-        PolyManager.get().getApi().getSchedule(date, "day", (scheduleList) -> {
+        mainHolder = view.findViewById(R.id.schedule_holder);
+
+        currentDate = calendar.getTime();
+        inflateSchedule();
+
+        return view;
+    }
+
+    @Override
+    public void next() {
+        currentDate = new Date(currentDate.getTime() + 7 * 24 * 60 * 60 * 1000);
+        inflateSchedule();
+    }
+
+    @Override
+    public void previous() {
+        currentDate = new Date(currentDate.getTime() - 7 * 24 * 60 * 60 * 1000);
+        inflateSchedule();
+    }
+
+    public void inflateSchedule() {
+        String date = formatter.format(calendar.getTime());
+
+        PolyManager.get().getApi().getSchedule(date, "week", (scheduleList) -> {
             for (DaySchedule daySchedule : scheduleList) {
                 View dayScheduleView = inflater.inflate(R.layout.day_schedule_layout, mainHolder, false);
                 TextView scheduleDayName = dayScheduleView.findViewById(R.id.schedule_day_name);
@@ -55,7 +81,7 @@ public class WeeklyScheduleFragment extends Fragment implements ScheduleShower {
                     TextView teacher = classView.findViewById(R.id.class_teacher);
                     TextView room = classView.findViewById(R.id.class_room);
                     time.setText(scheduleItem.getTime());
-                    name.setText(scheduleItem.getLesson() + " (" + scheduleItem.getLessonType() + ')');
+                    name.setText(String.format("%s (%s)", scheduleItem.getLesson(), scheduleItem.getLessonType()));
                     teacher.setText(scheduleItem.getTeacher());
                     room.setText(scheduleItem.getPlace());
                     classesHolder.addView(classView);
@@ -63,16 +89,5 @@ public class WeeklyScheduleFragment extends Fragment implements ScheduleShower {
                 mainHolder.addView(dayScheduleView);
             }
         });
-        return view;
-    }
-
-    @Override
-    public void next() {
-
-    }
-
-    @Override
-    public void previous() {
-
     }
 }

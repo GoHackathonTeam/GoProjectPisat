@@ -3,6 +3,7 @@ package com.dekinci.lksbstu.fragment.scheduletypes;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,21 +17,20 @@ import com.example.hackaton.goprojectpisat.R;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 
 
 public class DailyScheduleFragment extends Fragment implements ScheduleShower {
+    private static final SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
 
+    private TextView dateText;
+    private Calendar calendar;
+    private LinearLayout schedules;
+    private LayoutInflater inflater;
+    private Date currentDate;
 
     public DailyScheduleFragment() {
         // Required empty public constructor
-    }
-
-    // TODO: Rename and change types and number of parameters
-    public static DailyScheduleFragment newInstance() {
-        DailyScheduleFragment fragment = new DailyScheduleFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
@@ -38,14 +38,36 @@ public class DailyScheduleFragment extends Fragment implements ScheduleShower {
             @NonNull LayoutInflater inflater,
             ViewGroup container,
             Bundle savedInstanceState) {
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
-        String date = formatter.format(calendar.getTime());
+        this.inflater = inflater;
         View view = inflater.inflate(R.layout.fragment_daily_schedule, container, false);
-        LinearLayout schedules = view.findViewById(R.id.schedule_classes_holder);
-        PolyManager.get().getApi().getSchedule(date, "day", (scheduleList) -> {
-            TextView dateText = view.findViewById(R.id.schedule_day_name);
-            dateText.setText(date);
+        schedules = view.findViewById(R.id.schedule_classes_holder);
+        calendar = Calendar.getInstance();
+        dateText = view.findViewById(R.id.schedule_day_name);
+
+        currentDate = calendar.getTime();
+        inflateSchedule();
+
+        return view;
+    }
+
+    @Override
+    public void next() {
+        currentDate = new Date(currentDate.getTime() + 24 * 60 * 60 * 1000);
+        inflateSchedule();
+    }
+
+    @Override
+    public void previous() {
+        currentDate = new Date(currentDate.getTime() - 24 * 60 * 60 * 1000);
+        inflateSchedule();
+    }
+
+    public void inflateSchedule() {
+        String textDate = formatter.format(currentDate);
+
+        PolyManager.get().getApi().getSchedule(textDate, "day", (scheduleList) -> {
+            Log.w("Daily scgedule", "Schedule received");
+            dateText.setText(textDate);
 
             if (scheduleList.isEmpty()) {
                 TextView nothingText = new TextView(getContext());
@@ -54,32 +76,26 @@ public class DailyScheduleFragment extends Fragment implements ScheduleShower {
                 nothingText.setLayoutParams(params);
                 schedules.addView(nothingText);
             }
+
             Collection<ScheduleItem> scheduleItemCollection = scheduleList.get(0).getDaySchedule();
             for (ScheduleItem scheduleItem : scheduleItemCollection) {
                 View element = inflater.inflate(R.layout.class_schedule_layout, schedules, false);
                 TextView time = element.findViewById(R.id.class_time);
-                time.setText("null");
+                time.setText(scheduleItem.getTime());
+
                 TextView name = element.findViewById(R.id.class_name);
-                name.setText(scheduleItem.getLesson() + " (" + scheduleItem.getLessonType() + ")");
+                name.setText(String.format("%s (%s)", scheduleItem.getLesson(), scheduleItem.getLessonType()));
+
                 TextView teacher = element.findViewById(R.id.class_teacher);
                 teacher.setText(scheduleItem.getTeacher());
+
                 TextView room = element.findViewById(R.id.class_room);
                 room.setText(scheduleItem.getPlace());
+
                 ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
                 element.setLayoutParams(params);
                 schedules.addView(element);
             }
         });
-        return view;
-    }
-
-    @Override
-    public void next() {
-
-    }
-
-    @Override
-    public void previous() {
-
     }
 }

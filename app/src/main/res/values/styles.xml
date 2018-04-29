@@ -6,7 +6,7 @@
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/additional_poly</item>
-        <item name="background">@drawable/background</item>
+        <item name="android:windowBackground">@drawable/background</item>
     </style>
 
     <style name="SplashTheme" parent="MainTheme">

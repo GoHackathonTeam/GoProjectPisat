@@ -26,23 +26,23 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <Button
+        <RadioButton
             android:id="@+id/scheduleDaily"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Daily" />
 
-        <Button
+        <RadioButton
             android:id="@+id/scheduleWeekly"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Weekly" />
 
-        <Button
+        <RadioButton
             android:id="@+id/scheduleMonthly"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Monthly" />
