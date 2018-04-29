@@ -9,14 +9,13 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.dekinci.lksbstu.PolyManager;
 import com.dekinci.lksbstu.communication.structure.DaySchedule;
 import com.dekinci.lksbstu.communication.structure.Schedule;
+import com.dekinci.lksbstu.model.PolyManager;
 import com.example.hackaton.goprojectpisat.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Collection;
 
 public class WeeklyScheduleFragment extends Fragment implements ScheduleShower {
     public WeeklyScheduleFragment() {
