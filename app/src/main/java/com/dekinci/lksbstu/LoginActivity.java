@@ -107,6 +107,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void showProgress() {
+        int prevY = (int) loginFormView.getY();
+
         loginFormView.setVisibility(View.VISIBLE);
         loginFormView.setAlpha(1);
         loginFormView.animate()
@@ -122,7 +124,7 @@ public class LoginActivity extends AppCompatActivity {
                         loadingIndicatorView.setVisibility(View.VISIBLE);
                         loadingIndicatorView.animate()
                                 .setDuration(100)
-                                .y(200)
+                                .y(prevY)
                                 .alpha(1)
                                 .start();
 
@@ -133,6 +135,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void hideProgress() {
+        int prevY = (int) loadingIndicatorView.getY();
+
         loadingIndicatorView.setAlpha(1);
         loadingIndicatorView.setVisibility(View.VISIBLE);
         loadingIndicatorView.animate()
@@ -147,7 +151,7 @@ public class LoginActivity extends AppCompatActivity {
                         loginFormView.setVisibility(View.VISIBLE);
                         loginFormView.animate()
                                 .setDuration(100)
-                                .y(200)
+                                .y(prevY)
                                 .alpha(1)
                                 .start();
                         loadingIndicatorView.animate().setListener(null);
