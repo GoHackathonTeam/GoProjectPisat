@@ -12,12 +12,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.dekinci.lksbstu.communication.structure.pojos.User;
 import com.dekinci.lksbstu.model.PolyManager;
 import com.dekinci.lksbstu.communication.structure.Message;
+import com.dekinci.lksbstu.utils.FactCallback;
 import com.example.hackaton.goprojectpisat.R;
 
 import java.util.ArrayList;
@@ -46,10 +50,19 @@ public class ConversationFragment extends Fragment implements NavigationView.OnN
         View view =  inflater.inflate(R.layout.fragment_conversation, container, false);
         ListView listView = view.findViewById(R.id.list_dialog);
 
+        ImageButton send = view.findViewById(R.id.sendMess);
+        EditText takeMess = view.findViewById(R.id.takeMess);
+
         PolyManager.get().getApi().getMessageList(id, messageList -> {
-            Objects.requireNonNull(getActivity()).runOnUiThread(() ->
-                    listView.setAdapter(new MessageAdapter(messageList, getContext())));
+            Objects.requireNonNull(getActivity()).runOnUiThread(() ->{
+                    listView.setAdapter(new MessageAdapter(messageList, getContext()));
+            });
         },0, 10);
+
+//        send.setOnClickListener(v ->{
+//            PolyManager.get().getApi().sendMessage(PolyManager.get().getUser().getUser(User::getId),
+//                    takeMess.getText().toString(), );
+//        });
         return view;
     }
 
@@ -79,6 +92,9 @@ public class ConversationFragment extends Fragment implements NavigationView.OnN
                 });
                 messageBody.add(messageList.get(i).getText());
             }
+            System.out.println(messageList);
+            System.out.println(name);
+            System.out.println(messageBody);
         }
 
         @Override
@@ -105,10 +121,11 @@ public class ConversationFragment extends Fragment implements NavigationView.OnN
             @SuppressLint({"ViewHolder", "InflateParams"})
             View view = inflater.inflate(R.layout.messages, null);
 
-
             setData.name = view.findViewById(R.id.user);
-            setData.image = view.findViewById(R.id.headerProfileView);
+    //        setData.image = view.findViewById(R.id.headerProfileView);
             setData.msg = view.findViewById(R.id.msg);
+
+
 
             setData.name.setText(name.get(position));
             setData.msg.setText(messageBody.get(position));

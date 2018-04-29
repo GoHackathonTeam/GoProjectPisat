@@ -15,12 +15,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.dekinci.lksbstu.model.PolyManager;
 import com.dekinci.lksbstu.fragment.messenger.ConversationFragment;
+import com.dekinci.lksbstu.utils.ResultCallback;
 import com.example.hackaton.goprojectpisat.R;
 
 import java.util.ArrayList;
@@ -42,9 +44,19 @@ public class TetATetFragment extends Fragment implements NavigationView.OnNaviga
         View view =  inflater.inflate(R.layout.fragment_tet_a_tet, container, false);
         ListView listView = view.findViewById(R.id.list_dialogs);
         Log.i("Tet A Tet", "Fragment attached");
-        PolyManager.get().getApi().getDialogs(dialogs -> {
-            Objects.requireNonNull(getActivity()).runOnUiThread(() ->
-                listView.setAdapter(new DialogsAdapter(dialogs, getContext())));
+        PolyManager.get().getApi().getDialogs(new ResultCallback<List<String>>() {
+
+            @Override
+            public void success(List<String> dialogs) {
+                Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
+                    listView.setAdapter(new DialogsAdapter(dialogs, getContext()));
+                });
+            }
+
+            @Override
+            public void failure(Throwable e) {
+                e.printStackTrace();
+            }
         });
 
 
@@ -71,20 +83,22 @@ public class TetATetFragment extends Fragment implements NavigationView.OnNaviga
 
             name = new ArrayList<>();
 
-            PolyManager.get().getApi().getUserInfo(null, user -> {
-                name.add(user.getGroupName());
-                dialogsID = user.getGroupId();
-            });
+//            PolyManager.get().getApi().getUserInfo(null, user -> {
+//                name.add(user.getGroupName());
+//                dialogsID = user.getGroupId();
+//            });
+
             for(int i = 0; i < dialogs.size(); i++) {
                 PolyManager.get().getApi().getUserInfo(dialogs.get(i), user -> {
                     name.add(user.getName() + " " + user.getSurname());
                 });
             }
+
         }
 
         @Override
         public int getCount() {
-            return dialogs.size();
+            return name.size();
         }
 
         @Override
@@ -110,21 +124,24 @@ public class TetATetFragment extends Fragment implements NavigationView.OnNaviga
             setData.name = view.findViewById(R.id.user);
             setData.image = view.findViewById(R.id.headerProfileView);
 
-            setData.name.setText(name.get(position + 1));
+            setData.name.setText(name.get(position));
             //  setData.image.setImageBitmap(images.get(position));
 
             view.setOnClickListener(v -> {
                 String id;
-                if (position == 0){
-                    id = dialogsID;
-                }else {
-                    id = name.get(position + 1);
-                }
+//                if (position == 0){
+//                    id = dialogsID;
+//                }else {
+                    id = dialogs.get(position);
+           //     }
                 Fragment fragment = new ConversationFragment(id);
                 Activity activity = getActivity();
                 if (activity != null) {
                     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    ListView frame = (ListView)(view.getParent());
+                    FrameLayout frameLayout = (FrameLayout) frame.getParent();
+                    frameLayout.removeView(frame);
                     fragmentTransaction.add(R.id.tet_a_tet, fragment);
                     fragmentTransaction.commit();
                 }
