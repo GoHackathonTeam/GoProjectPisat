@@ -52,7 +52,7 @@ public class NewsFragment extends Fragment {
 
                 holder.addView(record);
             }
-        }, 0, Integer.MAX_VALUE);
+        }, 0, 1);
         return view;
     }
 }
