@@ -3,13 +3,13 @@
 
     <!-- Colors of spbstu -->
 
-    <color name="primary_poly">#ff319B3D</color>
+    <color name="primary_poly">#319b3d</color>
     <color name="primary_dark_poly">#ff16431C</color>
-    <color name="additional_poly">#ff42D153</color>
+    <color name="additional_poly">#42d153</color>
 
     <!-- Closest material colors -->
 
-    <color name="primary">#ff388e3c</color>
+    <color name="primary">#388e3c</color>
     <color name="primary_dark">#ff1b5e20</color>
 
     <!-- Colors of institutes -->

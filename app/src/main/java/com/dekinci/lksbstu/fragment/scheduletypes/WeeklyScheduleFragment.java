@@ -37,12 +37,10 @@ public class WeeklyScheduleFragment extends Fragment implements ScheduleShower {
             @NonNull LayoutInflater inflater,
             ViewGroup container,
             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        //return inflater.inflate(R.layout.fragment_weekly_schedule, container, false);
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
         final String date = formatter.format(calendar.getTime());
-        View view = inflater.inflate(R.layout.fragment_daily_schedule, container, false);
+        View view = inflater.inflate(R.layout.fragment_weekly_schedule, container, false);
         LinearLayout mainHolder = view.findViewById(R.id.schedule_holder);
         PolyManager.get().getApi().getSchedule(date, "day", (scheduleList) -> {
             for (DaySchedule daySchedule : scheduleList) {

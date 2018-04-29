@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="16dp"
+    android:background="@drawable/poly_bg_light"
     android:orientation="vertical"
+    android:padding="16dp"
     tools:context="com.dekinci.lksbstu.AboutActivity">
 
     <TextView
@@ -14,6 +15,7 @@
         android:layout_height="wrap_content"
         android:text="@string/about_info"
         android:textAppearance="@style/Header2Text" />
+
     <TextView
         android:id="@+id/about_info_content"
         android:layout_width="match_parent"
@@ -21,12 +23,14 @@
         android:layout_marginStart="8dp"
         android:text="@string/about_info_content"
         android:textAppearance="@style/CommonText" />
+
     <TextView
         android:id="@+id/about_authors"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/about_authors"
         android:textAppearance="@style/Header2Text" />
+
     <TextView
         android:id="@+id/about_authors_content"
         android:layout_width="match_parent"
