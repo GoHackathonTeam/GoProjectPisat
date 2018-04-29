@@ -1,6 +1,5 @@
 package com.dekinci.lksbstu;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -12,7 +11,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -123,8 +121,8 @@ public class MainActivity extends AppCompatActivity implements
             TextView name = view.findViewById(R.id.nav_header_name);
             name.setText(u.getName());
 
-            TextView group = view.findViewById(R.id.nav_header_group_num);
-            group.setText(u.getGroupName());
+            TextView login = view.findViewById(R.id.nav_header_login);
+            login.setText(u.getLogin());
         }));
     }
 

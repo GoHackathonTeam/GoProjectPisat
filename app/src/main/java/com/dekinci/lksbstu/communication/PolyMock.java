@@ -25,8 +25,6 @@ public class PolyMock implements PolyApi {
     private ScheduleServer scheduleServer = new ScheduleServer();
     private NewsServer newsServer = new NewsServer();
 
-    private List<User> users = new ArrayList<>();
-
     private Login mLogin;
 
     public PolyMock() {
@@ -46,6 +44,7 @@ public class PolyMock implements PolyApi {
         Login result = dataServer.login(login, password);
         if (result != null) {
             mLogin = result;
+            PolyApp.persistCredentials(result);
             callback.success();
         }
         else
