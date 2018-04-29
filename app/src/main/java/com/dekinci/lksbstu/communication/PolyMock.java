@@ -4,67 +4,40 @@ import android.util.Log;
 
 import com.dekinci.lksbstu.PolyApp;
 import com.dekinci.lksbstu.communication.factories.AnnouncementsFactory;
-import com.dekinci.lksbstu.communication.factories.NewsFactory;
-import com.dekinci.lksbstu.communication.factories.ScheduleFactory;
-import com.dekinci.lksbstu.communication.factories.UserFactory;
+import com.dekinci.lksbstu.communication.server.NewsServer;
+import com.dekinci.lksbstu.communication.server.ScheduleServer;
+import com.dekinci.lksbstu.communication.server.UserDataServer;
 import com.dekinci.lksbstu.communication.structure.Announcement;
 import com.dekinci.lksbstu.communication.structure.DaySchedule;
 import com.dekinci.lksbstu.communication.structure.Gradebook;
 import com.dekinci.lksbstu.communication.structure.Login;
 import com.dekinci.lksbstu.communication.structure.Message;
 import com.dekinci.lksbstu.communication.structure.News;
-import com.dekinci.lksbstu.communication.structure.Schedule;
-import com.dekinci.lksbstu.communication.structure.UserStatus;
 import com.dekinci.lksbstu.communication.structure.pojos.User;
 import com.dekinci.lksbstu.utils.FactCallback;
 import com.dekinci.lksbstu.utils.ResultCallback;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-public class PolyExemple implements PolyApi {
+public class PolyMock implements PolyApi {
+    private UserDataServer dataServer = new UserDataServer();
+    private ScheduleServer scheduleServer = new ScheduleServer();
+    private NewsServer newsServer = new NewsServer();
 
     private List<User> users = new ArrayList<>();
+
     private Login mLogin;
 
-    public PolyExemple() {
+    public PolyMock() {
         mLogin = PolyApp.restoreCredentials();
 
-        UserFactory userFactory = new UserFactory();
-        for (int i = 0; i < 5; i++)
-            users.add(userFactory.getStudent());
-        users.add(userFactory.getPrepod());
-        users.add(new User("0", "13531/4", "Пользователь", "Полезный", "Тестовый",
-                UserStatus.STUDENT.getStatus(), "ИКНТ", "13531/4",
-                "бакалавр", User.Types.FULL_TIME,
-                "3 января 1970", 10, 10));
+
     }
 
     @Override
-    public boolean isLoggedIn() {
+    public boolean loggedIn() {
         return mLogin != null;
-    }
-
-    @Override
-    public void getUserInfo(String user_id, ResultCallback<User> resultCallback) {
-        for (User user : users) {
-            if (user_id.equals(user.getId())) {
-                resultCallback.success(user);
-            }
-        }
-        resultCallback.failure(new FileNotFoundException());
-    }
-
-    @Override
-    public void getUserInfo(ResultCallback<User> resultCallback) {
-        for (User user : users) {
-            if (mLogin.getID().equals(user.getId())) {
-                resultCallback.success(user);
-            }
-        }
-        resultCallback.failure(new FileNotFoundException());
     }
 
     @Override
@@ -72,34 +45,55 @@ public class PolyExemple implements PolyApi {
         if (mLogin != null)
             callback.success();
 
-        String user_login = "a";
-        String user_pass = "0";
-        mLogin = new Login("dsfwe12dcds", "00000001");
-
-        if (login.equals(user_login) && password.equals(user_pass)) {
-            PolyApp.persistCredentials(mLogin);
+        Login result = dataServer.login(login, password);
+        if (result != null) {
+            mLogin = result;
             callback.success();
-        } else
-            callback.failure(new Exception());
+        }
+        else
+            callback.failure(new IllegalArgumentException("User with such login/password is not found"));
     }
 
     @Override
-    public void getSchedule(String data, String type, ResultCallback<List<DaySchedule>> resultCallback) {
-        ScheduleFactory factory = new ScheduleFactory();
+    public void getUserInfo(String user_id, ResultCallback<User> resultCallback) {
+        User result = dataServer.getUser(user_id);
+        if (result != null)
+            resultCallback.success(result);
+        else
+            resultCallback.failure(new IllegalArgumentException("User not found"));
+    }
+
+    @Override
+    public void getUserInfo(ResultCallback<User> resultCallback) {
+        if (!loggedIn())
+            resultCallback.failure(new IllegalStateException("Not logged in"));
+
+        User result = dataServer.getUser(mLogin.getId());
+        if (result != null)
+            resultCallback.success(result);
+        else
+            resultCallback.failure(new IllegalStateException("User not found"));
+    }
+
+    @Override
+    public void getSchedule(String date, String type, ResultCallback<List<DaySchedule>> resultCallback) {
+        List<DaySchedule> list = new ArrayList<>();
 
         switch (type) {
             case "day":
-                resultCallback.success(Collections.singletonList(factory.createDaySchedule()));
+                list.add(scheduleServer.getDaySchedule(date));
                 break;
             case "week":
-                resultCallback.success(factory.createWeekSchedule().getDaySchedules());
+                list.addAll(scheduleServer.getWeekSchedule(date).getDaySchedules());
                 break;
             case "month":
-                resultCallback.success(factory.createMonthSchedule().getSchedules());
+                list.addAll(scheduleServer.getMonthSchedule(date).getSchedules());
                 break;
             default:
                 Log.wtf("Exemple", "Wrong schedule type");
         }
+
+        resultCallback.success(list);
     }
 
     @Override
@@ -114,10 +108,9 @@ public class PolyExemple implements PolyApi {
 
     @Override
     public void getNews(ResultCallback<List<News>> resultCallback, int from, int to) {
-        NewsFactory newsFactory = new NewsFactory();
         List<News> news = new ArrayList<>();
         for (int i = from; i < to; i++)
-            news.add(newsFactory.generateNew());
+            news.add(newsServer.forceNewsById(String.valueOf(i)));
         resultCallback.success(news);
     }
 

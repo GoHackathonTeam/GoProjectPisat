@@ -19,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.dekinci.lksbstu.fragment.DocsFragment;
@@ -41,38 +42,15 @@ public class MainActivity extends AppCompatActivity implements
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show());
-
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        inflateProfile();
-        initFragment();
         initDrawerHeader();
+        initFragment();
         setNavigationListener();
-    }
-
-    private void inflateProfile() {
-        CurrentUser user = PolyManager.get().getUser();
-        ImageView imageView = findViewById(R.id.headerProfileView);
-        user.getAvatar(b -> runOnUiThread(() -> imageView.setImageBitmap(b)));
-
-        user.getUser(u -> runOnUiThread(() -> {
-            TextView surname = findViewById(R.id.nav_header_surname);
-            surname.setText(u.getSurname());
-
-            TextView name = findViewById(R.id.nav_header_name);
-            name.setText(u.getName());
-
-            TextView group = findViewById(R.id.nav_header_group_num);
-            group.setText(u.getGroupName());
-        }));
-
     }
 
     private void initFragment() {
@@ -85,20 +63,32 @@ public class MainActivity extends AppCompatActivity implements
 
     private void initDrawerHeader() {
         final LayoutInflater factory = getLayoutInflater();
-        @SuppressLint("InflateParams")
-        final View headerView = factory.inflate(R.layout.nav_header_main, null);
+        @SuppressLint("InflateParams") final View headerView = factory.inflate(R.layout.nav_header_main, null);
 
-        View prfiBtn = headerView.findViewById(R.id.profileViewClickable);
-        prfiBtn.setOnClickListener(v -> {
-            Fragment fragment = new ProfileFragment();
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.fragmentHolder, fragment);
-            fragmentTransaction.commit();
+        LinearLayout prfiBtn = headerView.findViewById(R.id.profileViewClickable);
+        prfiBtn.setOnClickListener(
+                v -> {
+                    goTo(new ProfileFragment());
 
-            DrawerLayout drawer = findViewById(R.id.drawer_layout);
-            drawer.closeDrawer(GravityCompat.START);
-        });
+                    DrawerLayout drawer = findViewById(R.id.drawer_layout);
+                    drawer.closeDrawer(GravityCompat.START);
+                }
+        );
+
+        CurrentUser user = PolyManager.get().getUser();
+        ImageView imageView = headerView.findViewById(R.id.headerProfileView);
+        user.getAvatar(b -> runOnUiThread(() -> imageView.setImageBitmap(b)));
+
+        user.getUser(u -> runOnUiThread(() -> {
+            TextView surname = headerView.findViewById(R.id.nav_header_surname);
+            surname.setText(u.getSurname());
+
+            TextView name = headerView.findViewById(R.id.nav_header_name);
+            name.setText(u.getName());
+
+            TextView group = headerView.findViewById(R.id.nav_header_group_num);
+            group.setText(u.getGroupName());
+        }));
     }
 
     private void setNavigationListener() {
@@ -135,6 +125,13 @@ public class MainActivity extends AppCompatActivity implements
             drawer.closeDrawer(GravityCompat.START);
             return true;
         });
+    }
+
+    private void goTo(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragmentHolder, fragment);
+        fragmentTransaction.commit();
     }
 
     @Override

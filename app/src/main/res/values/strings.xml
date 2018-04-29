@@ -43,7 +43,7 @@
     <string name="profile_achievements">Achievements</string>
     <string name="profile_logout">Log me out</string>
 
-    <!-- Strings related to schedule -->
+    <!-- Strings related to scheduleItem -->
     <string name="monday">Monday</string>
     <string name="tuesday">Tuesday</string>
     <string name="wednesday">Wednesday</string>

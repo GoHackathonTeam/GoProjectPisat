@@ -16,12 +16,11 @@ public class CurrentUser {
     private Set<Consumer<Bitmap>> avatarWaters = new HashSet<>();
     private Set<Consumer<User>> userWaters = new HashSet<>();
 
-    public User getUser(Consumer<User> consumer) {
+    public void getUser(Consumer<User> consumer) {
         if (user != null)
             consumer.accept(user);
         else
             userWaters.add(consumer);
-        return user;
     }
 
     public void setUser(User user) {

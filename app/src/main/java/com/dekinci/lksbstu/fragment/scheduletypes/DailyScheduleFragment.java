@@ -9,8 +9,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.dekinci.lksbstu.communication.structure.ScheduleItem;
 import com.dekinci.lksbstu.model.PolyManager;
-import com.dekinci.lksbstu.communication.structure.Schedule;
 import com.example.hackaton.goprojectpisat.R;
 
 import java.text.SimpleDateFormat;
@@ -54,17 +54,17 @@ public class DailyScheduleFragment extends Fragment implements ScheduleShower {
                 nothingText.setLayoutParams(params);
                 schedules.addView(nothingText);
             }
-            Collection<Schedule> scheduleCollection = scheduleList.get(0).getDaySched();
-            for (Schedule schedule : scheduleCollection) {
+            Collection<ScheduleItem> scheduleItemCollection = scheduleList.get(0).getDaySchedule();
+            for (ScheduleItem scheduleItem : scheduleItemCollection) {
                 View element = inflater.inflate(R.layout.class_schedule_layout, schedules, false);
                 TextView time = element.findViewById(R.id.class_time);
                 time.setText("null");
                 TextView name = element.findViewById(R.id.class_name);
-                name.setText(schedule.getLesson() + " (" + schedule.getLessonType() + ")");
+                name.setText(scheduleItem.getLesson() + " (" + scheduleItem.getLessonType() + ")");
                 TextView teacher = element.findViewById(R.id.class_teacher);
-                teacher.setText(schedule.getTeacher());
+                teacher.setText(scheduleItem.getTeacher());
                 TextView room = element.findViewById(R.id.class_room);
-                room.setText(schedule.getPlace());
+                room.setText(scheduleItem.getPlace());
                 ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
                 element.setLayoutParams(params);
                 schedules.addView(element);

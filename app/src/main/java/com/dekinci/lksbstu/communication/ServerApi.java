@@ -3,7 +3,6 @@ package com.dekinci.lksbstu.communication;
 import com.dekinci.lksbstu.communication.structure.DaySchedule;
 import com.dekinci.lksbstu.communication.structure.Gradebook;
 import com.dekinci.lksbstu.communication.structure.Login;
-import com.dekinci.lksbstu.communication.structure.Schedule;
 import com.dekinci.lksbstu.communication.structure.pojos.User;
 
 

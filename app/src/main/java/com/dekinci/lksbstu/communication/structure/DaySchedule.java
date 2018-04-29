@@ -1,33 +1,26 @@
 package com.dekinci.lksbstu.communication.structure;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class DaySchedule {
-
-    @SerializedName("daySched")
-    private List<Schedule> daySched = new ArrayList<>();
-
-    @SerializedName("date")
+    private List<ScheduleItem> daySchedule = new ArrayList<>();
     private String date;
 
-    public DaySchedule(List<Schedule> schedules, String date) {
+    public DaySchedule(List<ScheduleItem> scheduleItems, String date) {
         this.date = date;
-        daySched = schedules;
+        daySchedule = scheduleItems;
     }
 
     public DaySchedule() {
     }
 
-    public void add(Schedule schedule){
-        daySched.add(schedule);
+    public void add(ScheduleItem scheduleItem){
+        daySchedule.add(scheduleItem);
     }
 
-    public List<Schedule> getDaySched() {
-        return daySched;
+    public List<ScheduleItem> getDaySchedule() {
+        return daySchedule;
     }
 
     public String getDate() {

@@ -35,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        if (PolyManager.get().getApi().isLoggedIn()) {
+        if (PolyManager.get().getApi().loggedIn()) {
             proceed();
             return;
         }

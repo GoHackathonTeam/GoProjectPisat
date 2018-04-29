@@ -7,35 +7,34 @@ import java.util.List;
 
 public class Login {
     @SerializedName("access_token")
-    private String TOKEN;
+    private String token;
 
     @SerializedName("id")
-    private String ID;
-
-    public String getTOKEN() {
-        return TOKEN;
-    }
-
-    public String getID() {
-        return ID;
-    }
-
-    public Login(String TOKEN, String ID) {
-        this.TOKEN = TOKEN;
-        this.ID = ID;
-    }
-
-    public Login(){
-
-    }
-
-    @Override
-    public  String toString(){
-        return TOKEN + "&&&" + ID;
-    }
+    private String id;
 
     public static Login fromString(String str){
         List<String> arr = Arrays.asList(str.split("&&&"));
         return new Login(arr.get(0), arr.get(1));
+    }
+
+    public Login(String token, String id) {
+        this.token = token;
+        this.id = id;
+    }
+
+    public Login(){
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    @Override
+    public  String toString(){
+        return token + "&&&" + id;
     }
 }

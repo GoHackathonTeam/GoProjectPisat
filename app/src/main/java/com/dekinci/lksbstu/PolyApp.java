@@ -4,7 +4,7 @@ import android.app.Application;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.dekinci.lksbstu.communication.PolyExemple;
+import com.dekinci.lksbstu.communication.PolyMock;
 import com.dekinci.lksbstu.communication.structure.Login;
 import com.dekinci.lksbstu.model.PolyManager;
 
@@ -21,7 +21,7 @@ public class PolyApp extends Application {
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         innerDir = getFilesDir();
 
-        PolyManager.get().setApi(new PolyExemple());
+        PolyManager.get().setApi(new PolyMock());
     }
 
     public static void persistCredentials(Login login) {
