@@ -4,6 +4,7 @@
     android:id="@+id/tet_a_tet"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:padding="8dp"
     tools:context="com.dekinci.lksbstu.fragment.TetATetFragment">
 
 

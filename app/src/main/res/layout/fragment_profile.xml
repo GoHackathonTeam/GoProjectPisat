@@ -213,6 +213,29 @@
         app:layout_constraintStart_toStartOf="@+id/profile_info"
         app:layout_constraintTop_toBottomOf="@+id/profile_achievements" />
 
+    <TableLayout
+        android:id="@+id/profile_achievements_holder"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/profile_achievements_separator">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nothing to show here"
+                android:textAppearance="@style/CommonText" />
+        </TableRow>
+    </TableLayout>
+
     <View
         android:id="@+id/photoDivider"
         android:layout_width="1dp"
