@@ -1,5 +1,6 @@
 package com.dekinci.lksbstu.communication.server
 
+import android.content.BroadcastReceiver
 import com.dekinci.lksbstu.PolyApp
 import com.dekinci.lksbstu.communication.structure.Message
 import java.io.File
@@ -52,5 +53,16 @@ class DialogsServer {
             j++
         }
         return result
+    }
+
+    fun sendMessage(sender: String, receiver: String, message: String) {
+        messages.add(0, Message(sender, receiver, message))
+        val writer = dialogFile.writer()
+        writer.write(sender)
+        writer.write(10)
+        writer.write(receiver)
+        writer.write(10)
+        writer.write(message)
+        writer.write(10)
     }
 }
