@@ -30,6 +30,8 @@ public class LoginActivity extends AppCompatActivity {
     private View loginFormView;
     private AVLoadingIndicatorView loadingIndicatorView;
 
+    private Integer defY;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,6 +109,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void showProgress() {
+        if (defY == null)
+            defY = (int) loginFormView.getTranslationY();
+
         loginFormView.setVisibility(View.VISIBLE);
         loginFormView.setAlpha(1);
         loginFormView.animate()
@@ -122,7 +127,7 @@ public class LoginActivity extends AppCompatActivity {
                         loadingIndicatorView.setVisibility(View.VISIBLE);
                         loadingIndicatorView.animate()
                                 .setDuration(100)
-                                .y(200)
+                                .translationY(defY)
                                 .alpha(1)
                                 .start();
 
@@ -133,6 +138,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void hideProgress() {
+        if (defY == null)
+            defY = (int) loadingIndicatorView.getTranslationY();
+
         loadingIndicatorView.setAlpha(1);
         loadingIndicatorView.setVisibility(View.VISIBLE);
         loadingIndicatorView.animate()
@@ -147,7 +155,7 @@ public class LoginActivity extends AppCompatActivity {
                         loginFormView.setVisibility(View.VISIBLE);
                         loginFormView.animate()
                                 .setDuration(100)
-                                .y(200)
+                                .translationY(defY)
                                 .alpha(1)
                                 .start();
                         loadingIndicatorView.animate().setListener(null);

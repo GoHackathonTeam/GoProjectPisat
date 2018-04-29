@@ -41,7 +41,7 @@ public class TetATetFragment extends Fragment implements NavigationView.OnNaviga
                              Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_tet_a_tet, container, false);
         ListView listView = view.findViewById(R.id.list_dialogs);
-
+        Log.i("Tet A Tet", "Fragment attached");
         PolyManager.get().getApi().getDialogs(dialogs -> {
             Objects.requireNonNull(getActivity()).runOnUiThread(() ->
                 listView.setAdapter(new DialogsAdapter(dialogs, getContext())));
