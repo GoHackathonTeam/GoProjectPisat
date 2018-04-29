@@ -62,6 +62,12 @@ public class DailyScheduleFragment extends Fragment implements ScheduleShower {
         inflateSchedule();
     }
 
+    @Override
+    public void show(Date date) {
+        currentDate = date;
+        inflateSchedule();
+    }
+
     public void inflateSchedule() {
         String textDate = formatter.format(currentDate);
 
