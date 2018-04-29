@@ -7,11 +7,7 @@
         <item
             android:id="@+id/nav_messages"
             android:icon="@drawable/ic_menu_send"
-            android:title="@string/nav_group_messages" />
-        <item
-            android:id="@+id/nav_private_chat"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/nav_private_chat" />
+            android:title="@string/nav__messages" />
     </group>
 
     <group android:checkableBehavior="single">

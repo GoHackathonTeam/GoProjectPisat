@@ -24,6 +24,11 @@
 
     <style name="MainTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="PolyButton" parent="android:Widget.Material.Light.Button">
+        <item name="android:textColor">#ffffffff</item>
+        <item name="android:background">@drawable/poly_button</item>
+    </style>
+
     <style name="HeaderText" parent="TextAppearance.AppCompat.Large">
         <item name="android:textSize">30sp</item>
         <item name="android:fontFamily">sans-serif-light</item>
