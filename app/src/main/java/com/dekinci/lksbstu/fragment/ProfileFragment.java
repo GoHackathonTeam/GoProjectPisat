@@ -64,10 +64,10 @@ public class ProfileFragment extends Fragment {
             institute.setText(u.getInstitute());
 
             TextView recordBook = v.findViewById(R.id.profile_rec_book_value);
-            recordBook.setText("ERROR!"); //TODO!!!
+            recordBook.setText("12345"); //TODO!!!
 
             TextView speciality = v.findViewById(R.id.profile_speciality_value);
-            speciality.setText("ERROR!");//TODO!!!
+            speciality.setText("ICST");//TODO!!!
         }));
     }
 
