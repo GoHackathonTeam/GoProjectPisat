@@ -10,13 +10,15 @@ class DialogsServer {
     private val messages = mutableListOf<Message>()
 
     init {
-        val lines = dialogFile.readLines()
-        val size = lines.size / 3
-        for (i in 1..size) {
-            val offset = i * 3
-            messages += Message(lines[offset], lines[offset + 1], lines[offset + 2])
+        if (dialogFile.exists()) {
+            val lines = dialogFile.readLines()
+            val size = lines.size / 3
+            for (i in 1..size) {
+                val offset = i * 3
+                messages += Message(lines[offset], lines[offset + 1], lines[offset + 2])
+            }
+            messages.reverse()
         }
-        messages.reverse()
     }
 
     fun getDialogs(userId: String) : MutableList<String> {
