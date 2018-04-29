@@ -145,7 +145,11 @@ public class PolyMock implements PolyApi {
 
     @Override
     public void getMessageList(String user_id, ResultCallback<List<Message>> resultCallback, int from, int to) {
-
+        try {
+            resultCallback.success(dialogsServer.getMessageList(mLogin.getId(), user_id, from, to));
+        } catch (Exception e) {
+            resultCallback.failure(e);
+        }
     }
 
     @Override
