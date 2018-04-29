@@ -30,7 +30,7 @@ public class PolyApp extends Application {
 
     public static Login restoreCredentials() {
         if (isLoggedIn())
-            return Login.fromString(prefs.getString(CREDENTIALS_KEY, ""));
+            return Login.fromString(prefs.getString(CREDENTIALS_KEY, null));
         else
             return null;
     }

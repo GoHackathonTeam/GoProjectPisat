@@ -12,7 +12,7 @@ public class UserDataServer {
     static {
         users.put("01", new UserData(
                 "login", String.valueOf("pass".hashCode()),
-                "Name", "Surname", "Patron",
+                "Alex", "Nicolaenko", "Patron",
                 "Inst", "1", "13531",
                 "bach", "full", "stud",
                 1, 1, "2017"));

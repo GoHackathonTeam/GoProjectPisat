@@ -107,8 +107,6 @@ public class MainActivity extends AppCompatActivity implements
 
     private void initHeaderProfile(View view) {
         CurrentUser user = PolyManager.get().getUser();
-        ImageView imageView = view.findViewById(R.id.headerProfileView);
-        user.getAvatar(b -> runOnUiThread(() -> imageView.setImageBitmap(b)));
 
         user.getUser(u -> runOnUiThread(() -> {
             TextView surname = view.findViewById(R.id.nav_header_surname);

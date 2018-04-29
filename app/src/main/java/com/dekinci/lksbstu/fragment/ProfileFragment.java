@@ -44,9 +44,6 @@ public class ProfileFragment extends Fragment {
     private void inflateUserData(View v) {
         CurrentUser user = PolyManager.get().getUser();
 
-        ImageView profilePhoto = v.findViewById(R.id.profile_photo);
-        user.getAvatar(b -> getActivity().runOnUiThread(() -> profilePhoto.setImageBitmap(b)));
-
         user.getUser(u -> getActivity().runOnUiThread(()-> {
             TextView surname = v.findViewById(R.id.profile_surname);
             surname.setText(u.getSurname());

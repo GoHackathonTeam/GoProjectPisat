@@ -8,10 +8,12 @@
     <ListView
         android:id="@+id/list_dialog"
         android:layout_width="373dp"
-        android:layout_height="558dp"
+        android:layout_height="437dp"
+        android:layout_marginBottom="13dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/takeMess"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,7 +24,7 @@
         android:layout_width="309dp"
         android:layout_height="47dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="36dp"
         android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="Write message"
@@ -32,7 +34,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.982" />
+        app:layout_constraintVertical_bias="1.0" />
 
 
     <ImageButton
@@ -44,9 +46,9 @@
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.908"
+        app:layout_constraintHorizontal_bias="0.95"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.98" />
+        app:layout_constraintVertical_bias="1.0" />
 
 </android.support.constraint.ConstraintLayout>
