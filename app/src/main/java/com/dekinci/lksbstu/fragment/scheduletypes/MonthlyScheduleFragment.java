@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
 
-import com.dekinci.lksbstu.fragment.ScheduleFragment;
+import com.dekinci.lksbstu.utils.Utils;
 import com.example.hackaton.goprojectpisat.R;
 
 import java.util.Calendar;
@@ -18,6 +18,19 @@ public class MonthlyScheduleFragment extends Fragment implements ScheduleShower 
     private CalendarView calendarView;
     private Date currentDate;
     private Calendar calendar;
+
+    private DayManager manager;
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        manager = null;
+    }
+
+    @Override
+    public void injectDayManager(DayManager manager) {
+        this.manager = manager;
+    }
 
     @Override
     public View onCreateView(
@@ -31,11 +44,8 @@ public class MonthlyScheduleFragment extends Fragment implements ScheduleShower 
 
         calendarView = view.findViewById(R.id.scheduleCalendar);
         calendarView.setDate(currentDate.getTime());
-        calendarView.setOnDateChangeListener((view1, year, month, dayOfMonth) -> {
-            ScheduleFragment parent = (ScheduleFragment) getParentFragment();
-            if (parent != null)
-                parent.showDay(currentDate);
-        });
+        calendarView.setOnDateChangeListener((v, year, month, dayOfMonth) ->
+                manager.showDay(Utils.ymdToDate(year, month, dayOfMonth)));
 
         return view;
     }

@@ -26,8 +26,7 @@ public class NewsServer {
     public List<News> getNewsByDate(String date) {
         List<News> result = getForDate(date);
         if (result.isEmpty()) {
-            int amount = r.nextInt(3) + 1;
-            for (int i = 0; i < amount; i++)
+            for (int i = 0; i < 3; i++)
                 result.add(createNews(date));
         }
 
@@ -48,7 +47,7 @@ public class NewsServer {
     public News forceNewsById(String id) {
         News n = getNewsById(id);
         if (n == null)
-            n = createNews(r.nextInt(30) + 1 + " мая 2018");
+            n = createNews(r.nextInt(20) + 1 + ".05.2018");
         return n;
     }
 

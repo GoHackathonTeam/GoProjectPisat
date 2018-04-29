@@ -6,4 +6,5 @@ public interface ScheduleShower {
     void next();
     void previous();
     void show(Date date);
+    void injectDayManager(DayManager manager);
 }
