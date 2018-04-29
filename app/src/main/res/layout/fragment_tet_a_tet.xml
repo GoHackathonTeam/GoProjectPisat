@@ -4,7 +4,6 @@
     android:id="@+id/tet_a_tet"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/poly_bg_light"
     tools:context="com.dekinci.lksbstu.fragment.TetATetFragment">
 
 
