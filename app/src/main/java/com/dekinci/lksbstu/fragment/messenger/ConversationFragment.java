@@ -44,11 +44,12 @@ public class ConversationFragment extends Fragment implements NavigationView.OnN
         super.onCreate(savedInstanceState);
     }
 
+    ListView listView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_conversation, container, false);
-        ListView listView = view.findViewById(R.id.list_dialog);
+        listView = view.findViewById(R.id.list_dialog);
 
         ImageButton send = view.findViewById(R.id.sendMess);
         EditText takeMess = view.findViewById(R.id.takeMess);
@@ -59,10 +60,16 @@ public class ConversationFragment extends Fragment implements NavigationView.OnN
             });
         },0, 10);
 
-//        send.setOnClickListener(v ->{
-//            PolyManager.get().getApi().sendMessage(PolyManager.get().getUser().getUser(User::getId),
-//                    takeMess.getText().toString(), );
-//        });
+        send.setOnClickListener(v ->{
+            PolyManager.get().getApi().sendMessage(id,
+                    takeMess.getText().toString(), a ->{});
+            takeMess.setText("");
+            PolyManager.get().getApi().getMessageList(id, messageList -> {
+                Objects.requireNonNull(getActivity()).runOnUiThread(() ->{
+                    listView.setAdapter(new MessageAdapter(messageList, getContext()));
+                });
+            },0, 10);
+        });
         return view;
     }
 
