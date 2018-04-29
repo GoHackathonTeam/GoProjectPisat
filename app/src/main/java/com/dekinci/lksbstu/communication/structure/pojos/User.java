@@ -12,11 +12,12 @@ public class User {
     public User() {
     }
 
-    public User(String id,
+    public User(String id, String login,
                 String name, String surname, String patronymic, String avatarUrl,
                 String institute, String groupId, String groupName,
                 String educationLvl, String educationType, String educationRole,
                 Integer course, Integer semester, String enrollmentYear) {
+        this.login = login;
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -34,6 +35,7 @@ public class User {
     }
 
     private String id;
+    private String login;
 
     private String name;
     private String surname;
@@ -51,6 +53,10 @@ public class User {
     private Integer course;
     private Integer semester;
     private String enrollmentYear;
+
+    public String getLogin() {
+        return login;
+    }
 
     public String getId() {
         return id;

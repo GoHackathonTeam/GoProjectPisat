@@ -84,7 +84,8 @@ public class UserDataServer {
     public User getUser(String id) {
         UserData data = users.get(id);
         if (data != null) {
-            return new User(id, data.getName(), data.getSurname(), data.getPatronym(), data.getAvatarUrl(),
+            return new User(id, data.getLogin(),
+                    data.getName(), data.getSurname(), data.getPatronym(), data.getAvatarUrl(),
                     data.getInstitute(), data.getGroupId(), data.getGroupName(),
                     data.getEducationLvl(), data.getEducationType(), data.getEducationRole(),
                     data.getCourse(), data.getSemester(), data.getEnrollmentYear());

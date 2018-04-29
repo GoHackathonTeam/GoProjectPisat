@@ -70,19 +70,28 @@
     <!-- Example General settings -->
     <string name="pref_header_general">General</string>
 
-    <string name="pref_title_display_name">Display name</string>
-    <string name="pref_default_display_name">John Smith</string>
-
-    <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
-    <string-array name="pref_example_list_titles">
-        <item>Always</item>
-        <item>When possible</item>
-        <item>Never</item>
+    <string name="pref_start_activity">Choose start screen:</string>
+    <string-array name="pref_start_activity_list_titles">
+        <item>Profile</item>
+        <item>Schedule</item>
+        <item>Messages</item>
     </string-array>
-    <string-array name="pref_example_list_values">
+    <string-array name="pref_start_activity_list_values">
+        <item>2</item>
         <item>1</item>
         <item>0</item>
-        <item>-1</item>
+    </string-array>
+
+    <string name="pref_schedule_type">Choose start screen:</string>
+    <string-array name="pref_schedule_types_titles">
+        <item>Daily</item>
+        <item>Weekly</item>
+        <item>Monthly</item>
+    </string-array>
+    <string-array name="pref_schedule_types_values">
+        <item>2</item>
+        <item>1</item>
+        <item>0</item>
     </string-array>
 
     <!-- Example settings for Data & Sync -->

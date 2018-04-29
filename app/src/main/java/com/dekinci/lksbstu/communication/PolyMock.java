@@ -27,14 +27,10 @@ public class PolyMock implements PolyApi {
     private NewsServer newsServer = new NewsServer();
     private DialogsServer dialogsServer = new DialogsServer();
 
-    private List<User> users = new ArrayList<>();
-
     private Login mLogin;
 
     public PolyMock() {
         mLogin = PolyApp.restoreCredentials();
-
-
     }
 
     @Override
@@ -50,6 +46,7 @@ public class PolyMock implements PolyApi {
         Login result = dataServer.login(login, password);
         if (result != null) {
             mLogin = result;
+            PolyApp.persistCredentials(result);
             callback.success();
         }
         else
