@@ -1,12 +1,12 @@
 package com.dekinci.lksbstu;
 
-import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.dekinci.lksbstu.communication.PolyExemple;
 import com.dekinci.lksbstu.communication.structure.Login;
+import com.dekinci.lksbstu.model.PolyManager;
 
 import java.io.File;
 
@@ -18,9 +18,10 @@ public class PolyApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        PolyManager.get().setApi(new PolyExemple());
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         innerDir = getFilesDir();
+
+        PolyManager.get().setApi(new PolyExemple());
     }
 
     public static void persistCredentials(Login login) {

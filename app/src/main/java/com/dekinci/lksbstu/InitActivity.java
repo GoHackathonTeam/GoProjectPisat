@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import com.dekinci.lksbstu.model.PolyManager;
+
 public class InitActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -13,8 +15,7 @@ public class InitActivity extends AppCompatActivity {
     }
 
     private void proceed() {
-        Class c = PolyApp.isLoggedIn() ? MainActivity.class : LoginActivity.class;
-        Intent i = new Intent(InitActivity.this, c);
+        Intent i = new Intent(InitActivity.this, LoginActivity.class);
         startActivity(i);
         finish();
     }

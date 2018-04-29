@@ -16,7 +16,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.dekinci.lksbstu.PolyManager;
+import com.dekinci.lksbstu.model.PolyManager;
 import com.dekinci.lksbstu.communication.structure.Message;
 import com.example.hackaton.goprojectpisat.R;
 
@@ -107,7 +107,7 @@ public class ConversationFragment extends Fragment implements NavigationView.OnN
 
 
             setData.name = view.findViewById(R.id.user);
-            setData.image = view.findViewById(R.id.imageView);
+            setData.image = view.findViewById(R.id.headerProfileView);
             setData.msg = view.findViewById(R.id.msg);
 
             setData.name.setText(name.get(position));

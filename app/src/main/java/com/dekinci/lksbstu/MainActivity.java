@@ -1,8 +1,8 @@
 package com.dekinci.lksbstu;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -14,20 +14,24 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.dekinci.lksbstu.fragment.DocsFragment;
-import com.dekinci.lksbstu.fragment.GroupMessengerFragment;
 import com.dekinci.lksbstu.fragment.NewsFragment;
 import com.dekinci.lksbstu.fragment.ProfileFragment;
 import com.dekinci.lksbstu.fragment.ScheduleFragment;
 import com.dekinci.lksbstu.fragment.TasksFragment;
 import com.dekinci.lksbstu.fragment.TetATetFragment;
+import com.dekinci.lksbstu.model.CurrentUser;
+import com.dekinci.lksbstu.model.PolyManager;
 import com.example.hackaton.goprojectpisat.R;
 
 public class MainActivity extends AppCompatActivity implements
-        NavigationView.OnNavigationItemSelectedListener,
         ProfileFragment.LogOutListener {
 
     @Override
@@ -47,8 +51,90 @@ public class MainActivity extends AppCompatActivity implements
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        inflateProfile();
+        initFragment();
+        initDrawerHeader();
+        setNavigationListener();
+    }
+
+    private void inflateProfile() {
+        CurrentUser user = PolyManager.get().getUser();
+        ImageView imageView = findViewById(R.id.headerProfileView);
+        user.getAvatar(b -> runOnUiThread(() -> imageView.setImageBitmap(b)));
+
+        user.getUser(u -> runOnUiThread(() -> {
+            TextView surname = findViewById(R.id.nav_header_surname);
+            surname.setText(u.getSurname());
+
+            TextView name = findViewById(R.id.nav_header_name);
+            name.setText(u.getName());
+
+            TextView group = findViewById(R.id.nav_header_group_num);
+            group.setText(u.getGroupName());
+        }));
+
+    }
+
+    private void initFragment() {
+        Fragment fragment = new ProfileFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.fragmentHolder, fragment);
+        fragmentTransaction.commit();
+    }
+
+    private void initDrawerHeader() {
+        final LayoutInflater factory = getLayoutInflater();
+        @SuppressLint("InflateParams")
+        final View headerView = factory.inflate(R.layout.nav_header_main, null);
+
+        View prfiBtn = headerView.findViewById(R.id.profileViewClickable);
+        prfiBtn.setOnClickListener(v -> {
+            Fragment fragment = new ProfileFragment();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.fragmentHolder, fragment);
+            fragmentTransaction.commit();
+
+            DrawerLayout drawer = findViewById(R.id.drawer_layout);
+            drawer.closeDrawer(GravityCompat.START);
+        });
+    }
+
+    private void setNavigationListener() {
         NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setNavigationItemSelectedListener(item -> {
+            int id = item.getItemId();
+            Fragment fragment = null;
+            if (id == R.id.nav_schedule) {
+                fragment = new ScheduleFragment();
+            } else if (id == R.id.nav_messages) {
+                fragment = new TetATetFragment();
+            } else if (id == R.id.nav_tasks) {
+                fragment = new TasksFragment();
+            } else if (id == R.id.nav_docs) {
+                fragment = new DocsFragment();
+            } else if (id == R.id.nav_news) {
+                fragment = new NewsFragment();
+            } else if (id == R.id.nav_settings) {
+                Intent i = new Intent(this, SettingsActivity.class);
+                startActivity(i);
+            } else if (id == R.id.nav_about) {
+                Intent i = new Intent(this, AboutActivity.class);
+                startActivity(i);
+            }
+
+            if (fragment != null) {
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragmentHolder, fragment);
+                fragmentTransaction.commit();
+            }
+
+            DrawerLayout drawer = findViewById(R.id.drawer_layout);
+            drawer.closeDrawer(GravityCompat.START);
+            return true;
+        });
     }
 
     @Override
@@ -80,41 +166,6 @@ public class MainActivity extends AppCompatActivity implements
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-        Fragment fragment = null;
-        if (id == R.id.nav_schedule) {
-            fragment = new ScheduleFragment();
-        } else if (id == R.id.nav_messages) {
-            fragment = new TetATetFragment();
-        } else if (id == R.id.nav_tasks) {
-            fragment = new TasksFragment();
-        } else if (id == R.id.nav_docs) {
-            fragment = new DocsFragment();
-        } else if (id == R.id.nav_news) {
-            fragment = new NewsFragment();
-        } else if (id == R.id.nav_settings) {
-            Intent i = new Intent(this, SettingsActivity.class);
-            startActivity(i);
-        } else if (id == R.id.nav_about) {
-            Intent i = new Intent(this, AboutActivity.class);
-            startActivity(i);
-        }
-
-        if (fragment != null) {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.add(R.id.fragmentHolder, fragment);
-            fragmentTransaction.commit();
-        }
-
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
     }
 
     @Override

@@ -3,54 +3,42 @@ package com.dekinci.lksbstu;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
-import android.app.LoaderManager.LoaderCallbacks;
-import android.content.CursorLoader;
 import android.content.Intent;
-import android.content.Loader;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.dekinci.lksbstu.model.PolyManager;
 import com.dekinci.lksbstu.utils.FactCallback;
 import com.dekinci.lksbstu.utils.Synchronizer;
 import com.example.hackaton.goprojectpisat.R;
 import com.wang.avi.AVLoadingIndicatorView;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static android.Manifest.permission.READ_CONTACTS;
-
 
 public class LoginActivity extends AppCompatActivity {
-    private static final int REQUEST_READ_CONTACTS = 0;
     private UserLoginTask mAuthTask = null;
 
-    // UI references.
     private AutoCompleteTextView loginView;
     private EditText passwordView;
 
     private View loginFormView;
-
     private AVLoadingIndicatorView loadingIndicatorView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        if (PolyManager.get().getApi().isLoggedIn()) {
+            proceed();
+            return;
+        }
 
         loadingIndicatorView = findViewById(R.id.avi);
 
@@ -68,6 +56,7 @@ public class LoginActivity extends AppCompatActivity {
         loginSignInButton.setOnClickListener(view -> attemptLogin());
 
         loginFormView = findViewById(R.id.login_form);
+        loginFormView.setVisibility(View.VISIBLE);
     }
 
     private void attemptLogin() {

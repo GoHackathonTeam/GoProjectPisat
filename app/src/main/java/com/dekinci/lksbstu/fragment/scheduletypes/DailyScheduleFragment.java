@@ -3,22 +3,19 @@ package com.dekinci.lksbstu.fragment.scheduletypes;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.dekinci.lksbstu.PolyManager;
-import com.dekinci.lksbstu.communication.structure.DaySchedule;
+import com.dekinci.lksbstu.model.PolyManager;
 import com.dekinci.lksbstu.communication.structure.Schedule;
 import com.example.hackaton.goprojectpisat.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.Date;
 
 
 public class DailyScheduleFragment extends Fragment implements ScheduleShower {

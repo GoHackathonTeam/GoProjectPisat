@@ -49,6 +49,8 @@ public class User {
     @SerializedName("id")
     private String id;
 
+    private String avatarUrl = "https://images-na.ssl-images-amazon.com/images/I/41q1QAln%2BQL.jpg";
+
     @SerializedName("groupName")
     private String groupName;
 
@@ -87,6 +89,10 @@ public class User {
 
     public String getId() {
         return id;
+    }
+
+    public String getAvatarUrl() {
+        return avatarUrl;
     }
 
     public String getGroupName() {

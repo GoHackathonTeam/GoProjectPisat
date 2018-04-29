@@ -30,6 +30,8 @@ public class PolyExemple implements PolyApi {
     private Login mLogin;
 
     public PolyExemple() {
+        mLogin = PolyApp.restoreCredentials();
+
         UserFactory userFactory = new UserFactory();
         for (int i = 0; i < 5; i++)
             users.add(userFactory.getStudent());
@@ -38,6 +40,11 @@ public class PolyExemple implements PolyApi {
                 UserStatus.STUDENT.getStatus(), "ИКНТ", "13531/4",
                 "бакалавр", User.Types.FULL_TIME,
                 "3 января 1970", 10, 10));
+    }
+
+    @Override
+    public boolean isLoggedIn() {
+        return mLogin != null;
     }
 
     @Override

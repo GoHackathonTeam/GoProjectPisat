@@ -1,8 +1,8 @@
-package com.dekinci.lksbstu;
+package com.dekinci.lksbstu.model;
 
 import com.dekinci.lksbstu.communication.PolyApi;
 import com.dekinci.lksbstu.communication.structure.pojos.User;
-import com.dekinci.lksbstu.utils.ResultCallback;
+import com.dekinci.lksbstu.utils.ImageLoader;
 
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -10,6 +10,7 @@ public class PolyManager {
     private static final AtomicReference<PolyManager> manager = new AtomicReference<>();
 
     private PolyApi api;
+    private CurrentUser user = new CurrentUser();;
     private User currentUser;
     private String id;
 
@@ -31,14 +32,14 @@ public class PolyManager {
     }
 
     public void setUser() {
-        api.getUserInfo(user -> currentUser = user);
+        api.getUserInfo(user::setUser);
     }
 
     public PolyApi getApi() {
         return api;
     }
 
-    public User getCurrentUser() {
-        return currentUser;
+    public CurrentUser getUser() {
+        return user;
     }
 }

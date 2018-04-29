@@ -3,7 +3,6 @@ package com.dekinci.lksbstu.fragment;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -20,9 +19,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.dekinci.lksbstu.PolyManager;
+import com.dekinci.lksbstu.model.PolyManager;
 import com.dekinci.lksbstu.fragment.messenger.ConversationFragment;
-import com.dekinci.lksbstu.fragment.scheduletypes.DailyScheduleFragment;
 import com.example.hackaton.goprojectpisat.R;
 
 import java.util.ArrayList;
@@ -110,7 +108,7 @@ public class TetATetFragment extends Fragment implements NavigationView.OnNaviga
 
 
             setData.name = view.findViewById(R.id.user);
-            setData.image = view.findViewById(R.id.imageView);
+            setData.image = view.findViewById(R.id.headerProfileView);
 
             setData.name.setText(name.get(position + 1));
             //  setData.image.setImageBitmap(images.get(position));

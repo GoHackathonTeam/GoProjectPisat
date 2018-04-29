@@ -15,7 +15,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.dekinci.lksbstu.PolyManager;
+import com.dekinci.lksbstu.model.PolyManager;
 import com.dekinci.lksbstu.fragment.messenger.ConversationFragment;
 import com.example.hackaton.goprojectpisat.R;
 
@@ -89,7 +89,7 @@ public class TasksFragment extends Fragment {
 
 
             setData.name = view.findViewById(R.id.user);
-            setData.image = view.findViewById(R.id.imageView);
+            setData.image = view.findViewById(R.id.headerProfileView);
 
             setData.name.setText(name.get(position + 1));
             //  setData.image.setImageBitmap(images.get(position));

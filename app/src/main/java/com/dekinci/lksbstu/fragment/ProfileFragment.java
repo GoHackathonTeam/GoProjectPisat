@@ -10,7 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.dekinci.lksbstu.PolyManager;
+import com.dekinci.lksbstu.model.CurrentUser;
+import com.dekinci.lksbstu.model.PolyManager;
 import com.dekinci.lksbstu.communication.structure.pojos.User;
 import com.dekinci.lksbstu.utils.ImageLoader;
 import com.example.hackaton.goprojectpisat.R;
@@ -39,31 +40,33 @@ public class ProfileFragment extends Fragment {
     }
 
     private void inflateUserData(View v) {
-        User u = PolyManager.get().getCurrentUser();
+        CurrentUser user = PolyManager.get().getUser();
+
         ImageView profilePhoto = v.findViewById(R.id.profile_photo);
-        new ImageLoader(profilePhoto::setImageBitmap)
-                .execute("https://images-na.ssl-images-amazon.com/images/I/41q1QAln%2BQL.jpg");
+        user.getAvatar(b -> getActivity().runOnUiThread(() -> profilePhoto.setImageBitmap(b)));
 
-        TextView surname = v.findViewById(R.id.profile_surname);
-        surname.setText(u.getSurname());
+        user.getUser(u -> getActivity().runOnUiThread(()-> {
+            TextView surname = v.findViewById(R.id.profile_surname);
+            surname.setText(u.getSurname());
 
-        TextView name = v.findViewById(R.id.profile_name);
-        name.setText(u.getName());
+            TextView name = v.findViewById(R.id.profile_name);
+            name.setText(u.getName());
 
-        TextView patronymic = v.findViewById(R.id.profile_patronymic);
-        patronymic.setText(u.getPatronymic());
+            TextView patronymic = v.findViewById(R.id.profile_patronymic);
+            patronymic.setText(u.getPatronymic());
 
-        TextView group = v.findViewById(R.id.profile_group_value);
-        group.setText(u.getGroupId());
+            TextView group = v.findViewById(R.id.profile_group_value);
+            group.setText(u.getGroupId());
 
-        TextView institute = v.findViewById(R.id.profile_institute_value);
-        institute.setText(u.getInstitute());
+            TextView institute = v.findViewById(R.id.profile_institute_value);
+            institute.setText(u.getInstitute());
 
-        TextView recordBook = v.findViewById(R.id.profile_rec_book_value);
-        recordBook.setText("ERROR!"); //TODO!!!
+            TextView recordBook = v.findViewById(R.id.profile_rec_book_value);
+            recordBook.setText("ERROR!"); //TODO!!!
 
-        TextView speciality = v.findViewById(R.id.profile_speciality_value);
-        speciality.setText("ERROR!");//TODO!!!
+            TextView speciality = v.findViewById(R.id.profile_speciality_value);
+            speciality.setText("ERROR!");//TODO!!!
+        }));
     }
 
     @Override

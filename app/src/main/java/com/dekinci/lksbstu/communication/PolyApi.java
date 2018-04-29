@@ -33,6 +33,5 @@ public interface PolyApi {
 
     void sendMessageForGroup(String message, FactCallback factCallback);
     void getGroupMessage(ResultCallback<List<Message>> resultCallback, int from, int to);
-
-
+    boolean isLoggedIn();
 }
