@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,6 +37,7 @@ public class VkWallFragment extends Fragment implements NavigationView.OnNavigat
                              Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_vk_wall, container, false);
         ListView listView = view.findViewById(R.id.list_wall);
+        Log.i("VKWall", "Fragment attached");
 
 //        PolyManager.get().getApi().(dialogs -> {
 //            Objects.requireNonNull(getActivity()).runOnUiThread(() ->

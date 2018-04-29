@@ -31,8 +31,6 @@ public class PolyMock implements PolyApi {
 
     public PolyMock() {
         mLogin = PolyApp.restoreCredentials();
-
-
     }
 
     @Override

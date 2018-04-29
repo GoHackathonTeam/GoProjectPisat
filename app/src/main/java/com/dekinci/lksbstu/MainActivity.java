@@ -3,9 +3,7 @@ package com.dekinci.lksbstu;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -48,9 +46,8 @@ public class MainActivity extends AppCompatActivity implements
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        initDrawerHeader();
         initFragment();
-        setNavigationListener();
+        initDrawer();
     }
 
     private void initFragment() {
@@ -61,38 +58,9 @@ public class MainActivity extends AppCompatActivity implements
         fragmentTransaction.commit();
     }
 
-    private void initDrawerHeader() {
-        final LayoutInflater factory = getLayoutInflater();
-        @SuppressLint("InflateParams") final View headerView = factory.inflate(R.layout.nav_header_main, null);
-
-        LinearLayout prfiBtn = headerView.findViewById(R.id.profileViewClickable);
-        prfiBtn.setOnClickListener(
-                v -> {
-                    goTo(new ProfileFragment());
-
-                    DrawerLayout drawer = findViewById(R.id.drawer_layout);
-                    drawer.closeDrawer(GravityCompat.START);
-                }
-        );
-
-        CurrentUser user = PolyManager.get().getUser();
-        ImageView imageView = headerView.findViewById(R.id.headerProfileView);
-        user.getAvatar(b -> runOnUiThread(() -> imageView.setImageBitmap(b)));
-
-        user.getUser(u -> runOnUiThread(() -> {
-            TextView surname = headerView.findViewById(R.id.nav_header_surname);
-            surname.setText(u.getSurname());
-
-            TextView name = headerView.findViewById(R.id.nav_header_name);
-            name.setText(u.getName());
-
-            TextView group = headerView.findViewById(R.id.nav_header_group_num);
-            group.setText(u.getGroupName());
-        }));
-    }
-
-    private void setNavigationListener() {
+    private void initDrawer() {
         NavigationView navigationView = findViewById(R.id.nav_view);
+
         navigationView.setNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
             Fragment fragment = null;
@@ -125,6 +93,39 @@ public class MainActivity extends AppCompatActivity implements
             drawer.closeDrawer(GravityCompat.START);
             return true;
         });
+
+        View header = navigationView.getHeaderView(0);
+        initHeaderButton(header);
+        initHeaderProfile(header);
+    }
+
+    private void initHeaderButton(View view) {
+        LinearLayout prfiBtn = view.findViewById(R.id.profileViewClickable);
+        prfiBtn.setOnClickListener(
+                v -> {
+                    goTo(new ProfileFragment());
+
+                    DrawerLayout drawer = findViewById(R.id.drawer_layout);
+                    drawer.closeDrawer(GravityCompat.START);
+                }
+        );
+    }
+
+    private void initHeaderProfile(View view) {
+        CurrentUser user = PolyManager.get().getUser();
+        ImageView imageView = view.findViewById(R.id.headerProfileView);
+        user.getAvatar(b -> runOnUiThread(() -> imageView.setImageBitmap(b)));
+
+        user.getUser(u -> runOnUiThread(() -> {
+            TextView surname = view.findViewById(R.id.nav_header_surname);
+            surname.setText(u.getSurname());
+
+            TextView name = view.findViewById(R.id.nav_header_name);
+            name.setText(u.getName());
+
+            TextView group = view.findViewById(R.id.nav_header_group_num);
+            group.setText(u.getGroupName());
+        }));
     }
 
     private void goTo(Fragment fragment) {

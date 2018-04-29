@@ -36,6 +36,7 @@ public class TasksFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.i("Tasks", "Fragment attached");
         return inflater.inflate(R.layout.fragment_tasks, container, false);
     }
 
