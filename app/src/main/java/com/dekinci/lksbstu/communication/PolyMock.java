@@ -143,7 +143,7 @@ public class PolyMock implements PolyApi {
     @Override
     public void sendMessage(String other_user_id, String message, FactCallback factCallback) {
         try {
-            dialogsServer.sendMessage(mLogin.getId(), other_user_id, message);
+            dialogsServer.sendMessage("01", other_user_id, message); //mLogin.getId()
             factCallback.success();
         } catch (Exception e) {
             factCallback.failure(e);
