@@ -34,7 +34,9 @@
         <activity
             android:name="com.dekinci.lksbstu.SettingsActivity"
             android:label="@string/title_activity_settings" />
-        <activity android:name="com.dekinci.lksbstu.AboutActivity" />
+        <activity
+            android:name="com.dekinci.lksbstu.AboutActivity"
+            android:label="@string/title_activity_about"/>
     </application>
 
 </manifest>

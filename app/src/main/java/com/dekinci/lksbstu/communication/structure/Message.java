@@ -34,4 +34,9 @@ public class Message {
     public String getText() {
         return text;
     }
+
+    @Override
+    public String toString() {
+        return "{s: " + senderId + "; r: " + receiverId + "; m: " + text + "}";
+    }
 }
