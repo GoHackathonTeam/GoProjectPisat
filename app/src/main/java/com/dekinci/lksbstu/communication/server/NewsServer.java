@@ -21,7 +21,22 @@ public class NewsServer {
             "Вы и сами наверное догадались, что <b>новости</b> это <i>новости</i>",
             "Очень важная информация",
             "Lorem ipsum lorem ipsum lorem ipsum blah blah blah"};
+    private static String[] dates = {
+            "03.04.2019 23:34",
+            "02.11.2007 42:58",
+            "13.12.2014 04:31"
+    };
 
+    public List<News> getNewsByRange(int from, int to) {
+        if (to > headers.length)
+            to = headers.length;
+        if (from > to) return new ArrayList<>();
+        List<News> result = new ArrayList<>();
+        for (; from < to; from++) {
+            result.add(new News(Integer.toString(from), dates[from], headers[from], bodies[from]));
+        }
+        return result;
+    }
 
     public List<News> getNewsByDate(String date) {
         List<News> result = getForDate(date);
