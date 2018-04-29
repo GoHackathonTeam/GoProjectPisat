@@ -22,7 +22,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:visibility="invisible"
-        app:indicatorColor="@color/accent"
+        app:indicatorColor="@color/primary_dark"
         app:indicatorName="LineSpinFadeLoaderIndicator"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
