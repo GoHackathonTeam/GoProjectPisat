@@ -14,7 +14,8 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-    <string name="title_activity_schedule">ScheduleActivity</string>
+    <!-- For some reason this is the title used for all fragments -->
+    <string name="title_activity_schedule">PolyApp</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_desc">Navigation header</string>
@@ -29,6 +30,7 @@
     <string name="nav_tasks">Tasks</string>
     <string name="nav_docs">Documents</string>
     <string name="nav_news">News</string>
+    <string name="nav_memes">PolyMemes</string>
     <string name="nav_settings">Settings</string>
     <string name="nav_about">About</string>
 

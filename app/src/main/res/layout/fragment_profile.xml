@@ -239,13 +239,13 @@
 
     <Button
         android:id="@+id/button_logout"
+        style="@style/PolyButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/profile_logout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="434dp" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </android.support.constraint.ConstraintLayout>
