@@ -8,7 +8,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.dekinci.lksbstu.communication.structure.News;
+import com.dekinci.lksbstu.model.PolyManager;
 import com.example.hackaton.goprojectpisat.R;
 
 public class NewsFragment extends Fragment {
@@ -28,6 +32,24 @@ public class NewsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         Log.i("News", "Fragment attached");
-        return inflater.inflate(R.layout.fragment_news, container, false);
+        View view = inflater.inflate(R.layout.fragment_news, container, false);
+        LinearLayout holder = view.findViewById(R.id.news_holder);
+        PolyManager.get().getApi().getNews(newsList -> {
+            for (News news : newsList) {
+                TextView date = holder.findViewById(R.id.news_time);
+                TextView header = holder.findViewById(R.id.news_header);
+                TextView body = holder.findViewById(R.id.news_body);
+
+                getActivity().runOnUiThread(() -> {
+                    date.setText(news.getDate());
+                    header.setText(news.getHeader());
+                    String bodyText = news.getBody();
+                    if (bodyText.length() > 200)
+                        bodyText = bodyText.substring(0, 197) + "...";
+                    body.setText(bodyText);
+                });
+            }
+        }, 0, Integer.MAX_VALUE);
+        return view;
     }
 }
