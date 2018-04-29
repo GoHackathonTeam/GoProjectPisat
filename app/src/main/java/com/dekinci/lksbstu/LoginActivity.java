@@ -27,6 +27,7 @@ import android.widget.EditText;
 import com.dekinci.lksbstu.utils.FactCallback;
 import com.dekinci.lksbstu.utils.Synchronizer;
 import com.example.hackaton.goprojectpisat.R;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,28 +35,26 @@ import java.util.List;
 import static android.Manifest.permission.READ_CONTACTS;
 
 
-public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
+public class LoginActivity extends AppCompatActivity {
     private static final int REQUEST_READ_CONTACTS = 0;
-
-    /**
-     * Keep track of the login task to ensure we can cancel it if requested.
-     */
     private UserLoginTask mAuthTask = null;
 
     // UI references.
     private AutoCompleteTextView loginView;
     private EditText passwordView;
-    private View progressView;
+
     private View loginFormView;
+
+    private AVLoadingIndicatorView loadingIndicatorView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        loginView = findViewById(R.id.email);
-        populateAutoComplete();
+        loadingIndicatorView = findViewById(R.id.avi);
 
+        loginView = findViewById(R.id.login);
         passwordView = findViewById(R.id.password);
         passwordView.setOnEditorActionListener((textView, id, keyEvent) -> {
             if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
@@ -69,54 +68,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         loginSignInButton.setOnClickListener(view -> attemptLogin());
 
         loginFormView = findViewById(R.id.login_form);
-        progressView = findViewById(R.id.login_progress);
     }
 
-    private void populateAutoComplete() {
-        if (!mayRequestContacts())
-            return;
-
-        getLoaderManager().initLoader(0, null, this);
-    }
-
-    private boolean mayRequestContacts() {
-        if (checkSelfPermission(READ_CONTACTS) == PackageManager.PERMISSION_GRANTED)
-            return true;
-
-        if (shouldShowRequestPermissionRationale(READ_CONTACTS))
-            Snackbar.make(loginView, R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE)
-                    .setAction(android.R.string.ok, v ->
-                            requestPermissions(new String[]{READ_CONTACTS}, REQUEST_READ_CONTACTS));
-        else
-            requestPermissions(new String[]{READ_CONTACTS}, REQUEST_READ_CONTACTS);
-
-        return false;
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == REQUEST_READ_CONTACTS &&
-                grantResults.length == 1 &&
-                grantResults[0] == PackageManager.PERMISSION_GRANTED)
-            populateAutoComplete();
-    }
-
-
-    /**
-     * Attempts to sign in or register the account specified by the login form.
-     * If there are form errors (invalid email, missing fields, etc.), the
-     * errors are presented and no actual login attempt is made.
-     */
     private void attemptLogin() {
         if (mAuthTask != null) {
             return;
         }
 
-        // Reset errors.
         loginView.setError(null);
         passwordView.setError(null);
 
-        // Store values at the time of the login attempt.
         String login = loginView.getText().toString();
         String password = passwordView.getText().toString();
 
@@ -142,77 +103,68 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         if (cancel)
             focusView.requestFocus();
         else {
-            showProgress(true);
+            showProgress();
             mAuthTask = new UserLoginTask(login, password);
             mAuthTask.execute((Void) null);
         }
     }
 
     private boolean isLoginValid(String login) {
-        //TODO
         return true;
     }
 
     private boolean isPasswordValid(String password) {
-        //TODO
         return true;
     }
 
-    private void showProgress(final boolean show) {
-        int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-
-        loginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-        loginFormView.animate().setDuration(shortAnimTime).alpha(show ? 0 : 1)
+    private void showProgress() {
+        loginFormView.setVisibility(View.VISIBLE);
+        loginFormView.setAlpha(1);
+        loginFormView.animate()
+                .setDuration(100)
+                .y(0)
+                .alpha(0)
                 .setListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
-                        loginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-                    }
-                });
+                        loginFormView.setVisibility(View.INVISIBLE);
+                        loadingIndicatorView.setY(0);
+                        loadingIndicatorView.setAlpha(0);
+                        loadingIndicatorView.setVisibility(View.VISIBLE);
+                        loadingIndicatorView.animate()
+                                .setDuration(100)
+                                .y(200)
+                                .alpha(1)
+                                .start();
 
-        progressView.setVisibility(show ? View.VISIBLE : View.GONE);
-        progressView.animate().setDuration(shortAnimTime).alpha(show ? 1 : 0)
+                        loginFormView.animate().setListener(null);
+                    }
+                })
+                .start();
+    }
+
+    private void hideProgress() {
+        loadingIndicatorView.setAlpha(1);
+        loadingIndicatorView.setVisibility(View.VISIBLE);
+        loadingIndicatorView.animate()
+                .setDuration(100)
+                .y(0)
+                .alpha(0)
                 .setListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
-                        progressView.setVisibility(show ? View.VISIBLE : View.GONE);
+                        loadingIndicatorView.setVisibility(View.INVISIBLE);
+                        loginFormView.setAlpha(0);
+                        loginFormView.setVisibility(View.VISIBLE);
+                        loginFormView.animate()
+                                .setDuration(100)
+                                .y(200)
+                                .alpha(1)
+                                .start();
+                        loadingIndicatorView.animate().setListener(null);
                     }
-                });
-    }
-
-    @Override
-    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-        return new CursorLoader(this,
-                Uri.withAppendedPath(
-                        ContactsContract.Profile.CONTENT_URI,
-                        ContactsContract.Contacts.Data.CONTENT_DIRECTORY), ProfileQuery.PROJECTION,
-                ContactsContract.Contacts.Data.MIMETYPE + " = ?",
-                new String[]{ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE},
-                ContactsContract.Contacts.Data.IS_PRIMARY + " DESC");
-    }
-
-    @Override
-    public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
-        List<String> emails = new ArrayList<>();
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            emails.add(cursor.getString(ProfileQuery.ADDRESS));
-            cursor.moveToNext();
-        }
-
-        addEmailsToAutoComplete(emails);
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> cursorLoader) {
-    }
-
-    private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                LoginActivity.this,
-                android.R.layout.simple_dropdown_item_1line,
-                emailAddressCollection);
-        loginView.setAdapter(adapter);
+                })
+                .start();
     }
 
     private void proceed() {
@@ -220,16 +172,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
         finish();
-    }
-
-    private interface ProfileQuery {
-        String[] PROJECTION = {
-                ContactsContract.CommonDataKinds.Email.ADDRESS,
-                ContactsContract.CommonDataKinds.Email.IS_PRIMARY,
-        };
-
-        int ADDRESS = 0;
-        int IS_PRIMARY = 1;
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -264,11 +206,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         @Override
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;
-            showProgress(false);
 
             if (success)
                 proceed();
             else {
+                hideProgress();
                 passwordView.setError(getString(R.string.error_incorrect_password));
                 passwordView.requestFocus();
             }
@@ -277,7 +219,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         @Override
         protected void onCancelled() {
             mAuthTask = null;
-            showProgress(false);
+            hideProgress();
         }
     }
 }
