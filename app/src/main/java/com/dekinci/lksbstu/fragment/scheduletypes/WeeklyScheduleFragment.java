@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.dekinci.lksbstu.communication.structure.DaySchedule;
 import com.dekinci.lksbstu.communication.structure.ScheduleItem;
+import com.dekinci.lksbstu.fragment.ScheduleFragment;
 import com.dekinci.lksbstu.model.PolyManager;
 import com.example.hackaton.goprojectpisat.R;
 
@@ -65,6 +66,12 @@ public class WeeklyScheduleFragment extends Fragment implements ScheduleShower {
         inflateSchedule();
     }
 
+    @Override
+    public void show(Date date) {
+        currentDate = date;
+        inflateSchedule();
+    }
+
     public void inflateSchedule() {
         String date = formatter.format(calendar.getTime());
 
@@ -73,6 +80,12 @@ public class WeeklyScheduleFragment extends Fragment implements ScheduleShower {
                 View dayScheduleView = inflater.inflate(R.layout.day_schedule_layout, mainHolder, false);
                 TextView scheduleDayName = dayScheduleView.findViewById(R.id.schedule_day_name);
                 scheduleDayName.setText(date);
+                scheduleDayName.setOnClickListener((v) -> {
+                    ScheduleFragment parent = (ScheduleFragment) getParentFragment();
+                    if (parent != null)
+                        parent.showDay(currentDate);
+                });
+
                 LinearLayout classesHolder = dayScheduleView.findViewById(R.id.schedule_classes_holder);
                 for (ScheduleItem scheduleItem : daySchedule.getDaySchedule()) {
                     View classView = inflater.inflate(R.layout.class_schedule_layout, classesHolder, false);

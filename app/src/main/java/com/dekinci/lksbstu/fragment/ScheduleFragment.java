@@ -19,6 +19,8 @@ import com.dekinci.lksbstu.fragment.scheduletypes.WeeklyScheduleFragment;
 import com.dekinci.lksbstu.utils.OnSwipeTouchListener;
 import com.example.hackaton.goprojectpisat.R;
 
+import java.util.Date;
+
 public class ScheduleFragment extends Fragment {
     private ScheduleShower scheduleShower;
 
@@ -109,5 +111,11 @@ public class ScheduleFragment extends Fragment {
                 scheduleShower.previous();
             }
         });
+    }
+
+    public void showDay(Date date) {
+        DailyScheduleFragment f = new DailyScheduleFragment();
+        replaceBy(f);
+        f.show(date);
     }
 }
