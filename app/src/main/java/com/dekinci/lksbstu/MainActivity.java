@@ -66,10 +66,6 @@ public class MainActivity extends AppCompatActivity implements
                 fragment = new ScheduleFragment();
             } else if (id == R.id.nav_messages) {
                 fragment = new TetATetFragment();
-            } else if (id == R.id.nav_tasks) {
-                fragment = new TasksFragment();
-            } else if (id == R.id.nav_docs) {
-                fragment = new DocsFragment();
             } else if (id == R.id.nav_news) {
                 fragment = new NewsFragment();
             } else if (id == R.id.nav_settings) {
