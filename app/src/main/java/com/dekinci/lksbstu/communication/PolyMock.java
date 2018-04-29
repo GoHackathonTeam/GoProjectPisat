@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.dekinci.lksbstu.PolyApp;
 import com.dekinci.lksbstu.communication.factories.AnnouncementsFactory;
+import com.dekinci.lksbstu.communication.server.DialogsServer;
 import com.dekinci.lksbstu.communication.server.NewsServer;
 import com.dekinci.lksbstu.communication.server.ScheduleServer;
 import com.dekinci.lksbstu.communication.server.UserDataServer;
@@ -24,6 +25,7 @@ public class PolyMock implements PolyApi {
     private UserDataServer dataServer = new UserDataServer();
     private ScheduleServer scheduleServer = new ScheduleServer();
     private NewsServer newsServer = new NewsServer();
+    private DialogsServer dialogsServer = new DialogsServer();
 
     private Login mLogin;
 
@@ -138,17 +140,30 @@ public class PolyMock implements PolyApi {
 
     @Override
     public void sendMessage(String other_user_id, String message, FactCallback factCallback) {
-
+        try {
+            dialogsServer.sendMessage(mLogin.getId(), other_user_id, message);
+            factCallback.success();
+        } catch (Exception e) {
+            factCallback.failure(e);
+        }
     }
 
     @Override
     public void getMessageList(String user_id, ResultCallback<List<Message>> resultCallback, int from, int to) {
-
+        try {
+            resultCallback.success(dialogsServer.getMessageList(mLogin.getId(), user_id, from, to));
+        } catch (Exception e) {
+            resultCallback.failure(e);
+        }
     }
 
     @Override
     public void getDialogs(ResultCallback<List<String>> resultCallback) {
-
+        try {
+            resultCallback.success(dialogsServer.getDialogs(mLogin.getId()));
+        } catch (Exception e) {
+            resultCallback.failure(e);
+        }
     }
 
     @Override
