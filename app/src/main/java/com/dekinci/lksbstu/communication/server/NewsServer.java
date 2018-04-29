@@ -18,7 +18,7 @@ public class NewsServer {
     private Random r = new Random();
     private static String[] headers = {"Кое-что случилось", "Внимание!!!", "Новости"};
     private static String[] bodies = {
-            "Вы и сами наверное догадались, что <b>новости</b> это <i>новости</i>",
+            "Вы и сами наверное догадались, что ",
             "Очень важная информация",
             "Lorem ipsum lorem ipsum lorem ipsum blah blah blah"};
     private static String[] dates = {
@@ -28,11 +28,11 @@ public class NewsServer {
     };
 
     public List<News> getNewsByRange(int from, int to) {
-        if (to > headers.length)
-            to = headers.length;
+        if (to >= headers.length)
+            to = headers.length - 1;
         if (from > to) return new ArrayList<>();
         List<News> result = new ArrayList<>();
-        for (; from < to; from++) {
+        for (; from <= to; from++) {
             result.add(new News(Integer.toString(from), dates[from], headers[from], bodies[from]));
         }
         return result;

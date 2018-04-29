@@ -14,7 +14,10 @@ import android.widget.TextView;
 
 import com.dekinci.lksbstu.communication.structure.News;
 import com.dekinci.lksbstu.model.PolyManager;
+import com.dekinci.lksbstu.utils.ResultCallback;
 import com.example.hackaton.goprojectpisat.R;
+
+import java.util.List;
 
 public class NewsFragment extends Fragment {
 
@@ -35,24 +38,35 @@ public class NewsFragment extends Fragment {
         // Inflate the layout for this fragment
         Log.i("News", "Fragment attached");
         View view = inflater.inflate(R.layout.fragment_news, container, false);
-        LinearLayout holder = view.findViewById(R.id.newsItem); //TODO!!
-        PolyManager.get().getApi().getNews(newsList -> {
-            for (News news : newsList) {
-                View record = inflater.inflate(R.layout.news_layout, holder, false);
-                TextView date = record.findViewById(R.id.news_time);
-                TextView header = record.findViewById(R.id.news_header);
-                TextView body = record.findViewById(R.id.news_body);
+        LinearLayout holder = view.findViewById(R.id.Snews_holder);
+        PolyManager.get().getApi().getNews(new ResultCallback<List<News>>() {
 
-                date.setText(news.getDate());
-                header.setText(news.getHeader());
-                String bodyText = news.getBody();
-                if (bodyText.length() > 200)
-                    bodyText = bodyText.substring(0, 197) + "...";
-                body.setText(Html.fromHtml(bodyText, Html.FROM_HTML_MODE_COMPACT));
+            @Override
+            public void success(List<News> newsList) {
+                for (News news : newsList) {
+                    Log.d("News", news.getHeader());
+                    View record = inflater.inflate(R.layout.news_layout, holder, false);
+                    TextView date = record.findViewById(R.id.news_time);
+                    TextView header = record.findViewById(R.id.news_header);
+                    TextView body = record.findViewById(R.id.news_body);
 
-                holder.addView(record);
+                    String bodyText = news.getBody();
+                    if (bodyText.length() > 200)
+                        bodyText = bodyText.substring(0, 197) + "...";
+                    date.setText(news.getHeader());
+                    header.setText(Html.fromHtml(bodyText, Html.FROM_HTML_MODE_COMPACT));
+                    body.setText(news.getDate());
+
+                    holder.addView(record);
+                }
             }
-        }, 0, 1);
+
+            @Override
+            public void failure(Throwable e) {
+                e.printStackTrace();
+            }
+        }, 0, Integer.MAX_VALUE);
+
         return view;
     }
 }

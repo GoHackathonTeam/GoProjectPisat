@@ -4,10 +4,17 @@
     android:layout_height="match_parent"
     tools:context="com.dekinci.lksbstu.fragment.NewsFragment">
 
-    <LinearLayout
-        android:id="@+id/news_holder"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"/>
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/Snews_holder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="top|center_horizontal"
+            android:orientation="vertical" />
+
+    </ScrollView>
 
 </FrameLayout>
